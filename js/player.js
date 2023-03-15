@@ -10,7 +10,7 @@ class Player {
 
     this.width = 514;
     this.height = 392;
-    this.image.frames = 0;
+    this.image.frames = 3;
     this.image.framesIndex = 0;
 
     this.posX = 0;
