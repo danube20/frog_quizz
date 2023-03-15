@@ -6,11 +6,11 @@ class Player {
     this.gameHeight = gameH;
 
     this.image = new Image();
-    this.image.src = "../images/Sprite/quieta_2.png";
+    this.image.src = "../images/Sprite/quieta_20.png";
 
-    this.width = 514;
-    this.height = 392;
-    this.image.frames = 3;
+    this.width = 280;
+    this.height = 239;
+    this.image.frames = 20;
     this.image.framesIndex = 0;
 
     this.posX = 0;
@@ -23,8 +23,19 @@ class Player {
     this.setListeners();
   }
 
-  draw() {
-    this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height);
+  draw(framesCounter) {
+    this.ctx.drawImage(
+      this.image,
+      (this.image.width / this.image.frames) * this.image.framesIndex,
+      0,
+      this.image.width / this.image.frames,
+      this.image.height,
+      this.posX,
+      this.posY,
+      this.width,
+      this.height
+    );
+    this.animate(framesCounter);
   }
 
 
@@ -44,5 +55,15 @@ class Player {
           this.posY += this.velMOVE;
       }
     });
+  }
+
+  animate(framesCounter) {
+    if (framesCounter % 5 == 0) {
+      this.image.framesIndex++;
+    }
+
+    if (this.image.framesIndex >= this.image.frames) {
+      this.image.framesIndex = 0;
+    }
   }
 }
