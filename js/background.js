@@ -5,7 +5,7 @@ class Background {
     this.height = h;
 
     this.image = new Image();
-    this.image.src = "../images/road.png";
+    this.image.src = "images/background/background-1.png";
 
     this.posX = 0;
     this.posY = 0;
@@ -20,4 +20,5 @@ class Background {
       this.height
     );
   }
+  
 }

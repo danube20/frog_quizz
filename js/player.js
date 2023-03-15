@@ -6,17 +6,17 @@ class Player {
     this.gameHeight = gameH;
 
     this.image = new Image();
-    this.image.src = "../images/car.png";
+    this.image.src = "../images/Sprite/quieta_2.png";
 
-    this.width = 50;
-    this.height = 100;
-    this.image.frames = 1;
+    this.width = 514;
+    this.height = 392;
+    this.image.frames = 0;
     this.image.framesIndex = 0;
 
-    this.posX = 224;
-    this.posY = 550;
+    this.posX = 0;
+    this.posY = 0;
 
-    this.velX = 20;
+    this.velMOVE = 20;
 
     this.keys = keys;
 
@@ -32,11 +32,16 @@ class Player {
     document.addEventListener("keydown", (e) => {
       switch (e.keyCode) {
         case this.keys.RIGHT:
-          this.posX += this.velX;
+          this.posX += this.velMOVE;
           break;
         case this.keys.LEFT:
-          this.posX -= this.velX;
+          this.posX -= this.velMOVE;
           break;
+        case this.keys.UP:
+          this.posY -= this.velMOVE;
+          break;
+        case this.keys.DOWN:
+          this.posY += this.velMOVE;
       }
     });
   }
