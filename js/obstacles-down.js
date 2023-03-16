@@ -1,11 +1,11 @@
-class Obstacle {
+class ObstacleDown {
   constructor(ctx) {
     this.ctx = ctx;
     this.width = 188;
     this.height = 120;
 
     this.image = new Image();
-    this.image.src = "../images/Sprite/coche1_20.png";
+    this.image.src = "../images/Sprite/cochedown1_20.png";
 
     this.posX = -this.width-10;
     this.posY = 426;
@@ -13,7 +13,7 @@ class Obstacle {
     this.image.frames = 20;
     this.image.framesIndex = 0;
 
-    this.velX = 6;
+    this.velX = 3;
   }
 
   draw(framesCounter) {

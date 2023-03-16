@@ -7,7 +7,8 @@ const Game = {
   framesCounter: 0,
   background: undefined,
   player: undefined,
-  obstacles: [],
+  obstaclesDown: [],
+  obstaclesUp: [],
   quizzObjects: undefined,
 
   keys: {
@@ -44,8 +45,10 @@ const Game = {
       }
       this.clear();
       this.drawAll();
-      //   this.generateObstacles();
-      //   this.clearObstacles();
+      this.generateObstaclesUp();
+      this.generateObstaclesDown();
+      this.clearObstaclesUp();
+      this.clearObstaclesDown();
     }, 1000 / this.FPS);
   },
 
@@ -58,25 +61,31 @@ const Game = {
       350,
       "./images/quiz/question-mark.png"
     );
-    this.obstacles = new Obstacle(this.ctx);
+    this.obstaclesUp = [];
+    this.obstaclesDown = [];
   },
 
   drawAll() {
-      this.background.draw();
-      this.quizzObjects.draw();
+    this.background.draw();
+    this.quizzObjects.draw();
     this.player.draw(this.framesCounter);
-    this.obstacles.draw(this.framesCounter);
+    this.obstaclesUp.forEach(function (obs) {
+      obs.draw();
+    });
+    this.obstaclesDown.forEach(function (obs) {
+      obs.draw();
+    });
   },
 
   clear() {
     this.ctx.clearRect(0, 0, this.width, this.height);
   },
 
-  generateObstacles() {
+  generateObstaclesDown() {
     // Use framesCounter to generate new Obstacles
-    if (this.framesCounter % 100 === 0) {
-      this.obstacles.push(
-        new Obstacle(
+    if (this.framesCounter % 200 === 0) {
+      this.obstaclesDown.push(
+        new ObstacleDown(
           this.ctx,
           this.width,
           this.player.posY0,
@@ -86,10 +95,30 @@ const Game = {
     }
   },
 
-  clearObstacles() {
+  generateObstaclesUp() {
+    if (this.framesCounter % 200 === 0) {
+      this.obstaclesUp.push(
+        new ObstacleUp(
+          this.ctx,
+          this.width,
+          this.player.posY0,
+          this.player.height
+        )
+      );
+    }
+  },
+
+  clearObstaclesDown() {
     // Clear obstacles array (.filter 👀)
-    this.obstacles = this.obstacles.filter(function (obs) {
-      return obs.posX <= this.width;
+    this.obstaclesDown = this.obstaclesDown.filter(function (obs) {
+      return obs.posX <= Game.width;
+    });
+  },
+
+  clearObstaclesUp() {
+    // Clear obstacles array (.filter 👀)
+    this.obstaclesUp = this.obstaclesUp.filter(function (obs) {
+      return obs.posX >= -obs.width;
     });
   },
 };
