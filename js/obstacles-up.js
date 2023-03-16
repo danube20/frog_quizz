@@ -1,11 +1,11 @@
 class ObstacleUp {
-  constructor(ctx) {
+  constructor(ctx, imgSrc) {
     this.ctx = ctx;
     this.width = 188;
     this.height = 120;
 
     this.image = new Image();
-    this.image.src = "../images/Sprite/cocheup2_20.png";
+    this.image.src = "../images/Sprite/cocheup2_20.png"
 
     this.posX = Game.width;
     this.posY = 326;
@@ -15,7 +15,20 @@ class ObstacleUp {
 
     this.velX = 3;
   }
+  // getImage() {
 
+  //   if (random === 0) {
+  //     this.image.src = "../images/Sprite/cocheup2_20.png";
+  //   }
+
+  //   if (random === 1) {
+  //     this.image.src = "../images/Sprite/cocheup3_20.png";
+  //   }
+
+  //   if (random === 2) {
+  //     this.image.src = "../images/Sprite/cocheup1_20.png";
+  //   }
+  // }
   draw(framesCounter) {
     this.ctx.drawImage(
       this.image,
