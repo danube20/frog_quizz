@@ -52,6 +52,7 @@ const Game = {
       this.generateObstaclesDown();
       this.clearObstaclesUp();
       this.clearObstaclesDown();
+
       if (this.isCollisionUp() || this.isCollisionDown()) {
         this.lifes--;
         this.player.posX = 200;
@@ -185,28 +186,28 @@ const Game = {
   generateMasks() {
     this.ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
     //torre arr iz
-    this.ctx.fillRect(10, 0, 150, 226);
+    this.masksArray = [this.ctx.fillRect(10, 0, 150, 226),
     //arbol arr iz
-    this.ctx.fillRect(10, 170, 70, 120);
+    this.ctx.fillRect(10, 170, 70, 120),
     //casa ab dch
-    this.ctx.fillRect(480, 600, 160, 200);
+    this.ctx.fillRect(480, 600, 160, 200),
     //valla arr
-    this.ctx.fillRect(388, 74, 136, 46);
+    this.ctx.fillRect(388, 74, 136, 46),
     //muro arr
-    this.ctx.fillRect(520, 104, 136, 46);
+    this.ctx.fillRect(520, 104, 136, 46),
     //arbol arr dch
-    this.ctx.fillRect(540, 0, 100, 110);
+    this.ctx.fillRect(540, 0, 100, 110),
     //seto arriba dch
-    this.ctx.fillRect(500, 170, 100, 96);
+    this.ctx.fillRect(500, 170, 100, 96),
     //valla ab
-    this.ctx.fillRect(40, 706, 136, 46);
+    this.ctx.fillRect(40, 706, 136, 46),
     //arbol ab iz
-    this.ctx.fillRect(0, 600, 70, 120);
+    this.ctx.fillRect(0, 600, 70, 120),
     //muro ab
-    this.ctx.fillRect(30, 566, 136, 46);
+    this.ctx.fillRect(30, 566, 136, 46),
     //setito ab iz
-    this.ctx.fillRect(44, 766, 60, 60);
+    this.ctx.fillRect(44, 766, 60, 60),
     //setito ab dch
-    this.ctx.fillRect(420, 720, 60, 60);
+    this.ctx.fillRect(420, 720, 60, 60)]
   },
 };
