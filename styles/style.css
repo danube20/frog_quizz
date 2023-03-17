@@ -6,20 +6,16 @@
 
 .game-intro {
   width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .game-intro p {
   font-size: 18px;
-  font-family: "Verdana"
+  font-family: "Verdana";
 }
 
-.game-intro img {
-  width: 100%;
-}
-
-/* .logo-img {
-  width: 350px;
-} */
 
 .arrows-img {
   width: 150px;
@@ -34,12 +30,20 @@ body button {
   box-shadow: 0;
   border-radius: 5px;
   margin-bottom: 20px;
+  margin-top: 20px;
+  width: 220px;
 }
-
-/* #game-board {
-  width: 50vw;
-} */
 
 #game {
   display: flex;
+  /* background-color: #8dc53e; */
+}
+
+.board-img {
+  width: 380px;
+  margin-top: 20px;
+}
+
+.lifes {
+  width: 20%;
 }

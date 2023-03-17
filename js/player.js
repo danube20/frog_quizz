@@ -43,28 +43,37 @@ class Player {
     document.addEventListener("keydown", (e) => {
       switch (e.keyCode) {
         case this.keys.RIGHT:
-          this.image.frames = 20;
-          this.posX += this.velMOVE;
-          this.image.src = "../images/Sprite/saltodch_20.png";
-          this.lastMove = "right";
-          break;
+          if (this.posX + this.width - 74 <= Game.width) {
+            this.image.frames = 20;
+            this.posX += this.velMOVE;
+            this.image.src = "../images/Sprite/saltodch_20.png";
+            this.lastMove = "right";
+            break;
+          }
         case this.keys.LEFT:
-          this.image.frames = 20;
-          this.posX -= this.velMOVE;
-          this.image.src = "../images/Sprite/saltoizq_20.png";
-          this.lastMove = "left";
-          break;
+          if (this.posX + 109 >= 0) {
+            this.image.frames = 20;
+            this.posX -= this.velMOVE;
+            this.image.src = "../images/Sprite/saltoizq_20.png";
+            this.lastMove = "left";
+            break;
+          }
         case this.keys.UP:
-          this.image.frames = 20;
-          this.posY -= this.velMOVE;
-          this.image.src = "../images/Sprite/movimientoarriba_20.png";
-          this.lastMove = "up";
-          break;
+          if (this.posY + 74 >= 0) {
+            this.image.frames = 20;
+            this.posY -= this.velMOVE;
+            this.image.src = "../images/Sprite/movimientoarriba_20.png";
+            this.lastMove = "up";
+            break;
+          }
         case this.keys.DOWN:
-          this.image.frames = 20;
-          this.posY += this.velMOVE;
-          this.image.src = "../images/Sprite/movimientoabajo_20.png";
-          this.lastMove = "down";
+          if (this.posY + this.height - 71 <= Game.height) {
+            this.image.frames = 20;
+            this.posY += this.velMOVE;
+            this.image.src = "../images/Sprite/movimientoabajo_20.png";
+            this.lastMove = "down";
+            break;
+          }
       }
     });
     document.addEventListener("keyup", (e) => {
