@@ -54,7 +54,7 @@ const Game = {
       this.clearObstaclesDown();
       if (this.isCollisionUp() || this.isCollisionDown()) {
         this.lifes--;
-        this.player.posX = 250;
+        this.player.posX = 200;
         this.player.posY = 600;
       }
       if (this.lifes === 0) {
