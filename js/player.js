@@ -6,7 +6,7 @@ class Player {
     this.gameHeight = gameH;
 
     this.image = new Image();
-    this.image.src = "../images/Sprite/quietaup_20.png";
+    this.image.src = "./images/Sprite/quietaup_20.png";
 
     this.width = 280;
     this.height = 239;
@@ -48,32 +48,32 @@ class Player {
             this.posX += this.velMOVE;
             this.image.src = "../images/Sprite/saltodch_20.png";
             this.lastMove = "right";
-            break;
           }
+          break;
         case this.keys.LEFT:
           if (this.posX + 109 >= 0) {
             this.image.frames = 20;
             this.posX -= this.velMOVE;
             this.image.src = "../images/Sprite/saltoizq_20.png";
             this.lastMove = "left";
-            break;
           }
+          break;
         case this.keys.UP:
           if (this.posY + 74 >= 0) {
             this.image.frames = 20;
             this.posY -= this.velMOVE;
             this.image.src = "../images/Sprite/movimientoarriba_20.png";
             this.lastMove = "up";
-            break;
           }
+          break;
         case this.keys.DOWN:
           if (this.posY + this.height - 71 <= Game.height) {
             this.image.frames = 20;
             this.posY += this.velMOVE;
             this.image.src = "../images/Sprite/movimientoabajo_20.png";
             this.lastMove = "down";
-            break;
           }
+          break;
       }
     });
     document.addEventListener("keyup", (e) => {
