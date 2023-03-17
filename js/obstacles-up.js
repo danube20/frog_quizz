@@ -1,5 +1,5 @@
 class ObstacleUp {
-  constructor(ctx, imgSrc) {
+  constructor(ctx) {
     this.ctx = ctx;
     this.width = 188;
     this.height = 120;

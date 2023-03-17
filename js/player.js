@@ -14,7 +14,7 @@ class Player {
     this.image.framesIndex = 0;
     this.lastMove;
 
-    this.posX = 250;
+    this.posX = 200;
     this.posY = 600;
 
     this.velMOVE = 20;
