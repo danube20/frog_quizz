@@ -49,28 +49,34 @@ const Game = {
       this.generateObstaclesDown();
       this.clearObstaclesUp();
       this.clearObstaclesDown();
-    //   if (this.isCollisionUp()||this.isCollisionDown()) {
-    //     this.gameOver();
-    //   }
+      //   if (this.isCollisionUp()||this.isCollisionDown()) {
+      //     this.gameOver();
+      //   }
     }, 1000 / this.FPS);
   },
 
   reset() {
     this.background = new Background(this.ctx, this.width, this.height);
     this.player = new Player(this.ctx, this.gameW, this.gameH, this.keys);
-    this.quizzObjects = new PowerUpObject(
+    this.quizzObjects = new QuizzObject(
       this.ctx,
-      300,
-      350,
-      "./images/quiz/question-mark.png"
+      600,
+      250,
     );
+    this.quizzObjects = new QuizzObject(
+      this.ctx,
+      200,
+      650,
+    );
+  
+  
     this.obstaclesUp = [];
     this.obstaclesDown = [];
   },
 
   drawAll() {
     this.background.draw();
-    this.quizzObjects.draw();
+    this.quizzObjects.draw(this.framesCounter);
     this.player.draw(this.framesCounter);
     this.obstaclesUp.forEach(function (obs) {
       obs.draw();
@@ -129,47 +135,44 @@ const Game = {
     return this.obstaclesUp.some((obs) => {
       return (
         //arriba
-        this.player.posY -140 <= obs.posY+obs.height &&
+        this.player.posY - 140 <= obs.posY + obs.height &&
         //derecha
-        this.player.posX + this.player.width -130 >= obs.posX &&
+        this.player.posX + this.player.width - 130 >= obs.posX &&
         //abajo
-        this.player.posY + this.player.height -130 >= obs.posY &&
+        this.player.posY + this.player.height - 130 >= obs.posY &&
         //izquierda
-        this.player.posX <= obs.posX+obs.width -140 &&
+        this.player.posX <= obs.posX + obs.width - 140 &&
         //contener
-        this.player.posX -140 <= obs.posX + obs.width &&
+        this.player.posX - 140 <= obs.posX + obs.width &&
         this.player.posX + this.player.width >= obs.posX &&
-        this.player.posY -140<= obs.posY + obs.height &&
-        this.player.posY + this.player.height -140>= obs.posY
+        this.player.posY - 140 <= obs.posY + obs.height &&
+        this.player.posY + this.player.height - 140 >= obs.posY
       );
     });
   },
-  
-//   isCollisionDown() {
-//     return this.obstaclesDown.some((obs) => {
-//         return (
-//           //arriba
-//           this.player.posY -140 <= obs.posY+obs.height &&
-//           //derecha
-//           this.player.posX + this.player.width -130 >= obs.posX &&
-//           //abajo
-//           this.player.posY + this.player.height -130 >= obs.posY &&
-//           //izquierda
-//           this.player.posX <= obs.posX+obs.width -140 &&
-//           //contener
-//           this.player.posX -140 <= obs.posX + obs.width &&
-//           this.player.posX + this.player.width >= obs.posX &&
-//           this.player.posY -140<= obs.posY + obs.height &&
-//           this.player.posY + this.player.height -140>= obs.posY
-//         );
-//       });
-//     },
+
+  //   isCollisionDown() {
+  //     return this.obstaclesDown.some((obs) => {
+  //         return (
+  //           //arriba
+  //           this.player.posY -140 <= obs.posY+obs.height &&
+  //           //derecha
+  //           this.player.posX + this.player.width -130 >= obs.posX &&
+  //           //abajo
+  //           this.player.posY + this.player.height -130 >= obs.posY &&
+  //           //izquierda
+  //           this.player.posX <= obs.posX+obs.width -140 &&
+  //           //contener
+  //           this.player.posX -140 <= obs.posX + obs.width &&
+  //           this.player.posX + this.player.width >= obs.posX &&
+  //           this.player.posY -140<= obs.posY + obs.height &&
+  //           this.player.posY + this.player.height -140>= obs.posY
+  //         );
+  //       });
+  //     },
 
   gameOver() {
     // .clearInterval
-    clearInterval(this.interval)
+    clearInterval(this.interval);
   },
 };
-
-
-probando

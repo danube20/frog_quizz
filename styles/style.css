@@ -2,33 +2,35 @@
   padding: 0;
   margin: 0;
   text-align: center;
+
 }
 
+body {
+  background-color: #019544;
+}
 .game-intro {
   width: 50vw;
-}
-
-.game-intro p {
-  font-size: 18px;
-  font-family: "Verdana"
+  height: 100%;
+  position: relative;
+  
 }
 
 .game-intro img {
+  object-fit: cover;
   width: 100%;
 }
 
-/* .logo-img {
-  width: 350px;
-} */
+.buttondiv{
+  position: absolute;
+  bottom: 70px;
+  left: 230px;
 
-.arrows-img {
-  width: 150px;
 }
-
-body button {
+.buttondiv button {
   font-size: 30px;
-  background-color: #009344;
+  background-color: #282828;
   color: #8dc53e;
+  border: 3px solid red;
   padding: 20px 40px;
   border: 0;
   box-shadow: 0;
@@ -36,8 +38,14 @@ body button {
   margin-bottom: 20px;
 }
 
-/* #game-board {
-  width: 50vw;
+
+.arrows-img {
+  width: 150px;
+}
+
+
+/* #game-board canvas {
+  object-fit: cover;
 } */
 
 #game {
