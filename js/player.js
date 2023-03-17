@@ -44,6 +44,7 @@ class Player {
       switch (e.keyCode) {
         case this.keys.RIGHT:
           if (this.posX + this.width - 74 <= Game.width) {
+            Game.jumpAudio.play();
             this.image.frames = 20;
             this.posX += this.velMOVE;
             this.image.src = "../images/Sprite/saltodch_20.png";
@@ -52,6 +53,7 @@ class Player {
           break;
         case this.keys.LEFT:
           if (this.posX + 109 >= 0) {
+            Game.jumpAudio.play();
             this.image.frames = 20;
             this.posX -= this.velMOVE;
             this.image.src = "../images/Sprite/saltoizq_20.png";
@@ -60,6 +62,7 @@ class Player {
           break;
         case this.keys.UP:
           if (this.posY + 74 >= 0) {
+            Game.jumpAudio.play();
             this.image.frames = 20;
             this.posY -= this.velMOVE;
             this.image.src = "../images/Sprite/movimientoarriba_20.png";
@@ -68,6 +71,7 @@ class Player {
           break;
         case this.keys.DOWN:
           if (this.posY + this.height - 71 <= Game.height) {
+            Game.jumpAudio.play();
             this.image.frames = 20;
             this.posY += this.velMOVE;
             this.image.src = "../images/Sprite/movimientoabajo_20.png";

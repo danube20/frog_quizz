@@ -12,6 +12,10 @@ const Game = {
   quizzObjects: undefined,
   lifes: 3,
   masksArray: [],
+  crashAudio : new Audio ('../sounds/crash.mp3'),
+  jumpAudio : new Audio ('../sounds/jump.mp3'),
+  backSound : new Audio ('../sounds/backsound.mp3'),
+  gameOverSound : new Audio ('../sounds/gameover.mp3'),
 
   keys: {
     LEFT: 37,
@@ -41,6 +45,7 @@ const Game = {
 
   start() {
     this.reset();
+    this.backSound.play();
     this.interval = setInterval(() => {
       this.framesCounter++;
       if (this.framesCounter > 3000) {
@@ -55,6 +60,7 @@ const Game = {
       this.clearObstaclesDown();
 
       if (this.isCollisionUp() || this.isCollisionDown()) {
+        this.crashAudio.play();
         this.lifes--;
         this.player.posX = 200;
         this.player.posY = 600;
@@ -161,6 +167,9 @@ const Game = {
   gameOver() {
     // .clearInterval
     clearInterval(this.interval);
+    this.backSound.pause();
+    this.gameOverSound.play();
+
     document.addEventListener("keydown", (e) => {
       switch (e.keyCode) {
         case this.keys.ENTER:
