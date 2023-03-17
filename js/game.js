@@ -16,6 +16,9 @@ const Game = {
   jumpAudio : new Audio ('../sounds/jump.mp3'),
   backSound : new Audio ('../sounds/backsound.mp3'),
   gameOverSound : new Audio ('../sounds/gameover.mp3'),
+  croacSound: new Audio ('../sounds/croac.mp3'),
+  croacTimer: 0,
+
 
   keys: {
     LEFT: 37,
@@ -48,6 +51,7 @@ const Game = {
     this.backSound.play();
     this.interval = setInterval(() => {
       this.framesCounter++;
+      this.croacTimer++;
       if (this.framesCounter > 3000) {
         this.framesCounter = 0;
       }
@@ -58,6 +62,11 @@ const Game = {
       this.generateObstaclesDown();
       this.clearObstaclesUp();
       this.clearObstaclesDown();
+
+      if (this.croacTimer === 800) {
+        this.croacTimer = 0
+        this.croacSound.play()
+      }
 
       if (this.isCollisionUp() || this.isCollisionDown()) {
         this.crashAudio.play();

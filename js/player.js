@@ -43,6 +43,7 @@ class Player {
     document.addEventListener("keydown", (e) => {
       switch (e.keyCode) {
         case this.keys.RIGHT:
+          Game.croacTimer = 0;
           if (this.posX + this.width - 74 <= Game.width) {
             Game.jumpAudio.play();
             this.image.frames = 20;
@@ -52,6 +53,7 @@ class Player {
           }
           break;
         case this.keys.LEFT:
+          Game.croacTimer = 0;
           if (this.posX + 109 >= 0) {
             Game.jumpAudio.play();
             this.image.frames = 20;
@@ -61,6 +63,7 @@ class Player {
           }
           break;
         case this.keys.UP:
+          Game.croacTimer = 0;
           if (this.posY + 74 >= 0) {
             Game.jumpAudio.play();
             this.image.frames = 20;
@@ -70,6 +73,7 @@ class Player {
           }
           break;
         case this.keys.DOWN:
+          Game.croacTimer = 0;
           if (this.posY + this.height - 71 <= Game.height) {
             Game.jumpAudio.play();
             this.image.frames = 20;
