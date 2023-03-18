@@ -18,6 +18,7 @@ const Game = {
   gameOverSound: new Audio("./sounds/gameover.mp3"),
   croacSound: new Audio("./sounds/croac.mp3"),
   croacTimer: 0,
+  correctAnswers: 0,
 
   keys: {
     LEFT: 37,
@@ -82,6 +83,7 @@ const Game = {
       }
 
       if (this.quizzCollision()) {
+        this.clearQuizzObject()
         this.displayCard()
       }
       if (this.lifes === 0) {
@@ -112,7 +114,7 @@ const Game = {
   },
 
   generateQuizzObjects() {
-    this.quizzObjects.push(new QuizzObject(this.ctx, 600, 250));
+    this.quizzObjects.push(new QuizzObject(this.ctx, 100, 650));
     this.quizzObjects.push(new QuizzObject(this.ctx, 200, 650));
   },
 
@@ -258,5 +260,17 @@ const Game = {
   displayCard() {
    let quizzBox = document.querySelector('#quizz-box');
    quizzBox.style.visibility = 'visible'
+  },
+
+  clearQuizzObject() {
+    this.quizzObjects.forEach((quizz, i)=>{
+      if  (this.player.posX + 109 <= quizz.posX + quizz.width &&
+      this.player.posX + this.player.width - 103 >= quizz.posX &&
+      this.player.posY + 74 <= quizz.posY + quizz.height &&
+      this.player.posY + this.player.height - 71 >= quizz.posY){
+        this.quizzObjects.splice(i,1)
+      }
+    })
+
+    }
   }
-};
