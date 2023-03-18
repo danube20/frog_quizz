@@ -6,7 +6,7 @@ class Player {
     this.gameHeight = gameH;
 
     this.image = new Image();
-    this.image.src = "../images/Sprite/quietaup_20.png";
+    this.image.src = "./images/Sprite/quietaup_20.png";
 
     this.width = 280;
     this.height = 239;
@@ -14,7 +14,7 @@ class Player {
     this.image.framesIndex = 0;
     this.lastMove;
 
-    this.posX = 250;
+    this.posX = 200;
     this.posY = 600;
 
     this.velMOVE = 20;
@@ -43,28 +43,45 @@ class Player {
     document.addEventListener("keydown", (e) => {
       switch (e.keyCode) {
         case this.keys.RIGHT:
-          this.image.frames = 20;
-          this.posX += this.velMOVE;
-          this.image.src = "../images/Sprite/saltodch_20.png";
-          this.lastMove = "right";
+          Game.croacTimer = 0;
+          if (this.posX + this.width - 74 <= Game.width) {
+            Game.jumpAudio.play();
+            this.image.frames = 20;
+            this.posX += this.velMOVE;
+            this.image.src = "../images/Sprite/saltodch_20.png";
+            this.lastMove = "right";
+          }
           break;
         case this.keys.LEFT:
-          this.image.frames = 20;
-          this.posX -= this.velMOVE;
-          this.image.src = "../images/Sprite/saltoizq_20.png";
-          this.lastMove = "left";
+          Game.croacTimer = 0;
+          if (this.posX + 109 >= 0) {
+            Game.jumpAudio.play();
+            this.image.frames = 20;
+            this.posX -= this.velMOVE;
+            this.image.src = "../images/Sprite/saltoizq_20.png";
+            this.lastMove = "left";
+          }
           break;
         case this.keys.UP:
-          this.image.frames = 20;
-          this.posY -= this.velMOVE;
-          this.image.src = "../images/Sprite/movimientoarriba_20.png";
-          this.lastMove = "up";
+          Game.croacTimer = 0;
+          if (this.posY + 74 >= 0) {
+            Game.jumpAudio.play();
+            this.image.frames = 20;
+            this.posY -= this.velMOVE;
+            this.image.src = "../images/Sprite/movimientoarriba_20.png";
+            this.lastMove = "up";
+          }
           break;
         case this.keys.DOWN:
-          this.image.frames = 20;
-          this.posY += this.velMOVE;
-          this.image.src = "../images/Sprite/movimientoabajo_20.png";
-          this.lastMove = "down";
+          Game.croacTimer = 0;
+          if (this.posY + this.height - 71 <= Game.height) {
+            Game.jumpAudio.play();
+            this.image.frames = 20;
+            this.posY += this.velMOVE;
+            this.image.src = "../images/Sprite/movimientoabajo_20.png";
+            this.lastMove = "down";
+          }
+          break;
       }
     });
     document.addEventListener("keyup", (e) => {

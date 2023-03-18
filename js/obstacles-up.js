@@ -1,11 +1,11 @@
 class ObstacleUp {
-  constructor(ctx, imgSrc) {
+  constructor(ctx) {
     this.ctx = ctx;
     this.width = 188;
     this.height = 120;
 
     this.image = new Image();
-    this.image.src = "../images/Sprite/cocheup2_20.png"
+    this.image.src = "./images/Sprite/cocheup2_20.png"
 
     this.posX = Game.width;
     this.posY = 326;
