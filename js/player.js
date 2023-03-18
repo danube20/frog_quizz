@@ -17,11 +17,11 @@ class Player {
     this.posX = 200;
     this.posY = 700;
 
-    this.velMOVE = 20;
+    this.velMOVE = 3;
 
-    this.keys = keys;
+    this.keyPressed = [];
 
-    this.setListeners();
+    this.setEventHandlers();
   }
 
   draw(framesCounter) {
@@ -39,65 +39,92 @@ class Player {
     this.animate(framesCounter);
   }
 
-  setListeners() {
-    document.addEventListener("keydown", (e) => {
-      switch (e.keyCode) {
-        case this.keys.RIGHT:
-          Game.croacTimer = 0;
-          if (this.posX + this.width - 74 <= Game.width) {
-            Game.jumpAudio.play();
-            this.image.frames = 20;
-            this.posX += this.velMOVE;
-            this.image.src = "./images/Sprite/saltodch_20.png";
-            this.lastMove = "right";
-          }
-          break;
-        case this.keys.LEFT:
-          Game.croacTimer = 0;
-          if (this.posX + 109 >= 0) {
-            Game.jumpAudio.play();
-            this.image.frames = 20;
-            this.posX -= this.velMOVE;
-            this.image.src = "./images/Sprite/saltoizq_20.png";
-            this.lastMove = "left";
-          }
-          break;
-        case this.keys.UP:
-          Game.croacTimer = 0;
-          if (this.posY + 74 >= 0) {
-            Game.jumpAudio.play();
-            this.image.frames = 20;
-            this.posY -= this.velMOVE;
-            this.image.src = "./images/Sprite/movimientoarriba_20.png";
-            this.lastMove = "up";
-          }
-          break;
-        case this.keys.DOWN:
-          Game.croacTimer = 0;
-          if (this.posY + this.height - 71 <= Game.height) {
-            Game.jumpAudio.play();
-            this.image.frames = 20;
-            this.posY += this.velMOVE;
-            this.image.src = "./images/Sprite/movimientoabajo_20.png";
-            this.lastMove = "down";
-          }
-          break;
+  movement() {
+    this.keyPressed.forEach((elm) => {
+      if (
+        (elm.includes("ArrowRight") &&
+          this.posX + this.width - 74 <= Game.width &&
+          !Game.maskCollision()) ||
+        (this.posX + this.width - 74 <= Game.width &&
+          Game.maskCollision() &&
+          this.lastMove !== "right")
+      ) {
+        this.lastMove = "right";
+        Game.jumpAudio.play();
+        this.image.frames = 20;
+        this.posX += this.velMOVE;
+        this.image.src = "./images/Sprite/saltodch_20.png";
+      } else if (
+        (elm.includes("ArrowLeft") &&
+          this.posX + 109 >= 0 &&
+          !Game.maskCollision()) ||
+        (this.posX + 109 >= 0 &&
+          Game.maskCollision() &&
+          this.lastMove !== "left")
+      ) {
+        this.lastMove = "left";
+        Game.jumpAudio.play();
+        this.image.frames = 20;
+        this.posX -= this.velMOVE;
+        this.image.src = "./images/Sprite/saltoizq_20.png";
+      } else if (
+        (elm.includes("ArrowUp") &&
+          this.posY + 74 >= 0 &&
+          !Game.maskCollision()) ||
+        (this.posY + 74 >= 0 && Game.maskCollision() && this.lastMove !== "up")
+      ) {
+        this.lastMove = "up";
+        Game.jumpAudio.play();
+        this.image.frames = 20;
+        this.posY -= this.velMOVE;
+        this.image.src = "./images/Sprite/movimientoarriba_20.png";
+      } else if (
+        (elm.includes("ArrowDown") &&
+          this.posY + this.height - 71 <= Game.height &&
+          !Game.maskCollision()) ||
+        (this.posY + this.height - 71 <= Game.height &&
+          Game.maskCollision() &&
+          this.lastMove !== "down")
+      ) {
+        this.lastMove = "down";
+        Game.jumpAudio.play();
+        this.image.frames = 20;
+        this.posY += this.velMOVE;
+        this.image.src = "./images/Sprite/movimientoabajo_20.png";
       }
     });
-    document.addEventListener("keyup", (e) => {
-      if (this.lastMove === "up") {
+  }
+
+  setEventHandlers() {
+    document.addEventListener("keydown", (event) => {
+      const { key } = event;
+      if (key === "ArrowRight" && !this.keyPressed.includes("ArrowRight"))
+        this.keyPressed.push("ArrowRight");
+      else if (key === "ArrowLeft" && !this.keyPressed.includes("ArrowLeft"))
+        this.keyPressed.push("ArrowLeft");
+      else if (key === "ArrowUp" && !this.keyPressed.includes("ArrowUp"))
+        this.keyPressed.push("ArrowUp");
+      else if (key === "ArrowDown" && !this.keyPressed.includes("ArrowDown"))
+        this.keyPressed.push("ArrowDown");
+      else return null;
+    });
+
+    document.addEventListener("keyup", (event) => {
+      const { key } = event;
+      if (key === "ArrowLeft") {
+        this.keyPressed = [];
+        this.image.src = "./images/Sprite/quietaizq_20.png";
+      } else if (key === "ArrowRight") {
+        this.keyPressed = [];
+        this.image.src = "./images/Sprite/quietadch_20.png";
+      } else if (key === "ArrowUp") {
+        this.keyPressed = [];
         this.image.src = "./images/Sprite/quietaup_20.png";
-      }
-      if (this.lastMove === "down") {
+      } else if (key === "ArrowDown") {
+        this.keyPressed = [];
         this.image.frames = 1;
         this.image.src = "./images/Sprite/quietadown.png";
-      }
-      if (this.lastMove === "right") {
-        this.image.src = "./images/Sprite/quietadch_20.png";
-      }
-      if (this.lastMove === "left") {
-        this.image.src = "./images/Sprite/quietaizq_20.png";
-      }
+      } else return null;
     });
   }
 

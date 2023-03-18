@@ -7,6 +7,8 @@ const Game = {
   framesCounter: 0,
   background: undefined,
   player: undefined,
+  obstacleUp: undefined,
+  obstacleDown: undefined,
   obstaclesDown: [],
   obstaclesUp: [],
   quizzObjects: [],
@@ -19,20 +21,15 @@ const Game = {
   croacSound: new Audio("./sounds/croac.mp3"),
   croacTimer: 0,
   correctAnswers: 0,
-
-  keys: {
-    LEFT: 37,
-    RIGHT: 39,
-    UP: 38,
-    DOWN: 40,
-    ENTER: 13,
-  },
+  
 
   init() {
     this.setContext();
     this.setDimensions();
     this.start();
+    this.generateMasks();
     this.generateQuizzObjects();
+    this.obstacleUp.asigneSource();
     this.generateObstaclesUp();
     this.generateObstaclesDown();
   },
@@ -62,14 +59,14 @@ const Game = {
 
       this.drawAll();
       this.printLifes();
-      this.generateMasks();
+      this.obstacleUp.asigneSource();
       this.generateObstaclesUp();
       this.generateObstaclesDown();
       this.clearObstaclesUp();
       this.clearObstaclesDown();
-      this.quizzObjects.forEach((quiz) => {
-        quiz.draw(this.framesCounter);
-      });
+      // this.quizzObjects.forEach((quiz) => {
+      //   quiz.draw(this.framesCounter);
+      // });
       if (this.croacTimer === 800) {
         this.croacTimer = 0;
         this.croacSound.play();
@@ -83,8 +80,8 @@ const Game = {
       }
 
       if (this.quizzCollision()) {
-        this.clearQuizzObject()
-        this.displayCard()
+        this.clearQuizzObject();
+        this.displayCard();
       }
       if (this.lifes === 0) {
         this.gameOver();
@@ -95,6 +92,9 @@ const Game = {
   reset() {
     this.background = new Background(this.ctx, this.width, this.height);
     this.player = new Player(this.ctx, this.gameW, this.gameH, this.keys);
+    this.obstacleUp = new ObstacleUp (this.ctx)
+    this.obstacleDown = new ObstacleDown (this.ctx)
+    this.masksArray = []
   },
 
   drawAll() {
@@ -107,10 +107,47 @@ const Game = {
     this.obstaclesDown.forEach((obs) => {
       obs.draw(this.framesCounter);
     });
+
+    this.masksArray.forEach((mask)=> {
+      mask.draw()
+    })
+
+    this.quizzObjects.forEach((quiz) => {
+      quiz.draw(this.framesCounter);
+    });
+
+    this.player.movement()
   },
 
   clear() {
     this.ctx.clearRect(0, 0, this.width, this.height);
+  },
+
+  generateMasks() {
+      //torre arr iz
+      this.masksArray.push(new Mask(this.ctx, 60, 20, 100, 250)),
+      //arbol arr iz
+      this.masksArray.push(new Mask(this.ctx, 20, 210, 70, 120)),
+      //valla arr
+      this.masksArray.push(new Mask(this.ctx, 390, 80, 136, 46)),
+      //muro arr
+      this.masksArray.push(new Mask(this.ctx, 520, 124, 156, 46)),
+      //arbol arr dch
+      this.masksArray.push(new Mask(this.ctx, 540, 20, 100, 110)),
+      //seto arriba dch
+      this.masksArray.push(new Mask(this.ctx, 510, 190, 90, 96)),
+      //valla ab
+      this.masksArray.push(new Mask(this.ctx, 50, 820, 126, 46)),
+      //arbol ab iz
+      this.masksArray.push(new Mask(this.ctx, 20, 700, 70, 120)),
+      //muro ab
+      this.masksArray.push(new Mask(this.ctx, 30, 670, 136, 46)),
+      //setito ab iz
+      this.masksArray.push(new Mask(this.ctx, 54, 900, 60, 60)),
+      //setito ab dch
+      this.masksArray.push(new Mask(this.ctx, 420, 830, 60, 60)),
+      //casa ab dch
+      this.masksArray.push(new Mask(this.ctx, 480, 760, 160, 160));
   },
 
   generateQuizzObjects() {
@@ -119,26 +156,20 @@ const Game = {
   },
 
   generateObstaclesDown() {
-    if (this.framesCounter % 200 === 0) {
+    if (this.framesCounter % 250 === 0) {
       this.obstaclesDown.push(
         new ObstacleDown(
           this.ctx,
-          this.width,
-          this.player.posY0,
-          this.player.height
         )
       );
     }
   },
 
   generateObstaclesUp() {
-    if (this.framesCounter % 200 === 0) {
+    if (this.framesCounter % 300 === 0) {
       this.obstaclesUp.push(
         new ObstacleUp(
-          this.ctx,
-          this.width,
-          this.player.posY0,
-          this.player.height
+          this.ctx
         )
       );
     }
@@ -191,8 +222,7 @@ const Game = {
     document.addEventListener("keydown", (e) => {
       switch (e.keyCode) {
         case this.keys.ENTER:
-          this.clear();
-          this.init();
+          window.location.reload();
           break;
       }
     });
@@ -218,32 +248,15 @@ const Game = {
     }
   },
 
-  generateMasks() {
-    this.ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
-    //torre arr iz
-    this.ctx.fillRect(60, 0, 150, 226),
-      //arbol arr iz
-    this.ctx.fillRect(50, 170, 70, 120),
-      //casa ab dch
-    this.ctx.fillRect(650, 670, 160, 180),
-    //valla arr
-    this.ctx.fillRect(520, 74, 166, 46),
-      //muro arr
-    this.ctx.fillRect(700, 104, 156, 46),
-      //arbol arr dch
-    this.ctx.fillRect(740, 0, 100, 110),
-      //seto arriba dch
-      this.ctx.fillRect(680, 170, 100, 96),
-      //valla ab
-      this.ctx.fillRect(60, 740, 166, 46),
-      //arbol ab iz
-      this.ctx.fillRect(20, 620, 70, 120),
-      //muro ab
-      this.ctx.fillRect(60, 600, 156, 46),
-      //setito ab iz
-      this.ctx.fillRect(64, 800, 60, 60),
-      //setito ab dch
-      this.ctx.fillRect(570, 750, 60, 60);
+  maskCollision() {
+    return this.masksArray.some((mask) => {
+      return (
+        this.player.posX + 109 <= mask.posX + mask.width &&
+        this.player.posX + this.player.width - 103 >= mask.posX &&
+        this.player.posY + 74 <= mask.posY + mask.height &&
+        this.player.posY + this.player.height - 71 >= mask.posY
+      );
+    });
   },
 
   quizzCollision() {
@@ -258,19 +271,22 @@ const Game = {
   },
 
   displayCard() {
-   let quizzBox = document.querySelector('#quizz-box');
-   quizzBox.style.visibility = 'visible'
+    let quizzBox = document.querySelector("#quizz-box");
+    quizzBox.style.visibility = "visible";
   },
 
   clearQuizzObject() {
-    this.quizzObjects.forEach((quizz, i)=>{
-      if  (this.player.posX + 109 <= quizz.posX + quizz.width &&
-      this.player.posX + this.player.width - 103 >= quizz.posX &&
-      this.player.posY + 74 <= quizz.posY + quizz.height &&
-      this.player.posY + this.player.height - 71 >= quizz.posY){
-        this.quizzObjects.splice(i,1)
+    this.quizzObjects.forEach((quizz, i) => {
+      if (
+        this.player.posX + 109 <= quizz.posX + quizz.width &&
+        this.player.posX + this.player.width - 103 >= quizz.posX &&
+        this.player.posY + 74 <= quizz.posY + quizz.height &&
+        this.player.posY + this.player.height - 71 >= quizz.posY
+      ) {
+        this.quizzObjects.splice(i, 1);
       }
-    })
+    });
+  },
 
-    }
-  }
+ 
+};

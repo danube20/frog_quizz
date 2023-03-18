@@ -5,14 +5,13 @@ class ObstacleUp {
     this.height = 120;
 
     this.image = new Image();
-    this.image.src = "./images/Sprite/cocheup2_20.png"
+    this.image.src = undefined;
 
     this.posX = Game.width;
     this.posY = 326;
 
     this.image.frames = 20;
     this.image.framesIndex = 0;
-
     this.velX = 3;
   }
   // getImage() {
@@ -58,4 +57,19 @@ class ObstacleUp {
   move() {
     this.posX -= this.velX;
   }
-}
+
+
+  asigneSource() {
+      const random = Math.floor(Math.random()*4)
+      if (random === 1){
+        this.image.src = "./images/Sprite/cocheup1_20.png"
+      }
+      if (random === 2){
+        this.image.src = "./images/Sprite/cocheup2_20.png"
+      }
+      if (random === 3){
+        this.image.src = "./images/Sprite/cocheup3_20.png"
+      }
+      
+    }
+  }
