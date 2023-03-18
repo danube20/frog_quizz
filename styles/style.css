@@ -2,17 +2,21 @@
   padding: 0;
   margin: 0;
   text-align: center;
-
 }
 
 body {
   background-color: #019544;
 }
+
+#game {
+  display: flex;
+  /* background-color: #8dc53e; */
+}
+
 .game-intro {
-  width: 50vw;
+  width: 646px;
   height: 100%;
   position: relative;
-  
 }
 
 .game-intro img {
@@ -20,10 +24,21 @@ body {
   width: 100%;
 }
 
-.buttondiv{
+#quizz-box {
+  position: absolute;
+  left: 146px;
+  top: 131px;
+
+  width: 1000px;
+  height: 700px;
+  background-color: #8dc53e;
+
+  visibility: hidden;
+}
+
+.buttondiv {
   position: absolute;
   bottom: 70px;
-  left: 230px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,11 +56,6 @@ body {
   margin-bottom: 20px;
   margin-top: 20px;
   width: 220px;
-}
-
-#game {
-  display: flex;
-  /* background-color: #8dc53e; */
 }
 
 .board-img {

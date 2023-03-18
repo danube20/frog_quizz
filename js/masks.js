@@ -1,13 +1,14 @@
 class Masks {
-  constructor(ctx) {
+  constructor(ctx, posX, posY, w, h) {
     this.ctx = ctx;
+    this.posX = posX;
+    this.posY = posY;
+    this.w = w;
+    this.h = h;
     this.ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
   }
 
   draw() {
-    this.ctx.fillRect(10, 0, 150, 226);
-    this.ctx.fillRect(10, 170, 70, 120);
-    this.ctx.fillRect(480, 600, 160, 200);
-    this.ctx.fillRect(380, 80, 260, 66);
+    this.ctx.fillRect(posX, posY, w, h);
   }
 }

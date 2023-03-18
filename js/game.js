@@ -9,16 +9,15 @@ const Game = {
   player: undefined,
   obstaclesDown: [],
   obstaclesUp: [],
-  quizzObjects: undefined,
+  quizzObjects: [],
   lifes: 3,
   masksArray: [],
-  crashAudio : new Audio ('./sounds/crash.mp3'),
-  jumpAudio : new Audio ('./sounds/jump.mp3'),
-  backSound : new Audio ('./sounds/backsound.mp3'),
-  gameOverSound : new Audio ('./sounds/gameover.mp3'),
-  croacSound: new Audio ('./sounds/croac.mp3'),
+  crashAudio: new Audio("./sounds/crash.mp3"),
+  jumpAudio: new Audio("./sounds/jump.mp3"),
+  backSound: new Audio("./sounds/backsound.mp3"),
+  gameOverSound: new Audio("./sounds/gameover.mp3"),
+  croacSound: new Audio("./sounds/croac.mp3"),
   croacTimer: 0,
-
 
   keys: {
     LEFT: 37,
@@ -32,6 +31,9 @@ const Game = {
     this.setContext();
     this.setDimensions();
     this.start();
+    this.generateQuizzObjects();
+    this.generateObstaclesUp();
+    this.generateObstaclesDown();
   },
 
   setContext() {
@@ -40,8 +42,8 @@ const Game = {
   },
 
   setDimensions() {
-    this.width = innerWidth / 2;
-    this.height = innerHeight;
+    this.width = 646;
+    this.height = 964;
     this.canvas.setAttribute("width", this.width);
     this.canvas.setAttribute("height", this.height);
   },
@@ -56,23 +58,31 @@ const Game = {
         this.framesCounter = 0;
       }
       this.clear();
+
       this.drawAll();
+      this.printLifes();
       this.generateMasks();
       this.generateObstaclesUp();
       this.generateObstaclesDown();
       this.clearObstaclesUp();
       this.clearObstaclesDown();
-
+      this.quizzObjects.forEach((quiz) => {
+        quiz.draw(this.framesCounter);
+      });
       if (this.croacTimer === 800) {
-        this.croacTimer = 0
-        this.croacSound.play()
+        this.croacTimer = 0;
+        this.croacSound.play();
       }
 
       if (this.isCollisionUp() || this.isCollisionDown()) {
         this.crashAudio.play();
         this.lifes--;
         this.player.posX = 200;
-        this.player.posY = 600;
+        this.player.posY = 700;
+      }
+
+      if (this.quizzCollision()) {
+        this.displayCard()
       }
       if (this.lifes === 0) {
         this.gameOver();
@@ -83,32 +93,17 @@ const Game = {
   reset() {
     this.background = new Background(this.ctx, this.width, this.height);
     this.player = new Player(this.ctx, this.gameW, this.gameH, this.keys);
-    this.quizzObjects = new QuizzObject(
-      this.ctx,
-      600,
-      250,
-    );
-    this.quizzObjects = new QuizzObject(
-      this.ctx,
-      200,
-      650,
-    );
-  
-  
-    this.obstaclesUp = [];
-    this.obstaclesDown = [];
   },
 
   drawAll() {
     this.background.draw();
-    this.quizzObjects.draw(this.framesCounter);
+
     this.player.draw(this.framesCounter);
-    this.printLifes();
-    this.obstaclesUp.forEach(function (obs) {
-      obs.draw();
+    this.obstaclesUp.forEach((obs) => {
+      obs.draw(this.framesCounter);
     });
-    this.obstaclesDown.forEach(function (obs) {
-      obs.draw();
+    this.obstaclesDown.forEach((obs) => {
+      obs.draw(this.framesCounter);
     });
   },
 
@@ -116,8 +111,12 @@ const Game = {
     this.ctx.clearRect(0, 0, this.width, this.height);
   },
 
+  generateQuizzObjects() {
+    this.quizzObjects.push(new QuizzObject(this.ctx, 600, 250));
+    this.quizzObjects.push(new QuizzObject(this.ctx, 200, 650));
+  },
+
   generateObstaclesDown() {
-    // Use framesCounter to generate new Obstacles
     if (this.framesCounter % 200 === 0) {
       this.obstaclesDown.push(
         new ObstacleDown(
@@ -183,7 +182,7 @@ const Game = {
     // .clearInterval
     clearInterval(this.interval);
     const lifesImage = document.getElementById("lifes");
-    lifesImage.src = "images/0lifes.png"
+    lifesImage.src = "images/0lifes.png";
     this.backSound.pause();
     this.gameOverSound.play();
 
@@ -220,18 +219,17 @@ const Game = {
   generateMasks() {
     this.ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
     //torre arr iz
-    this.masksArray = [
-      this.ctx.fillRect(60, 0, 150, 226),
+    this.ctx.fillRect(60, 0, 150, 226),
       //arbol arr iz
-      this.ctx.fillRect(50, 170, 70, 120),
+    this.ctx.fillRect(50, 170, 70, 120),
       //casa ab dch
-      this.ctx.fillRect(650, 670, 160, 180),
-      //valla arr
-      this.ctx.fillRect(520, 74, 166, 46),
+    this.ctx.fillRect(650, 670, 160, 180),
+    //valla arr
+    this.ctx.fillRect(520, 74, 166, 46),
       //muro arr
-      this.ctx.fillRect(700, 104, 156, 46),
+    this.ctx.fillRect(700, 104, 156, 46),
       //arbol arr dch
-      this.ctx.fillRect(740, 0, 100, 110),
+    this.ctx.fillRect(740, 0, 100, 110),
       //seto arriba dch
       this.ctx.fillRect(680, 170, 100, 96),
       //valla ab
@@ -243,8 +241,22 @@ const Game = {
       //setito ab iz
       this.ctx.fillRect(64, 800, 60, 60),
       //setito ab dch
-      this.ctx.fillRect(570, 750, 60, 60),
-    ];
+      this.ctx.fillRect(570, 750, 60, 60);
   },
 
+  quizzCollision() {
+    return this.quizzObjects.some((quizz) => {
+      return (
+        this.player.posX + 109 <= quizz.posX + quizz.width &&
+        this.player.posX + this.player.width - 103 >= quizz.posX &&
+        this.player.posY + 74 <= quizz.posY + quizz.height &&
+        this.player.posY + this.player.height - 71 >= quizz.posY
+      );
+    });
+  },
+
+  displayCard() {
+   let quizzBox = document.querySelector('#quizz-box');
+   quizzBox.style.visibility = 'visible'
+  }
 };

@@ -31,7 +31,7 @@ class QuizzObject {
     }
 
     animate(framesCounter) {
-      if (framesCounter % 7 === 0) {
+      if (framesCounter % 2 === 0) {
         this.image.framesIndex++;
       }
   

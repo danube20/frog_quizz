@@ -15,7 +15,7 @@ class Player {
     this.lastMove;
 
     this.posX = 200;
-    this.posY = 600;
+    this.posY = 700;
 
     this.velMOVE = 20;
 

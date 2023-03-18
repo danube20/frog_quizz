@@ -24,8 +24,38 @@
     <div id="game-board">
       <canvas id="canvas"></canvas>
     </div>
-  </div>
 
+    <div id="quizz-box">
+
+     <form>
+      <p id="question"></p>
+					<label>
+						<input type="radio" id="answer1" name="quizzquestion" value="1"> 
+            <span id="answer1Text"></span>
+					</label>
+					<label>
+						<input type="radio" id="answer2" name="quizzquestion" value="2"> 
+            <span id="answer2Text"></span>
+					</label>
+					<label>
+						<input type="radio" id="answer3" name="quizzquestion" value="3"> 
+            <span id="answer3Text"></span>
+
+					</label>
+					<button id="skip-button" type="button">Skip question</button>
+          <button id="submit-button" type="submit">Submit</button>
+
+        </form>
+
+
+
+
+    </div>
+
+
+
+  </div>
+  <script src="js/quizz-data.js"></script>
   <script src="js/obstacles-up.js"></script>
   <script src="js/obstacles-down.js"></script>
   <!-- <script src="js/masks.js"></script> -->
