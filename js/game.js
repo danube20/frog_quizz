@@ -176,6 +176,8 @@ const Game = {
   gameOver() {
     // .clearInterval
     clearInterval(this.interval);
+    const lifesImage = document.getElementById("lifes");
+    lifesImage.src = "images/0lifes.png"
     this.backSound.pause();
     this.gameOverSound.play();
 
