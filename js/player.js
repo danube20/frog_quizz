@@ -48,7 +48,7 @@ class Player {
             Game.jumpAudio.play();
             this.image.frames = 20;
             this.posX += this.velMOVE;
-            this.image.src = "../images/Sprite/saltodch_20.png";
+            this.image.src = "./images/Sprite/saltodch_20.png";
             this.lastMove = "right";
           }
           break;
@@ -58,7 +58,7 @@ class Player {
             Game.jumpAudio.play();
             this.image.frames = 20;
             this.posX -= this.velMOVE;
-            this.image.src = "../images/Sprite/saltoizq_20.png";
+            this.image.src = "./images/Sprite/saltoizq_20.png";
             this.lastMove = "left";
           }
           break;
@@ -68,7 +68,7 @@ class Player {
             Game.jumpAudio.play();
             this.image.frames = 20;
             this.posY -= this.velMOVE;
-            this.image.src = "../images/Sprite/movimientoarriba_20.png";
+            this.image.src = "./images/Sprite/movimientoarriba_20.png";
             this.lastMove = "up";
           }
           break;
@@ -78,7 +78,7 @@ class Player {
             Game.jumpAudio.play();
             this.image.frames = 20;
             this.posY += this.velMOVE;
-            this.image.src = "../images/Sprite/movimientoabajo_20.png";
+            this.image.src = "./images/Sprite/movimientoabajo_20.png";
             this.lastMove = "down";
           }
           break;
@@ -86,17 +86,17 @@ class Player {
     });
     document.addEventListener("keyup", (e) => {
       if (this.lastMove === "up") {
-        this.image.src = "../images/Sprite/quietaup_20.png";
+        this.image.src = "./images/Sprite/quietaup_20.png";
       }
       if (this.lastMove === "down") {
         this.image.frames = 1;
-        this.image.src = "../images/Sprite/quietadown.png";
+        this.image.src = "./images/Sprite/quietadown.png";
       }
       if (this.lastMove === "right") {
-        this.image.src = "../images/Sprite/quietadch_20.png";
+        this.image.src = "./images/Sprite/quietadch_20.png";
       }
       if (this.lastMove === "left") {
-        this.image.src = "../images/Sprite/quietaizq_20.png";
+        this.image.src = "./images/Sprite/quietaizq_20.png";
       }
     });
   }

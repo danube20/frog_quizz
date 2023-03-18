@@ -12,11 +12,11 @@ const Game = {
   quizzObjects: undefined,
   lifes: 3,
   masksArray: [],
-  crashAudio : new Audio ('../sounds/crash.mp3'),
-  jumpAudio : new Audio ('../sounds/jump.mp3'),
-  backSound : new Audio ('../sounds/backsound.mp3'),
-  gameOverSound : new Audio ('../sounds/gameover.mp3'),
-  croacSound: new Audio ('../sounds/croac.mp3'),
+  crashAudio : new Audio ('./sounds/crash.mp3'),
+  jumpAudio : new Audio ('./sounds/jump.mp3'),
+  backSound : new Audio ('./sounds/backsound.mp3'),
+  gameOverSound : new Audio ('./sounds/gameover.mp3'),
+  croacSound: new Audio ('./sounds/croac.mp3'),
   croacTimer: 0,
 
 
@@ -83,19 +83,25 @@ const Game = {
   reset() {
     this.background = new Background(this.ctx, this.width, this.height);
     this.player = new Player(this.ctx, this.gameW, this.gameH, this.keys);
-    this.quizzObjects = new PowerUpObject(
+    this.quizzObjects = new QuizzObject(
       this.ctx,
-      300,
-      350,
-      "./images/quiz/question-mark.png"
+      600,
+      250,
     );
+    this.quizzObjects = new QuizzObject(
+      this.ctx,
+      200,
+      650,
+    );
+  
+  
     this.obstaclesUp = [];
     this.obstaclesDown = [];
   },
 
   drawAll() {
     this.background.draw();
-    this.quizzObjects.draw();
+    this.quizzObjects.draw(this.framesCounter);
     this.player.draw(this.framesCounter);
     this.printLifes();
     this.obstaclesUp.forEach(function (obs) {
