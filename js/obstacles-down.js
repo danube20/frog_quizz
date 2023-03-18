@@ -5,7 +5,7 @@ class ObstacleDown {
     this.height = 120;
 
     this.image = new Image();
-    this.image.src = "../images/Sprite/cochedown1_20.png";
+    this.image.src = "./images/Sprite/cochedown1_20.png";
 
     this.posX = -this.width-10;
     this.posY = 426;

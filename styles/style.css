@@ -24,8 +24,11 @@ body {
   position: absolute;
   bottom: 70px;
   left: 230px;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 .buttondiv button {
   font-size: 30px;
   background-color: #282828;
@@ -36,18 +39,20 @@ body {
   box-shadow: 0;
   border-radius: 5px;
   margin-bottom: 20px;
+  margin-top: 20px;
+  width: 220px;
 }
-
-
-.arrows-img {
-  width: 150px;
-}
-
-
-/* #game-board canvas {
-  object-fit: cover;
-} */
 
 #game {
   display: flex;
+  /* background-color: #8dc53e; */
+}
+
+.board-img {
+  width: 380px;
+  margin-top: 20px;
+}
+
+#lifes {
+  width: 20%;
 }
