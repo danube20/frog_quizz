@@ -124,8 +124,7 @@ class Player {
         this.image.src = "./images/Sprite/quietaup_20.png";
       } else if (key === "ArrowDown") {
         this.keyPressed = [];
-        this.image.frames = 1;
-        this.image.src = "./images/Sprite/quietadown.png";
+        this.image.src = "./images/Sprite/quietadown_20.png";
       } else return null;
     });
   }
