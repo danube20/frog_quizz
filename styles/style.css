@@ -19,6 +19,11 @@ body {
   position: relative;
 }
 
+#sound-button {
+  width: 40px;
+  margin-top: 10px
+}
+
 .game-intro img {
   object-fit: cover;
   width: 100%;

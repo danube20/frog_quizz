@@ -19,6 +19,8 @@ class Player {
 
     this.velMOVE = 3;
 
+    this.keys = keys;
+
     this.keyPressed = [];
 
     this.setEventHandlers();
@@ -129,7 +131,7 @@ class Player {
   }
 
   animate(framesCounter) {
-    if (framesCounter % 3 === 0) {
+    if (framesCounter % 2 === 0) {
       this.image.framesIndex++;
     }
 

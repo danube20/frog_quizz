@@ -12,6 +12,7 @@ const Game = {
   obstaclesDown: [],
   obstaclesUp: [],
   quizzObjects: [],
+  explosionsArray: [],
   lifes: 3,
   masksArray: [],
   crashAudio: new Audio("./sounds/crash.mp3"),
@@ -21,7 +22,11 @@ const Game = {
   croacSound: new Audio("./sounds/croac.mp3"),
   croacTimer: 0,
   correctAnswers: 0,
-  
+  playing: true,
+
+  keys: {
+    ENTER: 13,
+  },
 
   init() {
     this.setContext();
@@ -29,7 +34,6 @@ const Game = {
     this.start();
     this.generateMasks();
     this.generateQuizzObjects();
-    this.obstacleUp.asigneSource();
     this.generateObstaclesUp();
     this.generateObstaclesDown();
   },
@@ -48,6 +52,7 @@ const Game = {
 
   start() {
     this.reset();
+    document.querySelector("#lifes").style.visibility = "visible";
     this.backSound.play();
     this.interval = setInterval(() => {
       this.framesCounter++;
@@ -59,7 +64,6 @@ const Game = {
 
       this.drawAll();
       this.printLifes();
-      this.obstacleUp.asigneSource();
       this.generateObstaclesUp();
       this.generateObstaclesDown();
       this.clearObstaclesUp();
@@ -73,6 +77,7 @@ const Game = {
       }
 
       if (this.isCollisionUp() || this.isCollisionDown()) {
+        this.generateExplosion();
         this.crashAudio.play();
         this.lifes--;
         this.player.posX = 200;
@@ -92,9 +97,10 @@ const Game = {
   reset() {
     this.background = new Background(this.ctx, this.width, this.height);
     this.player = new Player(this.ctx, this.gameW, this.gameH, this.keys);
-    this.obstacleUp = new ObstacleUp (this.ctx)
-    this.obstacleDown = new ObstacleDown (this.ctx)
-    this.masksArray = []
+    this.obstacleUp = new ObstacleUp(this.ctx);
+    this.obstacleDown = new ObstacleDown(this.ctx);
+    this.masksArray = [];
+    this.explosion = new Explosion(this.ctx);
   },
 
   drawAll() {
@@ -107,16 +113,18 @@ const Game = {
     this.obstaclesDown.forEach((obs) => {
       obs.draw(this.framesCounter);
     });
-
-    this.masksArray.forEach((mask)=> {
-      mask.draw()
-    })
+    this.explosionsArray.forEach((exp) => {
+      exp.draw(this.framesCounter);
+    });
+    this.masksArray.forEach((mask) => {
+      mask.draw();
+    });
 
     this.quizzObjects.forEach((quiz) => {
       quiz.draw(this.framesCounter);
     });
 
-    this.player.movement()
+    this.player.movement();
   },
 
   clear() {
@@ -124,8 +132,8 @@ const Game = {
   },
 
   generateMasks() {
-      //torre arr iz
-      this.masksArray.push(new Mask(this.ctx, 60, 20, 100, 250)),
+    //torre arr iz
+    this.masksArray.push(new Mask(this.ctx, 60, 20, 100, 250)),
       //arbol arr iz
       this.masksArray.push(new Mask(this.ctx, 20, 210, 70, 120)),
       //valla arr
@@ -157,21 +165,13 @@ const Game = {
 
   generateObstaclesDown() {
     if (this.framesCounter % 250 === 0) {
-      this.obstaclesDown.push(
-        new ObstacleDown(
-          this.ctx,
-        )
-      );
+      this.obstaclesDown.push(new ObstacleDown(this.ctx));
     }
   },
 
   generateObstaclesUp() {
     if (this.framesCounter % 300 === 0) {
-      this.obstaclesUp.push(
-        new ObstacleUp(
-          this.ctx
-        )
-      );
+      this.obstaclesUp.push(new ObstacleUp(this.ctx));
     }
   },
 
@@ -180,6 +180,10 @@ const Game = {
     this.obstaclesDown = this.obstaclesDown.filter(function (obs) {
       return obs.posX <= Game.width;
     });
+  },
+
+  generateExplosion() {
+    this.explosionsArray.push(new Explosion(this.ctx));
   },
 
   clearObstaclesUp() {
@@ -230,15 +234,14 @@ const Game = {
     this.ctx.fillRect(0, 0, this.width, this.height);
     this.ctx.fillStyle = "red";
     this.ctx.font = "40px Arial";
-    this.ctx.fillText(`Game Over`, 280, 350);
+    this.ctx.fillText(`Game Over`, 220, 350);
     this.ctx.fillStyle = "white";
     this.ctx.font = "40px Arial";
-    this.ctx.fillText(`Press ENTER to retry`, 200, 450);
+    this.ctx.fillText(`Press ENTER to retry`, 130, 450);
   },
 
   printLifes() {
     const lifesImage = document.getElementById("lifes");
-
     if (this.lifes === 2) {
       lifesImage.src = "images/2lifes.png";
     }
@@ -262,10 +265,10 @@ const Game = {
   quizzCollision() {
     return this.quizzObjects.some((quizz) => {
       return (
-        this.player.posX + 109 <= quizz.posX + quizz.width &&
-        this.player.posX + this.player.width - 103 >= quizz.posX &&
-        this.player.posY + 74 <= quizz.posY + quizz.height &&
-        this.player.posY + this.player.height - 71 >= quizz.posY
+        this.player.posX + 109 <= quizz.posX + quizz.width - 26.5 &&
+        this.player.posX + this.player.width - 103 >= quizz.posX + 26.5 &&
+        this.player.posY + 74 <= quizz.posY + quizz.height - 11.5 &&
+        this.player.posY + this.player.height - 71 >= quizz.posY + 12.5
       );
     });
   },
@@ -288,5 +291,5 @@ const Game = {
     });
   },
 
- 
+  
 };
