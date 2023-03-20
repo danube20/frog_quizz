@@ -12,7 +12,7 @@ class Player {
     this.height = 239;
     this.image.frames = 20;
     this.image.framesIndex = 0;
-    this.lastMove;
+    this.lastMove = undefined;
 
     this.posX = 200;
     this.posY = 700;

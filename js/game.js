@@ -54,6 +54,7 @@ const Game = {
     this.reset();
     document.querySelector("#lifes").style.visibility = "visible";
     this.backSound.play();
+    this.backSound.loop = true;
     this.interval = setInterval(() => {
       this.framesCounter++;
       this.croacTimer++;
@@ -99,7 +100,6 @@ const Game = {
     this.player = new Player(this.ctx, this.gameW, this.gameH, this.keys);
     this.obstacleUp = new ObstacleUp(this.ctx);
     this.obstacleDown = new ObstacleDown(this.ctx);
-    this.masksArray = [];
     this.explosion = new Explosion(this.ctx);
   },
 
@@ -123,7 +123,6 @@ const Game = {
     this.quizzObjects.forEach((quiz) => {
       quiz.draw(this.framesCounter);
     });
-
     this.player.movement();
   },
 
@@ -176,7 +175,6 @@ const Game = {
   },
 
   clearObstaclesDown() {
-    // Clear obstacles array (.filter 👀)
     this.obstaclesDown = this.obstaclesDown.filter(function (obs) {
       return obs.posX <= Game.width;
     });
@@ -187,7 +185,6 @@ const Game = {
   },
 
   clearObstaclesUp() {
-    // Clear obstacles array (.filter 👀)
     this.obstaclesUp = this.obstaclesUp.filter(function (obs) {
       return obs.posX >= -obs.width;
     });
@@ -216,7 +213,6 @@ const Game = {
   },
 
   gameOver() {
-    // .clearInterval
     clearInterval(this.interval);
     const lifesImage = document.getElementById("lifes");
     lifesImage.src = "images/0lifes.png";
@@ -290,6 +286,4 @@ const Game = {
       }
     });
   },
-
-  
 };
