@@ -1,5 +1,6 @@
 window.onload = () => {
   document.querySelector("#lifes").style.visibility = "hidden";
+  document.querySelector('#quizz-legend-questionmark').style.visibility = "hidden"
   document.getElementById("start-button").onclick = () => {
     Game.init();
   };

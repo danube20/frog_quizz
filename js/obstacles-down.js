@@ -7,7 +7,7 @@ class ObstacleDown {
     this.image = new Image();
     this.image.src = "./images/Sprite/cochedown1_20.png";
 
-    this.posX = -this.width-10;
+    this.posX = -this.width - 10;
     this.posY = 490;
 
     this.image.frames = 20;
@@ -30,20 +30,23 @@ class ObstacleDown {
     );
     this.animate(framesCounter);
     this.move();
-
   }
 
   animate(framesCounter) {
-    if (framesCounter % 5 == 0) {
-      this.image.framesIndex++;
-    }
+    if (!Game.atQuizz) {
+      if (framesCounter % 5 == 0) {
+        this.image.framesIndex++;
+      }
 
-    if (this.image.framesIndex >= this.image.frames) {
-      this.image.framesIndex = 0;
+      if (this.image.framesIndex >= this.image.frames) {
+        this.image.framesIndex = 0;
+      }
     }
   }
 
   move() {
-    this.posX += this.velX;
+    if (!Game.atQuizz) {
+      this.posX += this.velX;
+    }
   }
 }

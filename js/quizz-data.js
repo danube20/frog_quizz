@@ -4,7 +4,6 @@ function printQuizz() {
   let answer2Info = "2";
   let answer3Info = "4";
   let correctAnswer = "4";
-
   let question = document.querySelector("#question");
   let answer1 = document.querySelector("#answer1");
   let answer2 = document.querySelector("#answer2");
@@ -21,10 +20,19 @@ function printQuizz() {
 
 function skipQuestion(event) {
   const quizzBox = document.querySelector("#quizz-box");
-  quizzBox.style.visibility = 'hidden';
+  quizzBox.style.visibility = "hidden";
+  Game.quizzScore -= 1;
+  Game.atQuizz = false;
+  printScore();
+
 }
 
 window.addEventListener("load", () => {
   const skipButton = document.querySelector("#skip-button");
   skipButton.addEventListener("click", skipQuestion);
 });
+
+function printScore() {
+  let legendInfo = document.querySelector("#quizz-legend-text");
+  legendInfo.innerText = `= ${Game.quizzScore}`;
+}

@@ -21,8 +21,9 @@ const Game = {
   gameOverSound: new Audio("./sounds/gameover.mp3"),
   croacSound: new Audio("./sounds/croac.mp3"),
   croacTimer: 0,
-  correctAnswers: 0,
+  quizzScore: 5,
   playing: true,
+  atQuizz: false,
 
   keys: {
     ENTER: 13,
@@ -53,10 +54,15 @@ const Game = {
   start() {
     this.reset();
     document.querySelector("#lifes").style.visibility = "visible";
+    document.querySelector('#board-img').src = "./images/LeaderboardScreen.png"
+    document.querySelector('#quizz-legend-questionmark').style.visibility = "visible"
+    printScore();
+
+    document.querySelector('#start-button').style.visibility = "hidden"
     this.backSound.play();
     this.backSound.loop = true;
     this.interval = setInterval(() => {
-      this.framesCounter++;
+      if (!Game.atQuizz) {this.framesCounter++;}
       this.croacTimer++;
       if (this.framesCounter > 3000) {
         this.framesCounter = 0;
@@ -86,8 +92,10 @@ const Game = {
       }
 
       if (this.quizzCollision()) {
+        this.atQuizz = true;
         this.clearQuizzObject();
         this.displayCard();
+        printQuizz();
       }
       if (this.lifes === 0) {
         this.gameOver();
@@ -234,6 +242,17 @@ const Game = {
     this.ctx.fillStyle = "white";
     this.ctx.font = "40px Arial";
     this.ctx.fillText(`Press ENTER to retry`, 130, 450);
+  },
+
+  winScreen () {
+    this.ctx.fillStyle = 'green';
+    this.ctx.fillRect(0, 0, this.width, this.height);
+    this.ctx.fillStyle = "Yellow";
+    this.ctx.font = "40px Arial";
+    this.ctx.fillText(`You Win!!`, 220, 350);
+
+
+
   },
 
   printLifes() {
