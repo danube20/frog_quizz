@@ -118,7 +118,6 @@ const Game = {
         if (
           this.player.posY + 74 >= 380 &&
           this.player.posY + this.player.height - 71 <= 650 &&
-          // !this.onTableDown() &&
           !this.onTableUp() &&
           !this.onTableDown()
         ) {
