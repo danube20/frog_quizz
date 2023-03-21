@@ -5,14 +5,13 @@ class ObstacleUp {
     this.height = 120;
 
     this.image = new Image();
-    this.image.src = "./images/Sprite/cocheup2_20.png"
+    this.image.src = "./images/Sprite/cocheup2_20.png";
 
     this.posX = Game.width;
-    this.posY = 326;
+    this.posY = 360;
 
     this.image.frames = 20;
     this.image.framesIndex = 0;
-
     this.velX = 3;
   }
   // getImage() {
@@ -46,16 +45,20 @@ class ObstacleUp {
   }
 
   animate(framesCounter) {
-    if (framesCounter % 5 == 0) {
-      this.image.framesIndex++;
-    }
+    if (!Game.atQuizz) {
+      if (framesCounter % 5 == 0) {
+        this.image.framesIndex++;
+      }
 
-    if (this.image.framesIndex >= this.image.frames) {
-      this.image.framesIndex = 0;
+      if (this.image.framesIndex >= this.image.frames) {
+        this.image.framesIndex = 0;
+      }
     }
   }
 
   move() {
-    this.posX -= this.velX;
+    if (!Game.atQuizz) {
+      this.posX -= this.velX;
+    }
   }
 }

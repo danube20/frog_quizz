@@ -1,19 +1,17 @@
-class ObstacleDown {
+class Explosion {
   constructor(ctx) {
     this.ctx = ctx;
-    this.width = 188;
+    this.width = 120;
     this.height = 120;
 
     this.image = new Image();
-    this.image.src = "./images/Sprite/cochedown1_20.png";
+    this.image.src = "../images/Sprite/colision.png";
 
-    this.posX = -this.width - 10;
-    this.posY = 490;
+    this.posX = Game.player.posX + 109;
+    this.posY = Game.player.posY + 74;
 
-    this.image.frames = 20;
+    this.image.frames = 6;
     this.image.framesIndex = 0;
-
-    this.velX = 3;
   }
 
   draw(framesCounter) {
@@ -29,25 +27,15 @@ class ObstacleDown {
       this.height
     );
     this.animate(framesCounter);
-    this.move();
   }
 
   animate(framesCounter) {
-    if (!Game.atQuizz) {
-      if (framesCounter % 5 == 0) {
-        this.image.framesIndex++;
-      }
+    if (framesCounter % 5 == 0) {
+      this.image.framesIndex++;
+    }
 
-      if (this.image.framesIndex >= this.image.frames) {
-        this.image.framesIndex = 0;
-      }
+    if (this.image.framesIndex >= this.image.frames) {
+      Game.explosionsArray = [];
     }
   }
-
-  move() {
-    if (!Game.atQuizz) {
-      this.posX += this.velX;
-    }
-  }
-
 }
