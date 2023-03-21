@@ -1,4 +1,4 @@
-class Background {
+class BackgroundOne {
   constructor(ctx, w, h) {
     this.ctx = ctx;
     this.width = w;

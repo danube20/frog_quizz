@@ -49,4 +49,5 @@ class ObstacleDown {
       this.posX += this.velX;
     }
   }
+
 }
