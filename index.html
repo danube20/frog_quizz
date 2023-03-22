@@ -1,82 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Schoolbell&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/style.css" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Schoolbell&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/style.css" />
+    <title>Froggie Quizz</title>
+  </head>
 
-  <title>Froggie Quizz</title>
-</head>
+  <body>
+    <div id="game">
+      <div class="game-intro">
+        <img
+          src="./images/background/intro-background.jpg"
+          alt="board image"
+          class="board-img"
+          id="board-img"
+        />
+        <img
+          src="./images/quiz/question-mark.png"
+          alt="question mark"
+          id="quizz-legend-questionmark"
+        />
+        <p id="quizz-legend-text"></p>
+        <br />
+        <div class="buttondiv">
+          <button id="start-button">Press to start</button>
+          <img src="images/3lifes.png" alt="lifes-img" id="lifes" />
+          <img
+            src="images/soundbutton.png"
+            alt="sound-button"
+            id="sound-button"
+          />
+        </div>
+      </div>
 
-<body>
+      <div id="game-board">
+        <canvas id="canvas"></canvas>
+      </div>
 
-  <div id="game">
-    <div class="game-intro">
-      <img src="./images/background/intro-background.jpg" alt="board image" class="board-img" id="board-img" />
-      <img src="./images/quiz/question-mark.png" alt="question mark" id="quizz-legend-questionmark" />
-      <p id="quizz-legend-text"></p>
-      <br />
-      <div class="buttondiv">
-        <button id="start-button">Press to start</button>
-        <img src="images/3lifes.png" alt="lifes-img" id="lifes" />
-        <img src="images/soundbutton.png" alt="sound-button" id="sound-button" />
+      <div id="quizz-box">
+        <form id="question-sheet">
+          <p id="question"></p>
+          <label>
+            <input type="radio" id="answer1" name="quizzanswer" value="1" />
+            <span id="answer1Text" class="answer"></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="answer2"
+              class="answer"
+              name="quizzanswer"
+              value="2"
+            />
+            <span id="answer2Text" class="answer"></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="answer3"
+              class="answer"
+              name="quizzanswer"
+              value="3"
+            />
+            <span id="answer3Text" class="answer"></span>
+          </label>
+          <div id="quizz-buttons">
+            <button id="skip-button" class="quizz-button" type="button">
+              Saltar pregunta
+            </button>
+            <button id="submit-button" class="quizz-button" type="submit">
+              Comprobar respuesta
+            </button>
+          </div>
+
+          <div class="submit-messages">
+            <p id="correct-answer-message">Respuesta correcta. ¡Enhorabuena!</p>
+            <p id="wrong-answer-message">
+              Respuesta incorrecta...Frogie pierde una vida :(
+            </p>
+          </div>
+
+          <button id="continue-button" class="quizz-button" type="button">
+            Continuar >
+          </button>
+          
+        </form>
       </div>
     </div>
 
-    <div id="game-board">
-      <canvas id="canvas"></canvas>
-    </div>
-
-    <div id="quizz-box">
-
-      <form id="question-sheet">
-        <p id="question"></p>
-        <label>
-          <input type="radio" id="answer1" name="quizzanswer" value="1">
-          <span id="answer1Text" class="answer"></span>
-        </label>
-        <label>
-          <input type="radio" id="answer2" class="answer" name="quizzanswer" value="2">
-          <span id="answer2Text" class="answer"></span>
-        </label>
-        <label>
-          <input type="radio" id="answer3" class="answer" name="quizzanswer" value="3">
-          <span id="answer3Text" class="answer"></span>
-
-        </label>
-        <div id="quizz-buttons">
-          <button id="skip-button" class="quizz-button" type="button">Skip question</button>
-          <button id="submit-button" class="quizz-button" type="submit">Submit</button>
-        </div>
-      </form>
-
-
-
-
-    </div>
-
-
-
-  </div>
-  <script src="js/splashdown.js"></script>
-  <script src="js/explosion.js"></script>
-  <script src="js/quizz-data.js"></script>
-  <script src="js/obstacles.js"></script>
-  <script src="js/tableUp.js"></script>
-  <script src="js/tableDown.js"></script>
-  <script src="js/masks.js"></script>
-  <script src="js/quizz-objects.js"></script>
-  <script src="js/player.js"></script>
-  <script src="js/backgroundOne.js"></script>
-  <script src="js/backgroundTwo.js"></script>
-  <script src="js/river.js"></script>
-  <script src="js/game.js"></script>
-  <script type="text/javascript" src="js/index.js"></script>
-</body>
-
+    <script src="js/splashdown.js"></script>
+    <script src="js/explosion.js"></script>
+    <script src="js/quizz-data.js"></script>
+    <script src="js/obstacles.js"></script>
+    <script src="js/tableUp.js"></script>
+    <script src="js/tableDown.js"></script>
+    <script src="js/masks.js"></script>
+    <script src="js/quizz-objects.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/backgroundOne.js"></script>
+    <script src="js/backgroundTwo.js"></script>
+    <script src="js/river.js"></script>
+    <script src="js/game.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+  </body>
 </html>

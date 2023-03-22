@@ -378,8 +378,10 @@ const Game = {
   },
 
   displayCard() {
-    let quizzBox = document.querySelector("#quizz-box");
+    const quizzBox = document.querySelector("#quizz-box");
     quizzBox.style.visibility = "visible";
+    skipButton.style.visibility = "visible";
+    submitButton.style.visibility = "visible";
   },
 
   clearQuizzObject() {

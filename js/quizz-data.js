@@ -32,6 +32,12 @@ let correctAnswer = undefined;
 let answer1 = undefined;
 let answer2 = undefined;
 let answer3 = undefined;
+const quizzBox = document.querySelector("#quizz-box");
+const skipButton = document.querySelector("#skip-button");
+const submitButton = document.querySelector("#submit-button");
+const continueButton = document.querySelector("#continue-button");
+const correctMessage = document.querySelector("#correct-answer-message");
+const wrongMessage = document.querySelector("#wrong-answer-message");
 
 function printQuizz() {
   randomIndex = Math.floor(Math.random() * infoArray.length);
@@ -57,18 +63,24 @@ function printQuizz() {
 }
 
 function skipQuestion(event) {
-  const quizzBox = document.querySelector("#quizz-box");
   quizzBox.style.visibility = "hidden";
   Game.quizzScore -= 1;
   Game.atQuizz = false;
   printScore();
 }
 
+function continueGame() {
+  Game.atQuizz = false;
+  quizzBox.style.visibility = "hidden";
+  continueButton.style.visibility = "hidden";
+  correctMessage.style.visibility = "hidden";
+  wrongMessage.style.visibility = "hidden";
+}
+
 window.addEventListener("load", () => {
-  const skipButton = document.querySelector("#skip-button");
   skipButton.addEventListener("click", skipQuestion);
-  const submitButton = document.querySelector("#submit-button");
   submitButton.addEventListener("click", getResult);
+  continueButton.addEventListener("click", continueGame);
 });
 
 function printScore() {
@@ -78,15 +90,21 @@ function printScore() {
 
 function getResult(event) {
   event.preventDefault();
+  skipButton.style.visibility = "hidden";
+  submitButton.style.visibility = "hidden";
+  continueButton.style.visibility = "visible";
   if (answer1.checked && answer1Info === correctAnswer) {
-    console.log("bien!");
-  }
-  else if (answer2.checked && answer2Info === correctAnswer) {
-    console.log("bien!");
-  }
-  else if (answer3.checked && answer3Info === correctAnswer) {
-    console.log("bien!");
+    document.querySelector("#correct-answer-message").style.visibility =
+      "visible";
+  } else if (answer2.checked && answer2Info === correctAnswer) {
+    document.querySelector("#correct-answer-message").style.visibility =
+      "visible";
+  } else if (answer3.checked && answer3Info === correctAnswer) {
+    document.querySelector("#correct-answer-message").style.visibility =
+      "visible";
   } else {
-    console.log("mal!");
+    document.querySelector("#wrong-answer-message").style.visibility =
+      "visible";
+    Game.lifes--;
   }
 }

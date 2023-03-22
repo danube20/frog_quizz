@@ -1,4 +1,7 @@
 window.onload = () => {
+  // document.querySelector("#correct-answer-message").style.visibility = "hidden";
+  // document.querySelector("#wrong-answer-message").style.visibility = "hidden";
+  // document.querySelector("#continue-button").style.visibility = "hidden";
   document.querySelector("#lifes").style.visibility = "hidden";
   document.querySelector('#quizz-legend-questionmark').style.visibility = "hidden"
   document.getElementById("start-button").onclick = () => {
