@@ -13,8 +13,8 @@ const Game = {
   obstacleDown: undefined,
   tableUp: undefined,
   tableDown: undefined,
-  obstaclesDown: [],
-  obstaclesUp: [],
+  obstaclesDownArray: [],
+  obstaclesUpArray: [],
   tablesUp: [],
   tablesDown: [],
   quizzObjects: [],
@@ -160,10 +160,10 @@ const Game = {
 
     if (this.currentLevel === 1) {
       this.background1.draw();
-      this.obstaclesUp.forEach((obs) => {
+      this.obstaclesUpArray.forEach((obs) => {
         obs.draw(this.framesCounter);
       });
-      this.obstaclesDown.forEach((obs) => {
+      this.obstaclesDownArray.forEach((obs) => {
         obs.draw(this.framesCounter);
       });
       this.explosionsArray.forEach((exp) => {
@@ -248,24 +248,24 @@ const Game = {
 
   generateObstaclesDown() {
     if (this.framesCounter % 250 === 0) {
-      this.obstaclesDown.push(new ObstacleDown(this.ctx));
+      this.obstaclesDownArray.push(new ObstacleDown(this.ctx));
     }
   },
 
   generateObstaclesUp() {
     if (this.framesCounter % 300 === 0) {
-      this.obstaclesUp.push(new ObstacleUp(this.ctx));
+      this.obstaclesUpArray.push(new ObstacleUp(this.ctx));
     }
   },
 
   clearObstaclesDown() {
-    this.obstaclesDown = this.obstaclesDown.filter(function (obs) {
+    this.obstaclesDownArray = this.obstaclesDownArray.filter(function (obs) {
       return obs.posX <= Game.width;
     });
   },
 
   clearObstaclesUp() {
-    this.obstaclesUp = this.obstaclesUp.filter(function (obs) {
+    this.obstaclesUpArray = this.obstaclesUpArray.filter(function (obs) {
       return obs.posX >= -obs.width;
     });
   },
@@ -291,7 +291,7 @@ const Game = {
   },
 
   isCollisionUp() {
-    return this.obstaclesUp.some((obs) => {
+    return this.obstaclesUpArray.some((obs) => {
       return (
         this.player.posX + 109 <= obs.posX + obs.width - 31 &&
         this.player.posX + this.player.width - 103 >= obs.posX + 27 &&
@@ -302,12 +302,12 @@ const Game = {
   },
 
   isCollisionDown() {
-    return this.obstaclesDown.some((obs) => {
+    return this.obstaclesDownArray.some((obs) => {
       return (
         this.player.posX + 109 <= obs.posX + obs.width - 31 &&
         this.player.posX + this.player.width - 103 >= obs.posX + 27 &&
         this.player.posY + 74 <= obs.posY + obs.height - 16 &&
-        this.player.posY + this.player.height - 71 >= obs.posY + 10
+        this.player.posY + this.player.height - 71 >= obs.posY + 5
       );
     });
   },

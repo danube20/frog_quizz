@@ -3,9 +3,6 @@ class Obstacle {
     this.ctx = ctx;
     this.width = 188;
     this.height = 120;
-
-    // this.posX = Game.width;
-    // this.posY = 360;
     this.velX = 3;
   }
 
