@@ -1,33 +1,26 @@
-class ObstacleUp {
+class Obstacle {
   constructor(ctx) {
     this.ctx = ctx;
     this.width = 188;
     this.height = 120;
+    this.obstaclesImages = [
+      "./images/Sprite/cocheup1_20.png",
+      "./images/Sprite/cocheup2_20.png",
+      "./images/Sprite/cocheup3_20.png",
+    ];
+    this.randomIdx = Math.floor(Math.random() * this.obstaclesImages.length);
 
     this.image = new Image();
-    this.image.src = "./images/Sprite/cocheup2_20.png";
+    this.image.src = this.obstaclesImages[this.randomIdx];
 
-    this.posX = Game.width;
-    this.posY = 360;
+    // this.posX = Game.width;
+    // this.posY = 360;
 
     this.image.frames = 20;
     this.image.framesIndex = 0;
     this.velX = 3;
   }
-  // getImage() {
 
-  //   if (random === 0) {
-  //     this.image.src = "../images/Sprite/cocheup2_20.png";
-  //   }
-
-  //   if (random === 1) {
-  //     this.image.src = "../images/Sprite/cocheup3_20.png";
-  //   }
-
-  //   if (random === 2) {
-  //     this.image.src = "../images/Sprite/cocheup1_20.png";
-  //   }
-  // }
   draw(framesCounter) {
     this.ctx.drawImage(
       this.image,
@@ -59,6 +52,29 @@ class ObstacleUp {
   move() {
     if (!Game.atQuizz) {
       this.posX -= this.velX;
+    }
+  }
+}
+
+class ObstacleUp extends Obstacle {
+  constructor(ctx) {
+    super(ctx);
+    this.posX = Game.width;
+    this.posY = 360;
+  }
+}
+
+class ObstacleDown extends Obstacle {
+  constructor(ctx) {
+    super(ctx);
+    this.posX = -this.width - 10;
+    this.posY = 490;
+    this.width = -188;
+  }
+
+  move() {
+    if (!Game.atQuizz) {
+      this.posX += this.velX;
     }
   }
 }

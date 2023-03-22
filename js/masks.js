@@ -10,6 +10,7 @@ class Mask {
   }
 
   draw() {
-    this.ctx.fillRect(this.posX, this.posY, this.w, this.h);
+    this.ctx.fillStyle = "black";
+    this.ctx.fillRect(this.posX, this.posY, this.width, this.height);
   }
 }

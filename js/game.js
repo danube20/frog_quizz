@@ -32,7 +32,7 @@ const Game = {
   quizzScore: 5,
   playing: true,
   atQuizz: false,
-  currentLevel: 2,
+  currentLevel: 1,
 
   keys: {
     ENTER: 13,
@@ -188,14 +188,13 @@ const Game = {
     this.onTableDown();
     this.player.draw(this.framesCounter);
 
-    this.masksArray.forEach((mask) => {
-      mask.draw();
-    });
-
     this.quizzObjects.forEach((quiz) => {
       quiz.draw(this.framesCounter);
     });
     this.player.movement();
+    this.masksArray.forEach((mask) => {
+      mask.draw();
+    });
   },
 
   clear() {
@@ -358,10 +357,10 @@ const Game = {
   maskCollision() {
     return this.masksArray.some((mask) => {
       return (
-        this.player.posX + 109 <= mask.posX + mask.width &&
-        this.player.posX + this.player.width - 103 >= mask.posX &&
-        this.player.posY + 74 <= mask.posY + mask.height &&
-        this.player.posY + this.player.height - 71 >= mask.posY
+        this.player.posX + 109 < mask.posX + mask.width &&
+        this.player.posX + this.player.width - 103 > mask.posX &&
+        this.player.posY + 74 < mask.posY + mask.height &&
+        this.player.height - 71 + this.player.posY > mask.posY
       );
     });
   },
