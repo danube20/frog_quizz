@@ -29,7 +29,7 @@ const Game = {
   croacSound: new Audio("./sounds/croac.mp3"),
   splashSound: new Audio("./sounds/splash.mp3"),
   croacTimer: 0,
-  quizzScore: 5,
+  quizzScore: 4,
   playing: true,
   atQuizz: false,
   currentLevel: 1,
@@ -229,8 +229,9 @@ const Game = {
   },
 
   generateQuizzObjects() {
-    this.quizzObjects.push(new QuizzObject(this.ctx, 100, 650));
+    this.quizzObjects.push(new QuizzObject(this.ctx, 400, 250));
     this.quizzObjects.push(new QuizzObject(this.ctx, 200, 650));
+    this.quizzObjects.push(new QuizzObject(this.ctx, 150, 150));
   },
 
   generateTablesDown() {

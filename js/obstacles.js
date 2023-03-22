@@ -3,21 +3,9 @@ class Obstacle {
     this.ctx = ctx;
     this.width = 188;
     this.height = 120;
-    this.obstaclesImages = [
-      "./images/Sprite/cocheup1_20.png",
-      "./images/Sprite/cocheup2_20.png",
-      "./images/Sprite/cocheup3_20.png",
-    ];
-    this.randomIdx = Math.floor(Math.random() * this.obstaclesImages.length);
-
-    this.image = new Image();
-    this.image.src = this.obstaclesImages[this.randomIdx];
 
     // this.posX = Game.width;
     // this.posY = 360;
-
-    this.image.frames = 20;
-    this.image.framesIndex = 0;
     this.velX = 3;
   }
 
@@ -61,6 +49,18 @@ class ObstacleUp extends Obstacle {
     super(ctx);
     this.posX = Game.width;
     this.posY = 360;
+
+    this.obstaclesImages = [
+      "./images/Sprite/cocheup1_20.png",
+      "./images/Sprite/cocheup2_20.png",
+      "./images/Sprite/cocheup3_20.png",
+    ];
+
+    this.image = new Image();
+    this.randomIdx = Math.floor(Math.random() * this.obstaclesImages.length);
+    this.image.src = this.obstaclesImages[this.randomIdx];
+    this.image.frames = 20;
+    this.image.framesIndex = 0;
   }
 }
 
@@ -70,6 +70,18 @@ class ObstacleDown extends Obstacle {
     this.posX = -this.width - 10;
     this.posY = 490;
     this.width = -188;
+
+    this.obstaclesImages = [
+      "./images/Sprite/cochedown1_20.png",
+      "./images/Sprite/cochedown2_20.png",
+      "./images/Sprite/cochedown3_20.png",
+    ];
+
+    this.image = new Image();
+    this.randomIdx = Math.floor(Math.random() * this.obstaclesImages.length);
+    this.image.src = this.obstaclesImages[this.randomIdx];
+    this.image.frames = 20;
+    this.image.framesIndex = 0;
   }
 
   move() {
