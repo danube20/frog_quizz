@@ -29,10 +29,11 @@ const Game = {
   croacSound: new Audio("./sounds/croac.mp3"),
   splashSound: new Audio("./sounds/splash.mp3"),
   croacTimer: 0,
-  quizzScore: 4,
+  quizzScore: 2,
   playing: true,
   atQuizz: false,
   currentLevel: 1,
+  notEnoughQuizz: false,
 
   keys: {
     ENTER: 13,
@@ -157,7 +158,6 @@ const Game = {
   drawAll() {
     // console.log(`up:${this.onTableUp()}`);
     // console.log(`down:${this.onTableDown}`);
-
     if (this.currentLevel === 1) {
       this.background1.draw();
       this.obstaclesUpArray.forEach((obs) => {
@@ -260,7 +260,7 @@ const Game = {
 
   clearObstaclesDown() {
     this.obstaclesDownArray = this.obstaclesDownArray.filter(function (obs) {
-      return obs.posX <= Game.width;
+      return obs.posX <= Game.width - obs.width;
     });
   },
 
@@ -331,9 +331,18 @@ const Game = {
     this.ctx.fillStyle = "red";
     this.ctx.font = "40px Arial";
     this.ctx.fillText(`Game Over`, 220, 350);
+    if (this.lifes === 0) {
+      this.ctx.fillStyle = "white";
+      this.ctx.font = "40px Arial";
+      this.ctx.fillText(`Te has quedado sin vidas`, 130, 450);
+    } else if (this.notEnoughQuizz) {
+      this.ctx.fillStyle = "white";
+      this.ctx.font = "40px Arial";
+      this.ctx.fillText(`Has skipeado demasiado`, 130, 450);
+    }
     this.ctx.fillStyle = "white";
     this.ctx.font = "40px Arial";
-    this.ctx.fillText(`Press ENTER to retry`, 130, 450);
+    this.ctx.fillText(`Press ENTER to retry`, 130, 550);
   },
 
   winScreen() {
@@ -394,6 +403,9 @@ const Game = {
       ) {
         this.quizzObjects.splice(i, 1);
       }
+      if (this.quizzScore > this.quizzObjects.length) {
+        this.notEnoughQuizz = true;
+      }
     });
   },
 
@@ -433,5 +445,22 @@ const Game = {
         return false;
       }
     });
+  },
+
+  mute() {
+    this.crashAudio.volume = 0;
+    this.jumpAudio.volume = 0;
+    this.backSound.volume = 0;
+    this.gameOverSound.volume = 0;
+    this.splashSound.volume = 0;
+    this.croacSound.volume = 0;
+  },
+
+  sound() {
+    this.crashAudio.volume = 1;
+    this.jumpAudio.volume = 1;
+    this.backSound.volume = 1;
+    this.gameOverSound.volume = 1;
+    this.splashSound.volume = 1;
   },
 };

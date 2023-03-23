@@ -33,12 +33,6 @@ class Obstacle {
       }
     }
   }
-
-  move() {
-    if (!Game.atQuizz) {
-      this.posX -= this.velX;
-    }
-  }
 }
 
 class ObstacleUp extends Obstacle {
@@ -59,6 +53,11 @@ class ObstacleUp extends Obstacle {
     this.image.frames = 20;
     this.image.framesIndex = 0;
   }
+  move() {
+    if (!Game.atQuizz) {
+      this.posX -= this.velX;
+    }
+  }
 }
 
 class ObstacleDown extends Obstacle {
@@ -66,7 +65,6 @@ class ObstacleDown extends Obstacle {
     super(ctx);
     this.posX = -this.width - 10;
     this.posY = 490;
-    this.width = -188;
 
     this.obstaclesImages = [
       "./images/Sprite/cochedown1_20.png",

@@ -64,9 +64,14 @@ function printQuizz() {
 
 function skipQuestion(event) {
   quizzBox.style.visibility = "hidden";
-  Game.quizzScore -= 1;
   Game.atQuizz = false;
   printScore();
+  continueButton.style.visibility = "hidden";
+  skipButton.style.visibility = "hidden";
+  submitButton.style.visibility = "hidden";
+  if (Game.notEnoughQuizz === true) {
+    Game.gameOver();
+  }
 }
 
 function continueGame() {
