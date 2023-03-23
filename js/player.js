@@ -50,7 +50,7 @@ class Player {
             !Game.maskCollision()) ||
           (this.posX + this.width - 74 <= Game.width &&
             Game.maskCollision() &&
-            this.lastMove !== "right")
+            Game.checkCollisionDirection() !== "right")
         ) {
           this.lastMove = "right";
           Game.jumpAudio.play();
@@ -63,7 +63,7 @@ class Player {
             !Game.maskCollision()) ||
           (this.posX + 109 >= 0 &&
             Game.maskCollision() &&
-            this.lastMove !== "left")
+            Game.checkCollisionDirection() !== "left")
         ) {
           this.lastMove = "left";
           Game.jumpAudio.play();
@@ -76,7 +76,7 @@ class Player {
             !Game.maskCollision()) ||
           (this.posY + 74 >= 0 &&
             Game.maskCollision() &&
-            this.lastMove !== "up")
+            Game.checkCollisionDirection() !== "top")
         ) {
           this.lastMove = "up";
           Game.jumpAudio.play();
@@ -89,7 +89,7 @@ class Player {
             !Game.maskCollision()) ||
           (this.posY + this.height - 71 <= Game.height &&
             Game.maskCollision() &&
-            this.lastMove !== "down")
+            Game.checkCollisionDirection() !== "bottom")
         ) {
           this.lastMove = "down";
           Game.jumpAudio.play();

@@ -22,6 +22,7 @@ const Game = {
   splashdownsArray: [],
   lifes: 3,
   masksArray: [],
+  maskWithCollision: [],
   crashAudio: new Audio("./sounds/crash.mp3"),
   jumpAudio: new Audio("./sounds/jump.mp3"),
   backSound: new Audio("./sounds/backsound.mp3"),
@@ -83,6 +84,7 @@ const Game = {
       this.clear();
 
       this.drawAll();
+      this.printMaskCollisionArray();
       this.printLifes();
       if (this.currentLevel === 1) {
         this.generateObstaclesUp();
@@ -158,7 +160,11 @@ const Game = {
   drawAll() {
     // console.log(`up:${this.onTableUp()}`);
     // console.log(`down:${this.onTableDown}`);
+    console.log(`dir: ${this.checkCollisionDirection()}`);
+    console.log(`mask: ${this.maskCollision()}`);
+    console.log(`maskarray ${this.maskWithCollision}`);
     if (this.currentLevel === 1) {
+      // this.checkWhatCollision();
       this.background1.draw();
       this.obstaclesUpArray.forEach((obs) => {
         obs.draw(this.framesCounter);
@@ -301,6 +307,49 @@ const Game = {
     });
   },
 
+  checkCollisionDirection() {
+    if (this.isCollisionDown || this.isCollisionUp)
+      this.maskWithCollision.forEach((mask) => {
+        if (this.player.posX <= mask.posX) {
+          return "right";
+        } else if (this.player.posX >= mask.posX) {
+          return "left";
+        } else if (this.player.posY <= mask.posY) {
+          return "top";
+        } else if (this.player.posY >= mask.posY) {
+          return "bottom";
+        } else {
+          return "hola";
+        }
+      });
+  },
+
+  printMaskCollisionArray() {
+    this.masksArray.forEach((mask, i) => {
+      if (
+        this.player.posX + 109 <= mask.posX + mask.width - 31 &&
+        this.player.posX + this.player.width - 103 >= mask.posX + 27 &&
+        this.player.posY + 74 <= mask.posY + mask.height - 16 &&
+        this.player.posY + this.player.height - 71 >= mask.posY + 5 &&
+        !this.maskWithCollision.includes(this.masksArray[i])
+      ) {
+        this.maskWithCollision.push(this.masksArray[i]);
+      }
+    });
+  },
+
+  clearMaskCollisionArray() {
+    if (!this.isCollisionDown && !this.isCollisionDown) {
+      this.maskWithCollision = [];
+    }
+  },
+
+  // clearCollisionArray() {
+  //   if (!this.isCollisionUp() && !this.isCollisionDown()) {
+  //     this.maskWithCollision = [];
+  //   }
+  // },
+
   isCollisionDown() {
     return this.obstaclesDownArray.some((obs) => {
       return (
@@ -311,6 +360,43 @@ const Game = {
       );
     });
   },
+
+  // checkWhatCollision() {
+  //   this.maskWithCollision.forEach((mask, i)){
+  //     if (
+  //       this.player.posX < this.maskWithCollision[i][1] &&
+  //       this.player.posY > this.maskWithCollision[i][2] &&
+  //       this.player[2] <
+  //         this.maskWithCollision[i][2] + this.maskWithCollision[i][4]
+  //     ) {
+  //       return "right";
+  //     } else if (
+  //       this.player[1] + this.player[4] >
+  //         this.maskWithCollision[i][1] + this.maskWithCollision[i][4] &&
+  //       this.player[2] > this.maskWithCollision[i][2] &&
+  //       this.player[2] <
+  //         this.maskWithCollision[i][2] + this.maskWithCollision[i][4]
+  //     ) {
+  //       return "left";
+  //     } else if (
+  //       this.player[2] < this.maskWithCollision[i][2] &&
+  //       this.player[1] > this.maskWithCollision[i][1] &&
+  //       this.player[1] <
+  //         this.maskWithCollision[i][1] + this.maskWithCollision[i][3]
+  //     ) {
+  //       return "up";
+  //     } else if (
+  //       this.player[2] > this.maskWithCollision[i][2] &&
+  //       this.player[1] > this.maskWithCollision[i][1] &&
+  //       this.player[1] <
+  //         this.maskWithCollision[i][1] + this.maskWithCollision[i][3]
+  //     ) {
+  //       return "down";
+  //     } else {
+  //       return undefined;
+  //     }
+  //   }}
+  // },
 
   gameOver() {
     clearInterval(this.interval);
