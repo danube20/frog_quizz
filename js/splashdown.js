@@ -1,14 +1,14 @@
 class Splashdown {
   constructor(ctx) {
     this.ctx = ctx;
-    this.width = 180;
-    this.height = 180;
+    this.width = 140;
+    this.height = 140;
 
     this.image = new Image();
     this.image.src = "../images/Sprite/splashdown.png";
 
-    this.posX = Game.player.posX + 60;
-    this.posY = Game.player.posY - 10;
+    this.posX = Game.player.posX;
+    this.posY = Game.player.posY - 70;
 
     this.image.frames = 11;
     this.image.framesIndex = 0;

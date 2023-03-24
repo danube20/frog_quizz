@@ -41,14 +41,14 @@ class Player {
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0],
-      [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0],
-      [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0],
-      [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0],
-      [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0],
-      [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+      [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+      [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+      [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+      [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+      [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     ];
 
@@ -161,15 +161,25 @@ class Player {
     if (!Game.atQuizz) {
       document.addEventListener("keydown", (event) => {
         const { key } = event;
-        if (key === "ArrowRight" && !this.keyPressed.includes("ArrowRight"))
+        if (key === "ArrowRight" && !this.keyPressed.includes("ArrowRight")) {
           this.keyPressed.push("ArrowRight");
-        else if (key === "ArrowLeft" && !this.keyPressed.includes("ArrowLeft"))
+          Game.croacTimer = 0;
+        } else if (
+          key === "ArrowLeft" &&
+          !this.keyPressed.includes("ArrowLeft")
+        ) {
           this.keyPressed.push("ArrowLeft");
-        else if (key === "ArrowUp" && !this.keyPressed.includes("ArrowUp"))
+          Game.croacTimer = 0;
+        } else if (key === "ArrowUp" && !this.keyPressed.includes("ArrowUp")) {
           this.keyPressed.push("ArrowUp");
-        else if (key === "ArrowDown" && !this.keyPressed.includes("ArrowDown"))
+          Game.croacTimer = 0;
+        } else if (
+          key === "ArrowDown" &&
+          !this.keyPressed.includes("ArrowDown")
+        ) {
           this.keyPressed.push("ArrowDown");
-        else return null;
+          Game.croacTimer = 0;
+        } else return null;
       });
 
       document.addEventListener("keyup", (event) => {

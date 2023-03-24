@@ -18,6 +18,9 @@ const Game = {
   tablesUp: [],
   tablesDown: [],
   quizzObjects: [],
+  mathQuizzObjects: [],
+  geoQuizzObjects: [],
+  musicQuizzObjects: [],
   explosionsArray: [],
   splashdownsArray: [],
   lifes: 3,
@@ -27,13 +30,15 @@ const Game = {
   gameOverSound: new Audio("./sounds/gameover.mp3"),
   croacSound: new Audio("./sounds/croac.mp3"),
   splashSound: new Audio("./sounds/splash.mp3"),
+  clin: new Audio("./sounds/clin.mp3"),
   croacTimer: 0,
   quizzScore: 2,
   playing: true,
   atQuizz: false,
-  currentLevel: 1,
+  currentLevel: 2,
   notEnoughQuizz: false,
   tileSize: 37,
+  typeOfQuestion: undefined,
 
   keys: {
     ENTER: 13,
@@ -44,6 +49,9 @@ const Game = {
     this.setDimensions();
     this.start();
     this.generateQuizzObjects();
+    this.generateMathQuizzObjects();
+    this.generateMusicQuizzObjects();
+    this.generateGeoQuizzObjects();
     this.generateObstaclesUp();
     this.generateObstaclesDown();
   },
@@ -116,24 +124,41 @@ const Game = {
 
       if (this.currentLevel === 2) {
         if (
-          this.player.posY + 74 >= 380 &&
-          this.player.posY + this.player.height - 71 <= 650 &&
+          this.player.posY + 39 >= 380 &&
+          this.player.posY + this.player.height - 38 <= 650 &&
           !this.onTableUp() &&
           !this.onTableDown()
         ) {
           this.generateSplashdown();
           this.splashSound.play();
-          // this.lifes--;
-          this.player.posX = 200;
-          this.player.posY = 700;
+          this.lifes--;
+          this.player.posX = 259;
+          this.player.posY = 777;
+        }
+      }
+      if (this.currentLevel === 1) {
+        if (this.quizzCollision()) {
+          this.clin.play();
+          this.atQuizz = true;
+          this.displayCard();
+          printQuizz();
+          this.clearQuizzObject();
         }
       }
 
-      if (this.quizzCollision()) {
-        this.atQuizz = true;
-        this.clearQuizzObject();
-        this.displayCard();
-        printQuizz();
+      if (this.currentLevel === 2) {
+        if (
+          this.mathQuizzCollision() ||
+          this.geoQuizzCollision() ||
+          this.musicQuizzCollision()
+        ) {
+          this.clin.play();
+          this.atQuizz = true;
+
+          this.displayCard();
+          printQuizz();
+          this.clearQuizzObject();
+        }
       }
       if (this.lifes === 0) {
         this.gameOver();
@@ -196,10 +221,22 @@ const Game = {
     this.onTableUp();
     this.onTableDown();
     this.player.draw(this.framesCounter);
-
-    this.quizzObjects.forEach((quiz) => {
-      quiz.draw(this.framesCounter);
-    });
+    if (this.currentLevel === 1) {
+      this.quizzObjects.forEach((quiz) => {
+        quiz.draw(this.framesCounter);
+      });
+    }
+    if (this.currentLevel === 2) {
+      this.mathQuizzObjects.forEach((quiz) => {
+        quiz.draw(this.framesCounter);
+      });
+      this.geoQuizzObjects.forEach((quiz) => {
+        quiz.draw(this.framesCounter);
+      });
+      this.musicQuizzObjects.forEach((quiz) => {
+        quiz.draw(this.framesCounter);
+      });
+    }
     this.player.movement();
   },
 
@@ -211,6 +248,21 @@ const Game = {
     this.quizzObjects.push(new QuizzObject(this.ctx, 400, 250));
     this.quizzObjects.push(new QuizzObject(this.ctx, 200, 650));
     this.quizzObjects.push(new QuizzObject(this.ctx, 150, 150));
+  },
+
+  generateMathQuizzObjects() {
+    this.mathQuizzObjects.push(new BlueQuizzObject(this.ctx, 400, 250));
+    this.mathQuizzObjects.push(new BlueQuizzObject(this.ctx, 200, 650));
+  },
+
+  generateGeoQuizzObjects() {
+    this.geoQuizzObjects.push(new WhiteQuizzObject(this.ctx, 300, 270));
+    this.geoQuizzObjects.push(new WhiteQuizzObject(this.ctx, 100, 750));
+  },
+
+  generateMusicQuizzObjects() {
+    this.musicQuizzObjects.push(new SkyQuizzObject(this.ctx, 120, 550));
+    this.musicQuizzObjects.push(new SkyQuizzObject(this.ctx, 350, 650));
   },
 
   generateTablesDown() {
@@ -354,6 +406,39 @@ const Game = {
     });
   },
 
+  mathQuizzCollision() {
+    return this.mathQuizzObjects.some((quizz) => {
+      return (
+        this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
+        this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
+        this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
+        this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
+      );
+    });
+  },
+
+  geoQuizzCollision() {
+    return this.geoQuizzObjects.some((quizz) => {
+      return (
+        this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
+        this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
+        this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
+        this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
+      );
+    });
+  },
+
+  musicQuizzCollision() {
+    return this.musicQuizzObjects.some((quizz) => {
+      return (
+        this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
+        this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
+        this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
+        this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
+      );
+    });
+  },
+
   displayCard() {
     const quizzBox = document.querySelector("#quizz-box");
     quizzBox.style.visibility = "visible";
@@ -362,29 +447,70 @@ const Game = {
   },
 
   clearQuizzObject() {
-    this.quizzObjects.forEach((quizz, i) => {
-      if (
-        this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
-        this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
-        this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
-        this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
-      ) {
-        this.quizzObjects.splice(i, 1);
-      }
-      if (this.quizzScore > this.quizzObjects.length) {
-        this.notEnoughQuizz = true;
-      }
-    });
+    if (this.currentLevel === 1) {
+      this.quizzObjects.forEach((quizz, i) => {
+        if (
+          this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
+          this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
+          this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
+          this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
+        ) {
+          this.quizzObjects.splice(i, 1);
+        }
+        if (this.quizzScore > this.quizzObjects.length) {
+          this.notEnoughQuizz = true;
+        }
+      });
+    }
+    if (this.currentLevel === 2) {
+      this.mathQuizzObjects.forEach((quizz, i) => {
+        if (
+          this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
+          this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
+          this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
+          this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
+        ) {
+          this.mathQuizzObjects.splice(i, 1);
+        }
+      });
+    }
+    if (this.currentLevel === 2) {
+      this.geoQuizzObjects.forEach((quizz, i) => {
+        if (
+          this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
+          this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
+          this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
+          this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
+        ) {
+          this.geoQuizzObjects.splice(i, 1);
+        }
+      });
+    }
+    if (this.currentLevel === 2) {
+      this.musicQuizzObjects.forEach((quizz, i) => {
+        if (
+          this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
+          this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
+          this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
+          this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
+        ) {
+          this.musicQuizzObjects.splice(i, 1);
+        }
+        if (this.quizzScore > this.quizzObjects.length) {
+          this.notEnoughQuizz = true;
+        }
+      });
+    }
   },
 
   onTableUp() {
     return this.tablesUp.some((tab) => {
       if (
-        this.player.posX + 109 <= tab.posX + tab.width &&
-        this.player.posX + this.player.width - 103 >= tab.posX &&
-        this.player.posY + 74 <= tab.posY + tab.height &&
-        this.player.posY + this.player.height - 71 >= tab.posY &&
-        this.player.posY + this.player.height - 71 <= tab.posY + tab.height
+        this.player.posX + 58 <= tab.posX + tab.width &&
+        this.player.posX + this.player.width - 55 >= tab.posX &&
+        this.player.posY + 39 <= tab.posY + tab.height &&
+        this.player.posY + this.player.height - 38 >= tab.posY &&
+        this.player.posY + this.player.height - 38 <= tab.posY + tab.height
       ) {
         if (this.player.posX + 109 >= 1) {
           this.player.posX -= this.tableUp.velX;
@@ -399,11 +525,11 @@ const Game = {
   onTableDown() {
     return this.tablesDown.some((tab) => {
       if (
-        this.player.posX + 109 <= tab.posX + tab.width &&
-        this.player.posX + this.player.width - 103 >= tab.posX &&
-        this.player.posY + 74 <= tab.posY + tab.height &&
-        this.player.posY + this.player.height - 71 >= tab.posY &&
-        this.player.posY + this.player.height - 71 <= tab.posY + tab.height
+        this.player.posX + 58 <= tab.posX + tab.width &&
+        this.player.posX + this.player.width - 55 >= tab.posX &&
+        this.player.posY + 39 <= tab.posY + tab.height &&
+        this.player.posY + this.player.height - 38 >= tab.posY &&
+        this.player.posY + this.player.height - 38 <= tab.posY + tab.height
       ) {
         if (this.player.posX + this.player.width - 103 <= this.width) {
           this.player.posX += 0.5;
@@ -422,6 +548,7 @@ const Game = {
     this.gameOverSound.volume = 0;
     this.splashSound.volume = 0;
     this.croacSound.volume = 0;
+    this.clin.volume = 0;
   },
 
   sound() {
