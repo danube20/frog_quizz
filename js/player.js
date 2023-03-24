@@ -7,10 +7,7 @@ class Player {
 
     this.image = new Image();
     this.image.src = "./images/Sprite/quietaup_20.png";
-    // this.image.src = "./images/red.png";
 
-    // this.width = 280;
-    // this.height = 239;
     this.width = 148;
     this.height = 148;
     this.image.frames = 20;
@@ -51,9 +48,6 @@ class Player {
       [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     ];
-
-    // this.posX = 200;
-    // this.posY = 700;
 
     this.posX = 259;
     this.posY = 777;

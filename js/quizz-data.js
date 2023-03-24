@@ -21,6 +21,21 @@ let infoArray = [
     "Mercurio",
     "Mercurio",
   ],
+  [
+    "¿Cuál es la lengua más hablada del mundo?",
+    "Español",
+    "Chino mandarín",
+    "Inglés",
+    "Chino mandarín",
+  ],
+  ["¿En qué ciudad murió Lady Di?", "Londres", "Bristol", "París", "París"],
+  [
+    "¿Cuál es el río más largo de España?",
+    "Gualdalquivir",
+    "Tajo",
+    "Ebro",
+    "Tajo",
+  ],
 ];
 
 let mathsArray = [
@@ -92,6 +107,7 @@ let musicArray = [
     "210",
     "94",
     "118",
+    "shakira",
   ],
   [
     "music¿De qué país es originario el queso brie?",
@@ -99,6 +115,7 @@ let musicArray = [
     "Francia",
     "Turquía",
     "Francia",
+    "shakira",
   ],
   [
     "music¿Qué fruto seco lleva en su interior un Ferrero Rocher?",
@@ -106,6 +123,7 @@ let musicArray = [
     "Anacardo",
     "Avellana",
     "Avellana",
+    "shakira",
   ],
   [
     "music¿Qué planeta es el que se encuentra más cerca del sol?",
@@ -113,6 +131,7 @@ let musicArray = [
     "Aries",
     "Mercurio",
     "Mercurio",
+    "shakira",
   ],
 ];
 
@@ -207,20 +226,22 @@ function printQuizz() {
       answer3Info = musicArray[randomIndex][3];
       correctAnswer = musicArray[randomIndex][4];
       // console.log(`correct: ${correctAnswer}`);
-
-      let question = document.querySelector("#question");
-      answer1 = document.querySelector("#answer1");
-      answer2 = document.querySelector("#answer2");
-      answer3 = document.querySelector("#answer3");
-      let answer1Text = document.querySelector("#answer1Text");
-      let answer2Text = document.querySelector("#answer2Text");
-      let answer3Text = document.querySelector("#answer3Text");
-
-      question.innerText = questionInfo;
-      answer1Text.innerText = answer1Info;
-      answer2Text.innerText = answer2Info;
-      answer3Text.innerText = answer3Info;
+      if (musicArray[randomIndex].includes("mp3")) {
+        console.log("ohyeah");
+      }
     }
+    let question = document.querySelector("#question");
+    answer1 = document.querySelector("#answer1");
+    answer2 = document.querySelector("#answer2");
+    answer3 = document.querySelector("#answer3");
+    let answer1Text = document.querySelector("#answer1Text");
+    let answer2Text = document.querySelector("#answer2Text");
+    let answer3Text = document.querySelector("#answer3Text");
+
+    question.innerText = questionInfo;
+    answer1Text.innerText = answer1Info;
+    answer2Text.innerText = answer2Info;
+    answer3Text.innerText = answer3Info;
   }
 }
 

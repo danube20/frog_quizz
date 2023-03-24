@@ -6,13 +6,14 @@ const Game = {
   croacSound: new Audio("./sounds/croac.mp3"),
   splashSound: new Audio("./sounds/splash.mp3"),
   clin: new Audio("./sounds/clin.mp3"),
+
   canvas: undefined,
   ctx: undefined,
   width: undefined,
   height: undefined,
   FPS: 60,
 
-  currentLevel: 1,
+  currentLevel: 2,
 
   framesCounter: 0,
 
@@ -39,7 +40,7 @@ const Game = {
 
   lifes: 3,
   croacTimer: 0,
-  quizzScore: 2,
+  quizzScore: 4,
   tileSize: 37,
   playing: true,
   atQuizz: false,
@@ -212,8 +213,20 @@ const Game = {
 
   //reset
   reset() {
-    this.background1 = new BackgroundOne(this.ctx, this.width, this.height);
-    this.background2 = new BackgroundTwo(this.ctx, this.width, this.height);
+    this.background1 = new BackgroundOne(
+      this.ctx,
+      this.width,
+      this.height,
+      this.posX,
+      this.posY
+    );
+    this.background2 = new BackgroundTwo(
+      this.ctx,
+      this.width,
+      this.height,
+      this.posX,
+      this.posY
+    );
     this.player = new Player(
       this.ctx,
       this.gameW,
@@ -289,9 +302,12 @@ const Game = {
 
   //print arrays
   generateQuizzObjects() {
-    this.quizzObjects.push(new QuizzObject(this.ctx, 400, 250));
-    this.quizzObjects.push(new QuizzObject(this.ctx, 200, 650));
+    this.quizzObjects.push(new QuizzObject(this.ctx, 400, 240));
+    this.quizzObjects.push(new QuizzObject(this.ctx, 200, 670));
     this.quizzObjects.push(new QuizzObject(this.ctx, 150, 150));
+    this.quizzObjects.push(new QuizzObject(this.ctx, 148, 850));
+    this.quizzObjects.push(new QuizzObject(this.ctx, 200, 30));
+    this.quizzObjects.push(new QuizzObject(this.ctx, 315, 470));
   },
 
   generateMathQuizzObjects() {
@@ -495,12 +511,13 @@ const Game = {
       if (
         this.player.posX + 58 <= tab.posX + tab.width &&
         this.player.posX + this.player.width - 55 >= tab.posX &&
-        this.player.posY + 39 <= tab.posY + tab.height &&
+        this.player.posY + 39 <= tab.posY + tab.height + 11.5 &&
         this.player.posY + this.player.height - 38 >= tab.posY &&
-        this.player.posY + this.player.height - 38 <= tab.posY + tab.height
+        this.player.posY + this.player.height - 38 <=
+          tab.posY + tab.height + 11.5
       ) {
-        if (this.player.posX + 109 >= 1) {
-          this.player.posX -= this.tableUp.velX;
+        if (this.player.posX + 109 >= 0) {
+          this.player.posX -= 0.5;
         }
         return true;
       } else {
@@ -514,9 +531,10 @@ const Game = {
       if (
         this.player.posX + 58 <= tab.posX + tab.width &&
         this.player.posX + this.player.width - 55 >= tab.posX &&
-        this.player.posY + 39 <= tab.posY + tab.height &&
+        this.player.posY + 39 <= tab.posY + tab.height + 11.5 &&
         this.player.posY + this.player.height - 38 >= tab.posY &&
-        this.player.posY + this.player.height - 38 <= tab.posY + tab.height
+        this.player.posY + this.player.height - 38 <=
+          tab.posY + tab.height + 11.5
       ) {
         if (this.player.posX + this.player.width - 103 <= this.width) {
           this.player.posX += 0.5;
