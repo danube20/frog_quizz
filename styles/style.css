@@ -21,7 +21,7 @@ body {
 
 #sound-button {
   width: 40px;
-  margin-top: 10px;
+  margin-top: 10px
 }
 
 .game-intro img {
@@ -34,11 +34,11 @@ body {
   left: 416.5px;
   top: 131px;
 
-  width: 459px;
+  width:459px;
   height: 700px;
-  background-image: url("/images/quizz-background.png");
+  background-image: url('/images/quizz-background.png');
 
-  font-family: "Schoolbell", cursive;
+  font-family: 'Schoolbell', cursive;
 
   visibility: hidden;
 }
@@ -73,9 +73,12 @@ body {
   visibility: hidden;
 }
 
+
 #continue-button {
   visibility: hidden;
+
 }
+
 
 .board-img {
   width: 380px;
@@ -97,16 +100,16 @@ body {
 
 .quizz-button {
   background-color: #019544;
-  color: white;
+  color:white;
   padding: 10px;
-  font-family: "Schoolbell";
+  font-family: 'Schoolbell';
   font-weight: 700;
   font-size: 20px;
 }
 
 .answer {
   margin-top: 10px;
-  font-size: 20px;
+  font-size: 20px
 }
 
 #quizz-buttons {
@@ -114,23 +117,23 @@ body {
 }
 
 #skip-button {
-  margin-right: 10px;
+  margin-right: 10px
 }
 
 #submit-button {
-  margin-left: 10px;
+  margin-left: 10px
 }
 
 #quizz-legend-questionmark {
   position: absolute;
   width: 50px;
   top: 400px;
-  left: 130px;
+  left: 130px
 }
 
 #quizz-legend-text {
   position: absolute;
-  font-family: "Schoolbell";
+  font-family: 'Schoolbell';
   top: 400px;
   left: 190px;
   text-align: left;

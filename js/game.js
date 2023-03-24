@@ -21,8 +21,6 @@ const Game = {
   explosionsArray: [],
   splashdownsArray: [],
   lifes: 3,
-  masksArray: [],
-  maskWithCollision: [],
   crashAudio: new Audio("./sounds/crash.mp3"),
   jumpAudio: new Audio("./sounds/jump.mp3"),
   backSound: new Audio("./sounds/backsound.mp3"),
@@ -35,6 +33,7 @@ const Game = {
   atQuizz: false,
   currentLevel: 1,
   notEnoughQuizz: false,
+  tileSize: 37,
 
   keys: {
     ENTER: 13,
@@ -44,7 +43,6 @@ const Game = {
     this.setContext();
     this.setDimensions();
     this.start();
-    this.generateMasks();
     this.generateQuizzObjects();
     this.generateObstaclesUp();
     this.generateObstaclesDown();
@@ -84,7 +82,6 @@ const Game = {
       this.clear();
 
       this.drawAll();
-      this.printMaskCollisionArray();
       this.printLifes();
       if (this.currentLevel === 1) {
         this.generateObstaclesUp();
@@ -141,13 +138,24 @@ const Game = {
       if (this.lifes === 0) {
         this.gameOver();
       }
+
+      if (this.quizzScore === 0) {
+        this.winScreen();
+      }
     }, 1000 / this.FPS);
   },
 
   reset() {
     this.background1 = new BackgroundOne(this.ctx, this.width, this.height);
     this.background2 = new BackgroundTwo(this.ctx, this.width, this.height);
-    this.player = new Player(this.ctx, this.gameW, this.gameH, this.keys);
+    this.player = new Player(
+      this.ctx,
+      this.gameW,
+      this.gameH,
+      this.keys,
+      this.tileMap
+    );
+    this.tileMap = new TileMap(this.ctx, this.tileSize, this.player);
     this.obstacleUp = new ObstacleUp(this.ctx);
     this.obstacleDown = new ObstacleDown(this.ctx);
     this.tableUp = new TableUp(this.ctx);
@@ -158,14 +166,9 @@ const Game = {
   },
 
   drawAll() {
-    // console.log(`up:${this.onTableUp()}`);
-    // console.log(`down:${this.onTableDown}`);
-    console.log(`dir: ${this.checkCollisionDirection()}`);
-    console.log(`mask: ${this.maskCollision()}`);
-    console.log(`maskarray ${this.maskWithCollision}`);
     if (this.currentLevel === 1) {
-      // this.checkWhatCollision();
       this.background1.draw();
+      this.tileMap.draw(this.ctx);
       this.obstaclesUpArray.forEach((obs) => {
         obs.draw(this.framesCounter);
       });
@@ -198,40 +201,10 @@ const Game = {
       quiz.draw(this.framesCounter);
     });
     this.player.movement();
-    this.masksArray.forEach((mask) => {
-      mask.draw();
-    });
   },
 
   clear() {
     this.ctx.clearRect(0, 0, this.width, this.height);
-  },
-
-  generateMasks() {
-    //torre arr iz
-    this.masksArray.push(new Mask(this.ctx, 60, 20, 100, 250)),
-      //arbol arr iz
-      this.masksArray.push(new Mask(this.ctx, 20, 210, 70, 120)),
-      //valla arr
-      this.masksArray.push(new Mask(this.ctx, 390, 80, 136, 46)),
-      //muro arr
-      this.masksArray.push(new Mask(this.ctx, 520, 124, 156, 46)),
-      //arbol arr dch
-      this.masksArray.push(new Mask(this.ctx, 540, 20, 100, 110)),
-      //seto arriba dch
-      this.masksArray.push(new Mask(this.ctx, 510, 190, 90, 96)),
-      //valla ab
-      this.masksArray.push(new Mask(this.ctx, 50, 820, 126, 46)),
-      //arbol ab iz
-      this.masksArray.push(new Mask(this.ctx, 20, 700, 70, 120)),
-      //muro ab
-      this.masksArray.push(new Mask(this.ctx, 30, 670, 136, 46)),
-      //setito ab iz
-      this.masksArray.push(new Mask(this.ctx, 54, 900, 60, 60)),
-      //setito ab dch
-      this.masksArray.push(new Mask(this.ctx, 420, 830, 60, 60)),
-      //casa ab dch
-      this.masksArray.push(new Mask(this.ctx, 480, 760, 160, 160));
   },
 
   generateQuizzObjects() {
@@ -266,7 +239,7 @@ const Game = {
 
   clearObstaclesDown() {
     this.obstaclesDownArray = this.obstaclesDownArray.filter(function (obs) {
-      return obs.posX <= Game.width - obs.width;
+      return obs.posX <= Game.width;
     });
   },
 
@@ -299,104 +272,24 @@ const Game = {
   isCollisionUp() {
     return this.obstaclesUpArray.some((obs) => {
       return (
-        this.player.posX + 109 <= obs.posX + obs.width - 31 &&
-        this.player.posX + this.player.width - 103 >= obs.posX + 27 &&
-        this.player.posY + 74 <= obs.posY + obs.height - 16 &&
-        this.player.posY + this.player.height - 71 >= obs.posY + 5
+        this.player.posX + 58 <= obs.posX + obs.width - 31 &&
+        this.player.posX + this.player.width - 55 >= obs.posX + 27 &&
+        this.player.posY + 39 <= obs.posY + obs.height - 16 &&
+        this.player.posY + this.player.height - 38 >= obs.posY + 5
       );
     });
   },
-
-  checkCollisionDirection() {
-    if (this.isCollisionDown || this.isCollisionUp)
-      this.maskWithCollision.forEach((mask) => {
-        if (this.player.posX <= mask.posX) {
-          return "right";
-        } else if (this.player.posX >= mask.posX) {
-          return "left";
-        } else if (this.player.posY <= mask.posY) {
-          return "top";
-        } else if (this.player.posY >= mask.posY) {
-          return "bottom";
-        } else {
-          return "hola";
-        }
-      });
-  },
-
-  printMaskCollisionArray() {
-    this.masksArray.forEach((mask, i) => {
-      if (
-        this.player.posX + 109 <= mask.posX + mask.width - 31 &&
-        this.player.posX + this.player.width - 103 >= mask.posX + 27 &&
-        this.player.posY + 74 <= mask.posY + mask.height - 16 &&
-        this.player.posY + this.player.height - 71 >= mask.posY + 5 &&
-        !this.maskWithCollision.includes(this.masksArray[i])
-      ) {
-        this.maskWithCollision.push(this.masksArray[i]);
-      }
-    });
-  },
-
-  clearMaskCollisionArray() {
-    if (!this.isCollisionDown && !this.isCollisionDown) {
-      this.maskWithCollision = [];
-    }
-  },
-
-  // clearCollisionArray() {
-  //   if (!this.isCollisionUp() && !this.isCollisionDown()) {
-  //     this.maskWithCollision = [];
-  //   }
-  // },
 
   isCollisionDown() {
     return this.obstaclesDownArray.some((obs) => {
       return (
-        this.player.posX + 109 <= obs.posX + obs.width - 31 &&
-        this.player.posX + this.player.width - 103 >= obs.posX + 27 &&
-        this.player.posY + 74 <= obs.posY + obs.height - 16 &&
-        this.player.posY + this.player.height - 71 >= obs.posY + 5
+        this.player.posX + 58 <= obs.posX + obs.width - 31 &&
+        this.player.posX + this.player.width - 55 >= obs.posX + 27 &&
+        this.player.posY + 39 <= obs.posY + obs.height - 16 &&
+        this.player.posY + this.player.height - 38 >= obs.posY + 5
       );
     });
   },
-
-  // checkWhatCollision() {
-  //   this.maskWithCollision.forEach((mask, i)){
-  //     if (
-  //       this.player.posX < this.maskWithCollision[i][1] &&
-  //       this.player.posY > this.maskWithCollision[i][2] &&
-  //       this.player[2] <
-  //         this.maskWithCollision[i][2] + this.maskWithCollision[i][4]
-  //     ) {
-  //       return "right";
-  //     } else if (
-  //       this.player[1] + this.player[4] >
-  //         this.maskWithCollision[i][1] + this.maskWithCollision[i][4] &&
-  //       this.player[2] > this.maskWithCollision[i][2] &&
-  //       this.player[2] <
-  //         this.maskWithCollision[i][2] + this.maskWithCollision[i][4]
-  //     ) {
-  //       return "left";
-  //     } else if (
-  //       this.player[2] < this.maskWithCollision[i][2] &&
-  //       this.player[1] > this.maskWithCollision[i][1] &&
-  //       this.player[1] <
-  //         this.maskWithCollision[i][1] + this.maskWithCollision[i][3]
-  //     ) {
-  //       return "up";
-  //     } else if (
-  //       this.player[2] > this.maskWithCollision[i][2] &&
-  //       this.player[1] > this.maskWithCollision[i][1] &&
-  //       this.player[1] <
-  //         this.maskWithCollision[i][1] + this.maskWithCollision[i][3]
-  //     ) {
-  //       return "down";
-  //     } else {
-  //       return undefined;
-  //     }
-  //   }}
-  // },
 
   gameOver() {
     clearInterval(this.interval);
@@ -450,24 +343,13 @@ const Game = {
     }
   },
 
-  maskCollision() {
-    return this.masksArray.some((mask) => {
-      return (
-        this.player.posX + 109 < mask.posX + mask.width &&
-        this.player.posX + this.player.width - 103 > mask.posX &&
-        this.player.posY + 74 < mask.posY + mask.height &&
-        this.player.height - 71 + this.player.posY > mask.posY
-      );
-    });
-  },
-
   quizzCollision() {
     return this.quizzObjects.some((quizz) => {
       return (
-        this.player.posX + 109 <= quizz.posX + quizz.width - 26.5 &&
-        this.player.posX + this.player.width - 103 >= quizz.posX + 26.5 &&
-        this.player.posY + 74 <= quizz.posY + quizz.height - 11.5 &&
-        this.player.posY + this.player.height - 71 >= quizz.posY + 12.5
+        this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
+        this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
+        this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
+        this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
       );
     });
   },
@@ -482,10 +364,10 @@ const Game = {
   clearQuizzObject() {
     this.quizzObjects.forEach((quizz, i) => {
       if (
-        this.player.posX + 109 <= quizz.posX + quizz.width &&
-        this.player.posX + this.player.width - 103 >= quizz.posX &&
-        this.player.posY + 74 <= quizz.posY + quizz.height &&
-        this.player.posY + this.player.height - 71 >= quizz.posY
+        this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
+        this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
+        this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
+        this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
       ) {
         this.quizzObjects.splice(i, 1);
       }

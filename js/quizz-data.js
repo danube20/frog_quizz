@@ -101,12 +101,18 @@ function getResult(event) {
   if (answer1.checked && answer1Info === correctAnswer) {
     document.querySelector("#correct-answer-message").style.visibility =
       "visible";
+    Game.quizzScore--;
+    printScore();
   } else if (answer2.checked && answer2Info === correctAnswer) {
     document.querySelector("#correct-answer-message").style.visibility =
       "visible";
+    Game.quizzScore--;
+    printScore();
   } else if (answer3.checked && answer3Info === correctAnswer) {
     document.querySelector("#correct-answer-message").style.visibility =
       "visible";
+    Game.quizzScore--;
+    printScore();
   } else {
     document.querySelector("#wrong-answer-message").style.visibility =
       "visible";
