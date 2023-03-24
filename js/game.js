@@ -1,18 +1,31 @@
 const Game = {
+  crashAudio: new Audio("./sounds/crash.mp3"),
+  jumpAudio: new Audio("./sounds/jump.mp3"),
+  backSound: new Audio("./sounds/backsound.mp3"),
+  gameOverSound: new Audio("./sounds/gameover.mp3"),
+  croacSound: new Audio("./sounds/croac.mp3"),
+  splashSound: new Audio("./sounds/splash.mp3"),
+  clin: new Audio("./sounds/clin.mp3"),
   canvas: undefined,
   ctx: undefined,
   width: undefined,
   height: undefined,
   FPS: 60,
+
+  currentLevel: 1,
+
   framesCounter: 0,
+
   background1: undefined,
   background2: undefined,
   river: undefined,
   player: undefined,
+
   obstacleUp: undefined,
   obstacleDown: undefined,
   tableUp: undefined,
   tableDown: undefined,
+
   obstaclesDownArray: [],
   obstaclesUpArray: [],
   tablesUp: [],
@@ -23,27 +36,21 @@ const Game = {
   musicQuizzObjects: [],
   explosionsArray: [],
   splashdownsArray: [],
+
   lifes: 3,
-  crashAudio: new Audio("./sounds/crash.mp3"),
-  jumpAudio: new Audio("./sounds/jump.mp3"),
-  backSound: new Audio("./sounds/backsound.mp3"),
-  gameOverSound: new Audio("./sounds/gameover.mp3"),
-  croacSound: new Audio("./sounds/croac.mp3"),
-  splashSound: new Audio("./sounds/splash.mp3"),
-  clin: new Audio("./sounds/clin.mp3"),
   croacTimer: 0,
   quizzScore: 2,
+  tileSize: 37,
   playing: true,
   atQuizz: false,
-  currentLevel: 2,
   notEnoughQuizz: false,
-  tileSize: 37,
   typeOfQuestion: undefined,
 
   keys: {
     ENTER: 13,
   },
 
+  //game functionality
   init() {
     this.setContext();
     this.setDimensions();
@@ -104,9 +111,6 @@ const Game = {
         this.clearTablesUp();
         this.clearTablesDown();
       }
-      // this.quizzObjects.forEach((quiz) => {
-      //   quiz.draw(this.framesCounter);
-      // });
       if (this.croacTimer === 800) {
         this.croacTimer = 0;
         this.croacSound.play();
@@ -170,6 +174,43 @@ const Game = {
     }, 1000 / this.FPS);
   },
 
+  printLifes() {
+    const lifesImage = document.getElementById("lifes");
+    if (this.lifes === 2) {
+      lifesImage.src = "images/2lifes.png";
+    }
+
+    if (this.lifes === 1) {
+      lifesImage.src = "images/1life.png";
+    }
+  },
+
+  mute() {
+    this.crashAudio.volume = 0;
+    this.jumpAudio.volume = 0;
+    this.backSound.volume = 0;
+    this.gameOverSound.volume = 0;
+    this.splashSound.volume = 0;
+    this.croacSound.volume = 0;
+    this.clin.volume = 0;
+  },
+
+  sound() {
+    this.crashAudio.volume = 1;
+    this.jumpAudio.volume = 1;
+    this.backSound.volume = 1;
+    this.gameOverSound.volume = 1;
+    this.splashSound.volume = 1;
+  },
+
+  displayCard() {
+    const quizzBox = document.querySelector("#quizz-box");
+    quizzBox.style.visibility = "visible";
+    skipButton.style.visibility = "visible";
+    submitButton.style.visibility = "visible";
+  },
+
+  //reset
   reset() {
     this.background1 = new BackgroundOne(this.ctx, this.width, this.height);
     this.background2 = new BackgroundTwo(this.ctx, this.width, this.height);
@@ -190,6 +231,7 @@ const Game = {
     this.river = new River(this.ctx, this.width);
   },
 
+  //draw graphics
   drawAll() {
     if (this.currentLevel === 1) {
       this.background1.draw();
@@ -240,10 +282,12 @@ const Game = {
     this.player.movement();
   },
 
+  //clean everything
   clear() {
     this.ctx.clearRect(0, 0, this.width, this.height);
   },
 
+  //print arrays
   generateQuizzObjects() {
     this.quizzObjects.push(new QuizzObject(this.ctx, 400, 250));
     this.quizzObjects.push(new QuizzObject(this.ctx, 200, 650));
@@ -289,6 +333,15 @@ const Game = {
     }
   },
 
+  generateExplosion() {
+    this.explosionsArray.push(new Explosion(this.ctx));
+  },
+
+  generateSplashdown() {
+    this.splashdownsArray.push(new Splashdown(this.ctx));
+  },
+
+  //clean arrays
   clearObstaclesDown() {
     this.obstaclesDownArray = this.obstaclesDownArray.filter(function (obs) {
       return obs.posX <= Game.width;
@@ -311,139 +364,6 @@ const Game = {
     this.tablesUp = this.tablesUp.filter(function (tab) {
       return tab.posX >= -tab.width;
     });
-  },
-
-  generateExplosion() {
-    this.explosionsArray.push(new Explosion(this.ctx));
-  },
-
-  generateSplashdown() {
-    this.splashdownsArray.push(new Splashdown(this.ctx));
-  },
-
-  isCollisionUp() {
-    return this.obstaclesUpArray.some((obs) => {
-      return (
-        this.player.posX + 58 <= obs.posX + obs.width - 31 &&
-        this.player.posX + this.player.width - 55 >= obs.posX + 27 &&
-        this.player.posY + 39 <= obs.posY + obs.height - 16 &&
-        this.player.posY + this.player.height - 38 >= obs.posY + 5
-      );
-    });
-  },
-
-  isCollisionDown() {
-    return this.obstaclesDownArray.some((obs) => {
-      return (
-        this.player.posX + 58 <= obs.posX + obs.width - 31 &&
-        this.player.posX + this.player.width - 55 >= obs.posX + 27 &&
-        this.player.posY + 39 <= obs.posY + obs.height - 16 &&
-        this.player.posY + this.player.height - 38 >= obs.posY + 5
-      );
-    });
-  },
-
-  gameOver() {
-    clearInterval(this.interval);
-    const lifesImage = document.getElementById("lifes");
-    lifesImage.src = "images/0lifes.png";
-    this.backSound.pause();
-    this.gameOverSound.play();
-
-    document.addEventListener("keydown", (e) => {
-      switch (e.keyCode) {
-        case this.keys.ENTER:
-          window.location.reload();
-          break;
-      }
-    });
-    this.ctx.fillStyle = "black";
-    this.ctx.fillRect(0, 0, this.width, this.height);
-    this.ctx.fillStyle = "red";
-    this.ctx.font = "40px Arial";
-    this.ctx.fillText(`Game Over`, 220, 350);
-    if (this.lifes === 0) {
-      this.ctx.fillStyle = "white";
-      this.ctx.font = "40px Arial";
-      this.ctx.fillText(`Te has quedado sin vidas`, 130, 450);
-    } else if (this.notEnoughQuizz) {
-      this.ctx.fillStyle = "white";
-      this.ctx.font = "40px Arial";
-      this.ctx.fillText(`Has skipeado demasiado`, 130, 450);
-    }
-    this.ctx.fillStyle = "white";
-    this.ctx.font = "40px Arial";
-    this.ctx.fillText(`Press ENTER to retry`, 130, 550);
-  },
-
-  winScreen() {
-    this.ctx.fillStyle = "green";
-    this.ctx.fillRect(0, 0, this.width, this.height);
-    this.ctx.fillStyle = "Yellow";
-    this.ctx.font = "40px Arial";
-    this.ctx.fillText(`You Win!!`, 220, 350);
-  },
-
-  printLifes() {
-    const lifesImage = document.getElementById("lifes");
-    if (this.lifes === 2) {
-      lifesImage.src = "images/2lifes.png";
-    }
-
-    if (this.lifes === 1) {
-      lifesImage.src = "images/1life.png";
-    }
-  },
-
-  quizzCollision() {
-    return this.quizzObjects.some((quizz) => {
-      return (
-        this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
-        this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
-        this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
-        this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
-      );
-    });
-  },
-
-  mathQuizzCollision() {
-    return this.mathQuizzObjects.some((quizz) => {
-      return (
-        this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
-        this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
-        this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
-        this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
-      );
-    });
-  },
-
-  geoQuizzCollision() {
-    return this.geoQuizzObjects.some((quizz) => {
-      return (
-        this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
-        this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
-        this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
-        this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
-      );
-    });
-  },
-
-  musicQuizzCollision() {
-    return this.musicQuizzObjects.some((quizz) => {
-      return (
-        this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
-        this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
-        this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
-        this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
-      );
-    });
-  },
-
-  displayCard() {
-    const quizzBox = document.querySelector("#quizz-box");
-    quizzBox.style.visibility = "visible";
-    skipButton.style.visibility = "visible";
-    submitButton.style.visibility = "visible";
   },
 
   clearQuizzObject() {
@@ -503,6 +423,73 @@ const Game = {
     }
   },
 
+  //checking functions
+  isCollisionUp() {
+    return this.obstaclesUpArray.some((obs) => {
+      return (
+        this.player.posX + 58 <= obs.posX + obs.width - 31 &&
+        this.player.posX + this.player.width - 55 >= obs.posX + 27 &&
+        this.player.posY + 39 <= obs.posY + obs.height - 16 &&
+        this.player.posY + this.player.height - 38 >= obs.posY + 5
+      );
+    });
+  },
+
+  isCollisionDown() {
+    return this.obstaclesDownArray.some((obs) => {
+      return (
+        this.player.posX + 58 <= obs.posX + obs.width - 31 &&
+        this.player.posX + this.player.width - 55 >= obs.posX + 27 &&
+        this.player.posY + 39 <= obs.posY + obs.height - 16 &&
+        this.player.posY + this.player.height - 38 >= obs.posY + 5
+      );
+    });
+  },
+
+  quizzCollision() {
+    return this.quizzObjects.some((quizz) => {
+      return (
+        this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
+        this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
+        this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
+        this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
+      );
+    });
+  },
+
+  mathQuizzCollision() {
+    return this.mathQuizzObjects.some((quizz) => {
+      return (
+        this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
+        this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
+        this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
+        this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
+      );
+    });
+  },
+
+  geoQuizzCollision() {
+    return this.geoQuizzObjects.some((quizz) => {
+      return (
+        this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
+        this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
+        this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
+        this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
+      );
+    });
+  },
+
+  musicQuizzCollision() {
+    return this.musicQuizzObjects.some((quizz) => {
+      return (
+        this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
+        this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
+        this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
+        this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
+      );
+    });
+  },
+
   onTableUp() {
     return this.tablesUp.some((tab) => {
       if (
@@ -541,21 +528,45 @@ const Game = {
     });
   },
 
-  mute() {
-    this.crashAudio.volume = 0;
-    this.jumpAudio.volume = 0;
-    this.backSound.volume = 0;
-    this.gameOverSound.volume = 0;
-    this.splashSound.volume = 0;
-    this.croacSound.volume = 0;
-    this.clin.volume = 0;
+  //special screens
+  gameOver() {
+    clearInterval(this.interval);
+    const lifesImage = document.getElementById("lifes");
+    lifesImage.src = "images/0lifes.png";
+    this.backSound.pause();
+    this.gameOverSound.play();
+
+    document.addEventListener("keydown", (e) => {
+      switch (e.keyCode) {
+        case this.keys.ENTER:
+          window.location.reload();
+          break;
+      }
+    });
+    this.ctx.fillStyle = "black";
+    this.ctx.fillRect(0, 0, this.width, this.height);
+    this.ctx.fillStyle = "red";
+    this.ctx.font = "40px Arial";
+    this.ctx.fillText(`Game Over`, 220, 350);
+    if (this.lifes === 0) {
+      this.ctx.fillStyle = "white";
+      this.ctx.font = "40px Arial";
+      this.ctx.fillText(`Te has quedado sin vidas`, 130, 450);
+    } else if (this.notEnoughQuizz) {
+      this.ctx.fillStyle = "white";
+      this.ctx.font = "40px Arial";
+      this.ctx.fillText(`Has skipeado demasiado`, 130, 450);
+    }
+    this.ctx.fillStyle = "white";
+    this.ctx.font = "40px Arial";
+    this.ctx.fillText(`Press ENTER to retry`, 130, 550);
   },
 
-  sound() {
-    this.crashAudio.volume = 1;
-    this.jumpAudio.volume = 1;
-    this.backSound.volume = 1;
-    this.gameOverSound.volume = 1;
-    this.splashSound.volume = 1;
+  winScreen() {
+    this.ctx.fillStyle = "green";
+    this.ctx.fillRect(0, 0, this.width, this.height);
+    this.ctx.fillStyle = "Yellow";
+    this.ctx.font = "40px Arial";
+    this.ctx.fillText(`You Win!!`, 220, 350);
   },
 };

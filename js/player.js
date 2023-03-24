@@ -110,7 +110,7 @@ class Player {
       this.keyPressed.forEach((elm) => {
         if (
           elm.includes("ArrowRight") &&
-          this.posX + this.width - 74 <= Game.width &&
+          // this.posX + this.width - 74 <= Game.width &&
           this.map[this.row][this.column + 1] === 0 &&
           this.column <= 17
         ) {
@@ -121,7 +121,7 @@ class Player {
           this.image.src = "./images/Sprite/saltodch_20.png";
         } else if (
           elm.includes("ArrowLeft") &&
-          this.posX + 109 >= 0 &&
+          // this.posX + 109 >= 0 &&
           this.map[this.row][this.column - 1] === 0 &&
           this.column >= 1
         ) {
@@ -132,7 +132,7 @@ class Player {
           this.image.src = "./images/Sprite/saltoizq_20.png";
         } else if (
           elm.includes("ArrowUp") &&
-          this.posY + 74 >= 0 &&
+          // this.posY + 74 >= 0 &&
           this.map[this.row - 1][this.column] === 0 &&
           this.row >= 1
         ) {
@@ -143,7 +143,7 @@ class Player {
           this.image.src = "./images/Sprite/movimientoarriba_20.png";
         } else if (
           elm.includes("ArrowDown") &&
-          this.posY + this.height - 71 <= Game.height &&
+          // this.posY + this.height - 71 <= Game.height &&
           this.map[this.row + 1][this.column] === 0 &&
           this.row <= 24
         ) {

@@ -4,9 +4,6 @@ class TileMap {
     this.tileSize = tileSize;
     this.player = player;
 
-    // this.wall = new Image();
-    // this.wall.src = "../images/red.png";
-
     this.map = [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0],

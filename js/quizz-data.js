@@ -253,7 +253,7 @@ window.addEventListener("load", () => {
 
 function printScore() {
   let legendInfo = document.querySelector("#quizz-legend-text");
-  legendInfo.innerText = `= ${Game.quizzScore}`;
+  legendInfo.innerText = `= ${Game.quizzScore} preguntas`;
 }
 
 function getResult(event) {
