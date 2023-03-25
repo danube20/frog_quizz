@@ -353,6 +353,9 @@ function continueGame() {
     correctMessage.style.visibility = "hidden";
     wrongMessage.style.visibility = "hidden";
     cantSkipMessage.style.visibility = "hidden";
+    if (Game.quizzScore === 0) {
+      Game.winScreen();
+    }
   } else if (Game.currentLevel === 2 && Game.musicQuizz === true) {
     quizzAudio.pause();
     Game.backSound.play();
@@ -363,6 +366,13 @@ function continueGame() {
     wrongMessage.style.visibility = "hidden";
     cantSkipMessage.style.visibility = "hidden";
     Game.musicQuizz = false;
+  } else if (
+    Game.currentLevel === 2 &&
+    this.mathsScore === 0 &&
+    this.geoScore === 0 &&
+    this.musicScore === 0
+  ) {
+    Game.winScreen();
   }
 }
 
@@ -379,7 +389,7 @@ function printScore() {
   let musicLegendInfo = document.querySelector("#music-quizz-legend-text");
   let geoLegendInfo = document.querySelector("#geo-quizz-legend-text");
   let mathsLegendInfo = document.querySelector("#maths-quizz-legend-text");
-  firstLevelLegendInfo.innerText = `= ${Game.quizzScore} preguntas`;
+  firstLevelLegendInfo.innerText = `${Game.quizzScore} preguntas`;
   musicLegendInfo.innerText = `= ${Game.musicScore} preguntas`;
   geoLegendInfo.innerText = `= ${Game.geoScore} preguntas`;
   mathsLegendInfo.innerText = `= ${Game.mathsScore} preguntas`;
@@ -415,30 +425,41 @@ function lastQuestion() {
 
 function getResult(event) {
   event.preventDefault();
-  skipButton.style.visibility = "hidden";
-  submitButton.style.visibility = "hidden";
-  continueButton.style.visibility = "visible";
+
   if (answer1.checked && answer1Info === correctAnswer) {
     document.querySelector("#correct-answer-message").style.visibility =
       "visible";
+
+    skipButton.style.visibility = "hidden";
+    submitButton.style.visibility = "hidden";
+    continueButton.style.visibility = "visible";
     changeScores();
     printScore();
   } else if (answer2.checked && answer2Info === correctAnswer) {
     document.querySelector("#correct-answer-message").style.visibility =
       "visible";
+
+    skipButton.style.visibility = "hidden";
+    submitButton.style.visibility = "hidden";
+    continueButton.style.visibility = "visible";
     changeScores();
 
     printScore();
   } else if (answer3.checked && answer3Info === correctAnswer) {
     document.querySelector("#correct-answer-message").style.visibility =
       "visible";
+    skipButton.style.visibility = "hidden";
+    submitButton.style.visibility = "hidden";
+    continueButton.style.visibility = "visible";
     changeScores();
     printScore();
-  } else if (!answer1.checked && answer2.checked && answer3.checked) {
-    document.querySelector("#non-answer-message").style.visibility = "visible";
+  } else if (!answer1.checked && !answer2.checked && !answer3.checked) {
   } else {
     document.querySelector("#wrong-answer-message").style.visibility =
       "visible";
+    skipButton.style.visibility = "hidden";
+    submitButton.style.visibility = "hidden";
+    continueButton.style.visibility = "visible";
     Game.lifes--;
   }
 }

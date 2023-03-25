@@ -47,23 +47,21 @@ html {
   position: absolute;
   left: 416.5px;
   top: 131px;
-
   width: 459px;
   height: 700px;
   background-image: url("/images/quizz-background.png");
   background-repeat: no-repeat;
-
   font-family: "Helvetica", cursive;
-
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-#question-sheet {
+#all-answers {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  margin-top: 5%;
 }
 
 #lifes {
@@ -80,27 +78,8 @@ html {
   width: 3%;
 }
 
-/* .buttondiv button {
-  font-size: 30px;
-  background-color: #282828;
-  color: #8dc53e;
-  border: 3px solid red;
-  padding: 20px 40px;
-  border: 0;
-  box-shadow: 0;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  width: 220px;
-} */
-
-/* #game-over-screen {
-  display: none;
-} */
-
 #non-answer-message {
   visibility: hidden;
-  padding: 20px;
 }
 
 #correct-answer-message {
@@ -109,7 +88,6 @@ html {
 
 #cant-skip-message {
   visibility: hidden;
-  padding: 20px;
 }
 
 #wrong-answer-message {
@@ -119,17 +97,10 @@ html {
 
 #continue-button {
   visibility: hidden;
-  padding-top: 10px;
 }
 
-#question-sheet {
-  display: flex;
-  flex-direction: column;
-}
 #question {
   font-size: 30px;
-  padding-right: 40px;
-  padding-left: 40px;
 }
 
 .quizz-button {
@@ -139,6 +110,8 @@ html {
   font-family: "Helvetica";
   font-weight: 700;
   font-size: 20px;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 .answer {
@@ -195,4 +168,11 @@ html {
 
 #maths-quizz-legend-text {
   top: 600px;
+}
+
+.front-message {
+  position: absolute;
+  top: 310px;
+  left: 550px;
+  width: 37%;
 }

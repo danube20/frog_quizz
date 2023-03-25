@@ -118,7 +118,6 @@ const Game = {
           this.player.posY = 700;
         }
         if (this.quizzCollision()) {
-          console.log("quiz coll");
           this.clin.play();
           this.atQuizz = true;
           this.displayCard();
@@ -126,10 +125,8 @@ const Game = {
           this.clearQuizzObject();
         }
         if (this.isCollisionUp()) {
-          console.log("coll up");
         }
         if (this.isCollisionDown()) {
-          console.log("coll Down");
         }
       }
 
@@ -177,19 +174,19 @@ const Game = {
         this.gameOver();
       }
 
-      if (this.currentLevel === 1) {
-        if (this.quizzScore === 0) {
-          this.winScreen();
-        }
-      } else if (this.currentLevel === 2) {
-        if (
-          this.mathsScore === 0 &&
-          this.geoScore === 0 &&
-          this.musicScore === 0
-        ) {
-          this.winScreen();
-        }
-      }
+      // if (this.currentLevel === 1) {
+      //   if (this.quizzScore === 0) {
+      //     this.winScreen();
+      //   }
+      // } else if (this.currentLevel === 2) {
+      //   if (
+      //     this.mathsScore === 0 &&
+      //     this.geoScore === 0 &&
+      //     this.musicScore === 0
+      //   ) {
+      //     this.winScreen();
+      //   }
+      // }
     }, 1000 / this.FPS);
   },
 
@@ -197,23 +194,30 @@ const Game = {
     const gameIntro = document.querySelector("#game-intro");
     const game = document.querySelector("#game");
     const quizz = document.querySelector("#quizz-box");
-    const win = document.querySelector("#win-screen");
     const gameOver1 = document.querySelector("#game-over-1");
     const gameOver2 = document.querySelector("#game-over-2");
+    const win1 = document.querySelector("#you-win-1");
+    const win2 = document.querySelector("#you-win-2");
     gameIntro.style.display = "block";
     game.style.display = "none";
     quizz.style.visibility = "hidden";
-    win.style.display = "none";
     gameOver1.style.display = "none";
     gameOver2.style.display = "none";
+    win1.style.display = "none";
+    win2.style.display = "none";
   },
 
   startGameScreen() {
-    const gameIntro = document.querySelector("#game-intro");
-    const game = document.querySelector("#game");
+    if (this.currentLevel === 1) {
+      const gameIntro = document.querySelector("#game-intro");
+      const game = document.querySelector("#game");
 
-    gameIntro.style.display = "none";
-    game.style.display = "block";
+      gameIntro.style.display = "none";
+      game.style.display = "block";
+    } else if (this.currentLevel === 2) {
+      const legendImage = document.querySelector("#legend-background");
+      legendImage.src = "./images/legend-screen-level2.jpg";
+    }
   },
 
   printLifes() {
@@ -336,8 +340,6 @@ const Game = {
     this.player.movement();
     this.checkLegend();
     this.updateTypeOfQuestion();
-    // console.log(musicArray.length);
-    // console.log(this.playing);
   },
 
   //clean everything
@@ -352,7 +354,7 @@ const Game = {
     this.quizzObjects.push(new QuizzObject(this.ctx, 148, 850));
     this.quizzObjects.push(new QuizzObject(this.ctx, 200, 30));
     this.quizzObjects.push(new QuizzObject(this.ctx, 315, 470));
-    this.quizzObjects.push(new QuizzObject(this.ctx, 415, 170));
+    this.quizzObjects.push(new QuizzObject(this.ctx, 415, 670));
   },
 
   generateMathQuizzObjects() {
@@ -519,7 +521,6 @@ const Game = {
         this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
         this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
       ) {
-        console.log(quizz);
         return true;
       }
     });
@@ -636,9 +637,6 @@ const Game = {
         "visible";
       document.querySelector("#maths-quizz-legend-text").style.visibility =
         "visible";
-      document.querySelector(
-        "#level-one-legend-question-mark"
-      ).style.visibility = "hidden";
       document.querySelector("#blue-question-mark").style.visibility =
         "visible";
       document.querySelector("#sky-question-mark").style.visibility = "visible";
@@ -691,10 +689,33 @@ const Game = {
   },
 
   winScreen() {
-    this.ctx.fillStyle = "green";
-    this.ctx.fillRect(0, 0, this.width, this.height);
-    this.ctx.fillStyle = "Yellow";
-    this.ctx.font = "40px Arial";
-    this.ctx.fillText(`You Win!!`, 220, 350);
+    clearInterval(this.interval);
+    this.backSound.pause();
+
+    if (this.currentLevel === 1) {
+      const winScreen1 = document.querySelector("#you-win-1");
+      winScreen1.style.display = "block";
+
+      document.addEventListener("keydown", (e) => {
+        switch (e.keyCode) {
+          case this.keys.ENTER:
+            winScreen1.style.display = "none";
+            this.currentLevel = 2;
+            this.init();
+            break;
+        }
+      });
+    } else if (this.currentLevel === 2) {
+      const winScreen2 = document.querySelector("#you-win-2");
+      winScreen2.style.display = "block";
+
+      document.addEventListener("keydown", (e) => {
+        switch (e.keyCode) {
+          case this.keys.ENTER:
+            window.location.reload();
+            break;
+        }
+      });
+    }
   },
 };

@@ -61,19 +61,22 @@
     <div id="quizz-box">
       <form id="question-sheet">
         <p id="question"></p>
-        <label>
-          <input type="radio" id="answer1" name="quizzanswer" value="1" />
-          <span id="answer1Text" class="answer"></span>
-        </label>
-        <label>
-          <input type="radio" id="answer2" class="answer" name="quizzanswer" value="2" />
-          <span id="answer2Text" class="answer"></span>
-        </label>
-        <label>
-          <input type="radio" id="answer3" class="answer" name="quizzanswer" value="3" />
-          <span id="answer3Text" class="answer"></span>
-        </label>
+        <div id="all-answers">
+          <label>
+            <input type="radio" id="answer1" name="quizzanswer" value="1" />
+            <span id="answer1Text" class="answer"></span>
+          </label>
+          <label>
+            <input type="radio" id="answer2" class="answer" name="quizzanswer" value="2" />
+            <span id="answer2Text" class="answer"></span>
+          </label>
+          <label>
+            <input type="radio" id="answer3" class="answer" name="quizzanswer" value="3" />
+            <span id="answer3Text" class="answer"></span>
+          </label>
+        </div>
         <p id="cant-skip-message">Si pasas esta pregunta, no harbrá suficientes como para conseguir el objetivo</p>
+
         <div id="quizz-buttons">
           <button id="skip-button" class="quizz-button" type="button">
             Saltar pregunta
@@ -85,11 +88,10 @@
 
         <div class="submit-messages">
           <p id="correct-answer-message">Respuesta correcta. ¡Enhorabuena!</p>
-          <p id="cant-skip-message">Si pasas esta pregunta, no harbrá suficientes como para conseguir el objetivo</p>
+          <p id="cant-skip-message">Si pasas esta pregunta, no habrá suficientes como para conseguir el objetivo</p>
           <p id="wrong-answer-message">
             Respuesta incorrecta...Frogie pierde una vida :(
           </p>
-          <p id="non-answer-message">Primero, debes seleccionar una respuesta</p>
         </div>
 
         <button id="continue-button" class="quizz-button" type="button">
@@ -100,21 +102,15 @@
     </div>
 
     <div id="win-screen">
-      <img src="./images/youwin-screen-nextlevel-10.png" alt="you win!" id="you-win-1">
-      <img src="./images/youwin-screen-restart-11.png" alt="you win!" id="you-win-2">
+      <img src="./images/youwin-screen-1.png" alt="you win!" id="you-win-1" class="front-message">
+      <img src="./images/youwin-screen-2.png" alt="you win!" id="you-win-2" class="front-message">
     </div>
 
     <div id="game-over-screen">
-      <img src="./images/gameover-screen-1.png" alt="Game Over Screen" id="game-over-1">
-      <img src="./images/gameover-screen-2.png" alt="Game Over Screen" id="game-over-2">
+      <img src="./images/gameover-screen-1.png" alt="Game Over Screen" id="game-over-1" class="front-message">
+      <img src="./images/gameover-screen-2.png" alt="Game Over Screen" id="game-over-2" class="front-message">
     </div>
   </div>
-
-
-
-
-
-
 
 
   <script src="js/collisionMatrix.js"></script>
