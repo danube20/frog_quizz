@@ -183,6 +183,7 @@ const submitButton = document.querySelector("#submit-button");
 const continueButton = document.querySelector("#continue-button");
 const correctMessage = document.querySelector("#correct-answer-message");
 const wrongMessage = document.querySelector("#wrong-answer-message");
+const cantSkipMessage = document.querySelector("#cant-skip-message");
 
 // function adaptateMusicArray() {
 //   if (Game.playing === false) {
@@ -217,6 +218,7 @@ const wrongMessage = document.querySelector("#wrong-answer-message");
 // }
 
 function printQuizz() {
+  lastQuestion();
   if (Game.currentLevel === 1) {
     randomIndex = Math.floor(Math.random() * infoArray.length);
     questionInfo = infoArray[randomIndex][0];
@@ -324,6 +326,7 @@ function skipQuestion(event) {
   continueButton.style.visibility = "hidden";
   skipButton.style.visibility = "hidden";
   submitButton.style.visibility = "hidden";
+  cantSkipMessage.style.visibility = "hidden";
   if (Game.notEnoughQuizz === true) {
     Game.gameOver();
   }
@@ -348,6 +351,7 @@ function continueGame() {
   continueButton.style.visibility = "hidden";
   correctMessage.style.visibility = "hidden";
   wrongMessage.style.visibility = "hidden";
+  cantSkipMessage.style.visibility = "hidden";
 }
 
 window.addEventListener("load", () => {
@@ -367,6 +371,34 @@ function printScore() {
   musicLegendInfo.innerText = `= ${Game.musicScore} preguntas`;
   geoLegendInfo.innerText = `= ${Game.geoScore} preguntas`;
   mathsLegendInfo.innerText = `= ${Game.mathsScore} preguntas`;
+}
+
+function lastQuestion() {
+  if (Game.currentLevel === 1) {
+    if (Game.quizzScore === Game.quizzObjects.length) {
+      document.querySelector("#cant-skip-message").style.visibility = "visible";
+    }
+  } else if (Game.currentLevel === 2) {
+    if (
+      Game.atQuizz === true &&
+      Game.typeOfQuestion === "maths" &&
+      Game.mathsScore === Game.mathQuizzObjects.length
+    ) {
+      document.querySelector("#cant-skip-message").style.visibility = "visible";
+    } else if (
+      Game.atQuizz === true &&
+      Game.typeOfQuestion === "geo" &&
+      Game.geoScore === Game.geoQuizzObjects.length
+    ) {
+      document.querySelector("#cant-skip-message").style.visibility = "visible";
+    } else if (
+      Game.atQuizz === true &&
+      Game.typeOfQuestion === "music" &&
+      Game.musicScore === Game.musicQuizzObjects.length
+    ) {
+      document.querySelector("#cant-skip-message").style.visibility = "visible";
+    }
+  }
 }
 
 function getResult(event) {

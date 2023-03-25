@@ -80,6 +80,11 @@ body {
   visibility: hidden;
 }
 
+#cant-skip-message {
+  visibility: hidden;
+  padding: 20px;
+}
+
 #wrong-answer-message {
   visibility: hidden;
   color: red;

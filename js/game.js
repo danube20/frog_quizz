@@ -544,7 +544,7 @@ const Game = {
         this.player.posY + this.player.height - 38 <=
           tab.posY + tab.height + 11.5
       ) {
-        if (this.player.posX + 109 >= 0) {
+        if (this.player.posX + 109 >= 0 && !this.atQuizz) {
           this.player.posX -= 0.5;
         }
         return true;
@@ -564,7 +564,10 @@ const Game = {
         this.player.posY + this.player.height - 38 <=
           tab.posY + tab.height + 11.5
       ) {
-        if (this.player.posX + this.player.width - 103 <= this.width) {
+        if (
+          this.player.posX + this.player.width - 103 <= this.width &&
+          !this.atQuizz
+        ) {
           this.player.posX += 0.5;
         }
         return true;
