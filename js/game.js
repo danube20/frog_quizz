@@ -41,9 +41,13 @@ const Game = {
   lifes: 3,
   croacTimer: 0,
   quizzScore: 4,
+  musicScore: 2,
+  geoScore: 1,
+  mathsScore: 1,
   tileSize: 37,
   playing: true,
   atQuizz: false,
+  musicQuizz: false,
   notEnoughQuizz: false,
   typeOfQuestion: undefined,
 
@@ -80,7 +84,7 @@ const Game = {
     this.reset();
     document.querySelector("#lifes").style.visibility = "visible";
     document.querySelector("#board-img").src = "./images/LeaderboardScreen.png";
-    document.querySelector("#quizz-legend-questionmark").style.visibility =
+    document.querySelector("#level-one-legend-questionmark").style.visibility =
       "visible";
     printScore();
 
@@ -169,9 +173,21 @@ const Game = {
         this.gameOver();
       }
 
-      if (this.quizzScore === 0) {
-        this.winScreen();
+      if (this.currentLevel === 1) {
+        if (this.quizzScore === 0) {
+          this.winScreen();
+        }
+      } else if (this.currentLevel === 2) {
+        if (
+          this.mathsScore === 0 &&
+          this.geoScore === 0 &&
+          this.musicScore === 0
+        ) {
+          this.winScreen();
+        }
       }
+
+      // adaptateMusicArray();
     }, 1000 / this.FPS);
   },
 
@@ -293,6 +309,10 @@ const Game = {
       });
     }
     this.player.movement();
+    this.checkLegend();
+    this.updateTypeOfQuestion();
+    // console.log(musicArray.length);
+    // console.log(this.playing);
   },
 
   //clean everything
@@ -393,9 +413,7 @@ const Game = {
         ) {
           this.quizzObjects.splice(i, 1);
         }
-        if (this.quizzScore > this.quizzObjects.length) {
-          this.notEnoughQuizz = true;
-        }
+        this.checkEnoughQuestions();
       });
     }
     if (this.currentLevel === 2) {
@@ -408,6 +426,7 @@ const Game = {
         ) {
           this.mathQuizzObjects.splice(i, 1);
         }
+        this.checkEnoughQuestions();
       });
     }
     if (this.currentLevel === 2) {
@@ -420,6 +439,7 @@ const Game = {
         ) {
           this.geoQuizzObjects.splice(i, 1);
         }
+        this.checkEnoughQuestions();
       });
     }
     if (this.currentLevel === 2) {
@@ -432,9 +452,7 @@ const Game = {
         ) {
           this.musicQuizzObjects.splice(i, 1);
         }
-        if (this.quizzScore > this.quizzObjects.length) {
-          this.notEnoughQuizz = true;
-        }
+        this.checkEnoughQuestions();
       });
     }
   },
@@ -506,6 +524,16 @@ const Game = {
     });
   },
 
+  updateTypeOfQuestion() {
+    if (this.mathQuizzCollision()) {
+      this.typeOfQuestion = "maths";
+    } else if (this.geoQuizzCollision()) {
+      this.typeOfQuestion = "geo";
+    } else if (this.musicQuizzCollision()) {
+      this.typeOfQuestion = "music";
+    }
+  },
+
   onTableUp() {
     return this.tablesUp.some((tab) => {
       if (
@@ -544,6 +572,61 @@ const Game = {
         return false;
       }
     });
+  },
+
+  checkLegend() {
+    if (this.currentLevel === 1) {
+      document.querySelector("#firstlevel-quizz-legend-text").style.visibility =
+        "visible";
+      document.querySelector("#music-quizz-legend-text").style.visibility =
+        "hidden";
+      document.querySelector("#geo-quizz-legend-text").style.visibility =
+        "hidden";
+      document.querySelector("#maths-quizz-legend-text").style.visibility =
+        "hidden";
+      document.querySelector(
+        "#level-one-legend-question-mark"
+      ).style.visibility = "visible";
+      document.querySelector("#blue-question-mark").style.visibility = "hidden";
+      document.querySelector("#sky-question-mark").style.visibility = "hidden";
+      document.querySelector("#white-question-mark").style.visibility =
+        "hidden";
+    }
+
+    if (this.currentLevel === 2) {
+      document.querySelector("#firstlevel-quizz-legend-text").style.visibility =
+        "hidden";
+      document.querySelector("#music-quizz-legend-text").style.visibility =
+        "visible";
+      document.querySelector("#geo-quizz-legend-text").style.visibility =
+        "visible";
+      document.querySelector("#maths-quizz-legend-text").style.visibility =
+        "visible";
+      document.querySelector(
+        "#level-one-legend-question-mark"
+      ).style.visibility = "hidden";
+      document.querySelector("#blue-question-mark").style.visibility =
+        "visible";
+      document.querySelector("#sky-question-mark").style.visibility = "visible";
+      document.querySelector("#white-question-mark").style.visibility =
+        "visible";
+    }
+  },
+
+  checkEnoughQuestions() {
+    if (this.currentLevel === 1) {
+      if (this.quizzScore > this.quizzObjects.length) {
+        this.notEnoughQuizz = true;
+      }
+    } else if (this.currentLevel === 2) {
+      if (
+        this.mathsScore > this.mathQuizzObjects.length ||
+        this.geoScore > this.geoQuizzObjects.length ||
+        this.musicScore > this.musicQuizzObjects.length
+      ) {
+        this.notEnoughQuizz = true;
+      }
+    }
   },
 
   //special screens

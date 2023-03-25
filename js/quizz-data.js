@@ -102,39 +102,72 @@ let geoArray = [
 
 let musicArray = [
   [
-    "musicCuántos elementos forman la tabla periódica?",
-    "118",
-    "210",
-    "94",
-    "118",
-    "shakira",
+    "Qué canción suena?",
+    "Physical",
+    "Levitating",
+    "Let's go!",
+    "Levitating",
+    "mp3",
+    new Audio("./sounds/quizz/levitating.mp3"),
   ],
   [
-    "music¿De qué país es originario el queso brie?",
-    "España",
-    "Francia",
-    "Turquía",
-    "Francia",
-    "shakira",
+    "¿Qué canción suena?",
+    "Yellow Submarine",
+    "Help",
+    "Don't stop me now",
+    "Yellow Submarine",
+    "mp3",
+    new Audio("./sounds/quizz/yellowsubmarine.mp3"),
   ],
   [
-    "music¿Qué fruto seco lleva en su interior un Ferrero Rocher?",
-    "Almendra",
-    "Anacardo",
-    "Avellana",
-    "Avellana",
-    "shakira",
+    "¿Qué canción suena?",
+    "Titanic",
+    "I will always love you",
+    "My heart will go on",
+    "My heart will go on",
+    "mp3",
+    new Audio("./sounds/quizz/titanic.mp3"),
   ],
   [
-    "music¿Qué planeta es el que se encuentra más cerca del sol?",
-    "Marte",
-    "Aries",
-    "Mercurio",
-    "Mercurio",
-    "shakira",
+    "¿De quién es la canción Hey Jude?",
+    "Los Beatles",
+    "Rolling Stones",
+    "Michael Jackson",
+    "Los Beatles",
   ],
 ];
 
+let dataForMp3Array = [
+  [
+    "Qué canción suena?",
+    "Physical",
+    "Levitating",
+    "Let's go!",
+    "Levitating",
+    "mp3",
+    new Audio("./sounds/quizz/levitating.mp3"),
+  ],
+  [
+    "¿Qué canción suena?",
+    "Yellow Submarine",
+    "Help",
+    "Don't stop me now",
+    "Yellow Submarine",
+    "mp3",
+    new Audio("./sounds/quizz/yellowsubmarine.mp3"),
+  ],
+  [
+    "¿Qué canción suena?",
+    "Titanic",
+    "I will always love you",
+    "My heart will go on",
+    "My heart will go on",
+    "mp3",
+    new Audio("./sounds/quizz/titanic.mp3"),
+  ],
+];
+
+let quizzAudio = undefined;
 let randomIndex = undefined;
 let questionInfo = undefined;
 let answer1Info = undefined;
@@ -150,6 +183,38 @@ const submitButton = document.querySelector("#submit-button");
 const continueButton = document.querySelector("#continue-button");
 const correctMessage = document.querySelector("#correct-answer-message");
 const wrongMessage = document.querySelector("#wrong-answer-message");
+
+// function adaptateMusicArray() {
+//   if (Game.playing === false) {
+//     for (let i = 0; i <= musicArray.length; i++) {
+//       let arrayChecked = musicArray[i];
+//       for (let j = 0; j <= arrayChecked.length; j++) {
+//         if (musicArray[i][j] === "mp3") {
+//           musicArray.splice(i, 1);
+//         }
+//       }
+//     }
+//   } else if (Game.playing === true) {
+//     for (let i = 0; i <= dataForMp3Array.length; i++)
+//       if (!musicArray.includes(dataForMp3Array[i])) {
+//         musicArray.push(dataForMp3Array[i]);
+//       }
+//   }
+// }
+
+// musicArray.forEach((question, i) => {
+//   if (question.includes("mp3")) {
+//     musicArray.splice(i, 1);
+// }
+// });
+
+// else if (Game.playing === true) {
+//   for (let i = 0; i <= dataForMp3Array.length; i++) {
+//     if (!musicArray.includes(dataForMp3Array[i])) {
+//       musicArray.push(dataForMp3Array[i]);
+//     }
+//   }
+// }
 
 function printQuizz() {
   if (Game.currentLevel === 1) {
@@ -173,11 +238,12 @@ function printQuizz() {
     answer1Text.innerText = answer1Info;
     answer2Text.innerText = answer2Info;
     answer3Text.innerText = answer3Info;
+    infoArray.splice(randomIndex, 1);
   }
 
   if (Game.currentLevel === 2) {
     if (Game.mathQuizzCollision()) {
-      randomIndex = Math.floor(Math.random() * infoArray.length);
+      randomIndex = Math.floor(Math.random() * mathsArray.length);
       questionInfo = mathsArray[randomIndex][0];
       answer1Info = mathsArray[randomIndex][1];
       answer2Info = mathsArray[randomIndex][2];
@@ -197,8 +263,9 @@ function printQuizz() {
       answer1Text.innerText = answer1Info;
       answer2Text.innerText = answer2Info;
       answer3Text.innerText = answer3Info;
+      mathsArray.splice(randomIndex, 1);
     } else if (Game.geoQuizzCollision()) {
-      randomIndex = Math.floor(Math.random() * infoArray.length);
+      randomIndex = Math.floor(Math.random() * geoArray.length);
       questionInfo = geoArray[randomIndex][0];
       answer1Info = geoArray[randomIndex][1];
       answer2Info = geoArray[randomIndex][2];
@@ -218,8 +285,9 @@ function printQuizz() {
       answer1Text.innerText = answer1Info;
       answer2Text.innerText = answer2Info;
       answer3Text.innerText = answer3Info;
+      geoArray.splice(randomIndex, 1);
     } else if (Game.musicQuizzCollision()) {
-      randomIndex = Math.floor(Math.random() * infoArray.length);
+      randomIndex = Math.floor(Math.random() * musicArray.length);
       questionInfo = musicArray[randomIndex][0];
       answer1Info = musicArray[randomIndex][1];
       answer2Info = musicArray[randomIndex][2];
@@ -227,7 +295,9 @@ function printQuizz() {
       correctAnswer = musicArray[randomIndex][4];
       // console.log(`correct: ${correctAnswer}`);
       if (musicArray[randomIndex].includes("mp3")) {
-        console.log("ohyeah");
+        quizzAudio = musicArray[randomIndex][6];
+        (Game.musicQuizz = true), Game.backSound.pause();
+        quizzAudio.play();
       }
     }
     let question = document.querySelector("#question");
@@ -242,6 +312,7 @@ function printQuizz() {
     answer1Text.innerText = answer1Info;
     answer2Text.innerText = answer2Info;
     answer3Text.innerText = answer3Info;
+    musicArray.splice(randomIndex, 1);
   }
 }
 
@@ -258,6 +329,19 @@ function skipQuestion(event) {
   }
 }
 
+function changeScores() {
+  if (Game.currentLevel === 1) {
+    Game.quizzScore--;
+  } else if (Game.currentLevel === 2) {
+    if (Game.typeOfQuestion === "maths" && Game.mathsScore > 0) {
+      Game.mathsScore--;
+    } else if (Game.typeOfQuestion === "geo" && Game.geoScore > 0) {
+      Game.geoScore--;
+    } else if (Game.typeOfQuestion === "music" && Game.musicScore > 0) {
+      Game.musicScore--;
+    }
+  }
+}
 function continueGame() {
   Game.atQuizz = false;
   quizzBox.style.visibility = "hidden";
@@ -273,8 +357,16 @@ window.addEventListener("load", () => {
 });
 
 function printScore() {
-  let legendInfo = document.querySelector("#quizz-legend-text");
-  legendInfo.innerText = `= ${Game.quizzScore} preguntas`;
+  let firstLevelLegendInfo = document.querySelector(
+    "#firstlevel-quizz-legend-text"
+  );
+  let musicLegendInfo = document.querySelector("#music-quizz-legend-text");
+  let geoLegendInfo = document.querySelector("#geo-quizz-legend-text");
+  let mathsLegendInfo = document.querySelector("#maths-quizz-legend-text");
+  firstLevelLegendInfo.innerText = `= ${Game.quizzScore} preguntas`;
+  musicLegendInfo.innerText = `= ${Game.musicScore} preguntas`;
+  geoLegendInfo.innerText = `= ${Game.geoScore} preguntas`;
+  mathsLegendInfo.innerText = `= ${Game.mathsScore} preguntas`;
 }
 
 function getResult(event) {
@@ -285,17 +377,18 @@ function getResult(event) {
   if (answer1.checked && answer1Info === correctAnswer) {
     document.querySelector("#correct-answer-message").style.visibility =
       "visible";
-    Game.quizzScore--;
+    changeScores();
     printScore();
   } else if (answer2.checked && answer2Info === correctAnswer) {
     document.querySelector("#correct-answer-message").style.visibility =
       "visible";
-    Game.quizzScore--;
+    changeScores();
+
     printScore();
   } else if (answer3.checked && answer3Info === correctAnswer) {
     document.querySelector("#correct-answer-message").style.visibility =
       "visible";
-    Game.quizzScore--;
+    changeScores();
     printScore();
   } else {
     document.querySelector("#wrong-answer-message").style.visibility =

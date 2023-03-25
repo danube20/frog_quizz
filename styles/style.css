@@ -23,7 +23,7 @@ body {
   margin-top: 10px;
 }
 
-.game-intro img {
+#board-img {
   object-fit: cover;
   width: 100%;
 }
@@ -140,14 +140,14 @@ body {
   margin-top: 15px;
 }
 
-#quizz-legend-questionmark {
+.quizz-legend-questionmark {
   position: absolute;
-  width: 50px;
+  width: 60px;
   top: 400px;
   left: 130px;
 }
 
-#quizz-legend-text {
+.legendtext {
   position: absolute;
   font-family: "Schoolbell";
   top: 400px;
@@ -156,4 +156,20 @@ body {
   color: white;
   -webkit-text-stroke: 1px black;
   font-size: 40px;
+}
+
+#blue-question-mark {
+  top: 500px;
+}
+
+#white-question-mark {
+  top: 600px;
+}
+
+#geo-quizz-legend-text {
+  top: 500px;
+}
+
+#maths-quizz-legend-text {
+  top: 600px;
 }

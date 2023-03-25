@@ -1,6 +1,8 @@
 window.onload = () => {
   document.querySelector("#lifes").style.visibility = "hidden";
-  document.querySelector("#quizz-legend-questionmark").style.visibility =
+  document.querySelector("#level-one-legend-questionmark").style.visibility =
+    "hidden";
+  document.querySelector("#level-two-legend-questionmark").style.visibility =
     "hidden";
 
   document.querySelector("#sound-button").onclick = () => {
