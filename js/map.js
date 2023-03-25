@@ -42,18 +42,18 @@ class TileMap {
           this.#drawWall(this.ctx, column, row, this.tileSize);
         }
 
-        ctx.strokeStyle = "yellow";
-        ctx.strokeRect(
-          column * this.tileSize,
-          row * this.tileSize,
-          this.tileSize,
-          this.tileSize
-        );
+        // ctx.strokeStyle = "yellow";
+        // ctx.strokeRect(
+        //   column * this.tileSize,
+        //   row * this.tileSize,
+        //   this.tileSize,
+        //   this.tileSize
+        // );
       }
     }
   }
   #drawWall(ctx, column, row, size) {
-    this.ctx.fillStyle = "rgba(0,0,0,0.8)";
+    this.ctx.fillStyle = "rgba(0,0,0,0)";
     this.ctx.fillRect(column * this.tileSize, row * this.tileSize, size, size);
   }
 }

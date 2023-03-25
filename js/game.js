@@ -13,7 +13,7 @@ const Game = {
   height: undefined,
   FPS: 60,
 
-  currentLevel: 2,
+  currentLevel: 1,
 
   framesCounter: 0,
 

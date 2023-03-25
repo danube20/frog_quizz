@@ -346,12 +346,24 @@ function changeScores() {
   }
 }
 function continueGame() {
-  Game.atQuizz = false;
-  quizzBox.style.visibility = "hidden";
-  continueButton.style.visibility = "hidden";
-  correctMessage.style.visibility = "hidden";
-  wrongMessage.style.visibility = "hidden";
-  cantSkipMessage.style.visibility = "hidden";
+  if (Game.currentLevel === 1) {
+    Game.atQuizz = false;
+    quizzBox.style.visibility = "hidden";
+    continueButton.style.visibility = "hidden";
+    correctMessage.style.visibility = "hidden";
+    wrongMessage.style.visibility = "hidden";
+    cantSkipMessage.style.visibility = "hidden";
+  } else if (Game.currentLevel === 2 && Game.musicQuizz === true) {
+    quizzAudio.pause();
+    Game.backSound.play();
+    Game.atQuizz = false;
+    quizzBox.style.visibility = "hidden";
+    continueButton.style.visibility = "hidden";
+    correctMessage.style.visibility = "hidden";
+    wrongMessage.style.visibility = "hidden";
+    cantSkipMessage.style.visibility = "hidden";
+    Game.musicQuizz = false;
+  }
 }
 
 window.addEventListener("load", () => {
