@@ -2,8 +2,12 @@ const Game = {
   crashAudio: new Audio("./sounds/crash.mp3"),
   jumpAudio: new Audio("./sounds/jump.mp3"),
   backSound: new Audio("./sounds/backsound.mp3"),
-  gameOverSound: new Audio("./sounds/gameover.mp3"),
-  croacSound: new Audio("./sounds/croac.mp3"),
+  croacSound: new Audio("./sounds/froggievoice/croac.mp3"),
+  noSkipSound: new Audio("./sounds/froggievoice/noskip.mp3"),
+  wrongSound: new Audio("./sounds/froggievoice/wrong.mp3"),
+  goSound: new Audio("./sounds/froggievoice/go.mp3"),
+  correctSound: new Audio("./sounds/froggievoice/correct.mp3"),
+  gameOverSound: new Audio("./sounds/froggievoice/gameover.mp3"),
   splashSound: new Audio("./sounds/splash.mp3"),
   clin: new Audio("./sounds/clin.mp3"),
 
@@ -66,6 +70,7 @@ const Game = {
     this.generateGeoQuizzObjects();
     this.generateObstaclesUp();
     this.generateObstaclesDown();
+    this.switchArray();
   },
 
   setContext() {
@@ -82,13 +87,9 @@ const Game = {
 
   start() {
     this.reset();
-    document.querySelector("#lifes").style.visibility = "visible";
-    document.querySelector("#board-img").src = "./images/LeaderboardScreen.png";
-    document.querySelector("#level-one-legend-questionmark").style.visibility =
-      "visible";
+    this.startGameScreen();
     printScore();
 
-    document.querySelector("#start-button").style.visibility = "hidden";
     this.backSound.play();
     this.backSound.loop = true;
     this.interval = setInterval(() => {
@@ -108,6 +109,28 @@ const Game = {
         this.generateObstaclesDown();
         this.clearObstaclesUp();
         this.clearObstaclesDown();
+
+        if (this.isCollisionUp() || this.isCollisionDown()) {
+          this.generateExplosion();
+          this.crashAudio.play();
+          this.lifes--;
+          this.player.posX = 200;
+          this.player.posY = 700;
+        }
+        if (this.quizzCollision()) {
+          console.log("quiz coll");
+          this.clin.play();
+          this.atQuizz = true;
+          this.displayCard();
+          printQuizz();
+          this.clearQuizzObject();
+        }
+        if (this.isCollisionUp()) {
+          console.log("coll up");
+        }
+        if (this.isCollisionDown()) {
+          console.log("coll Down");
+        }
       }
 
       if (this.currentLevel === 2) {
@@ -119,16 +142,6 @@ const Game = {
       if (this.croacTimer === 800) {
         this.croacTimer = 0;
         this.croacSound.play();
-      }
-
-      if (this.currentLevel === 1) {
-        if (this.isCollisionUp() || this.isCollisionDown()) {
-          this.generateExplosion();
-          this.crashAudio.play();
-          this.lifes--;
-          this.player.posX = 200;
-          this.player.posY = 700;
-        }
       }
 
       if (this.currentLevel === 2) {
@@ -143,15 +156,6 @@ const Game = {
           this.lifes--;
           this.player.posX = 259;
           this.player.posY = 777;
-        }
-      }
-      if (this.currentLevel === 1) {
-        if (this.quizzCollision()) {
-          this.clin.play();
-          this.atQuizz = true;
-          this.displayCard();
-          printQuizz();
-          this.clearQuizzObject();
         }
       }
 
@@ -186,9 +190,30 @@ const Game = {
           this.winScreen();
         }
       }
-
-      // adaptateMusicArray();
     }, 1000 / this.FPS);
+  },
+
+  gameIntro() {
+    const gameIntro = document.querySelector("#game-intro");
+    const game = document.querySelector("#game");
+    const quizz = document.querySelector("#quizz-box");
+    const win = document.querySelector("#win-screen");
+    const gameOver1 = document.querySelector("#game-over-1");
+    const gameOver2 = document.querySelector("#game-over-2");
+    gameIntro.style.display = "block";
+    game.style.display = "none";
+    quizz.style.visibility = "hidden";
+    win.style.display = "none";
+    gameOver1.style.display = "none";
+    gameOver2.style.display = "none";
+  },
+
+  startGameScreen() {
+    const gameIntro = document.querySelector("#game-intro");
+    const game = document.querySelector("#game");
+
+    gameIntro.style.display = "none";
+    game.style.display = "block";
   },
 
   printLifes() {
@@ -264,7 +289,7 @@ const Game = {
   drawAll() {
     if (this.currentLevel === 1) {
       this.background1.draw();
-      this.tileMap.draw(this.ctx);
+      // this.tileMap.draw(this.ctx);
       this.obstaclesUpArray.forEach((obs) => {
         obs.draw(this.framesCounter);
       });
@@ -323,11 +348,11 @@ const Game = {
   //print arrays
   generateQuizzObjects() {
     this.quizzObjects.push(new QuizzObject(this.ctx, 400, 240));
-    this.quizzObjects.push(new QuizzObject(this.ctx, 200, 670));
     this.quizzObjects.push(new QuizzObject(this.ctx, 150, 150));
     this.quizzObjects.push(new QuizzObject(this.ctx, 148, 850));
     this.quizzObjects.push(new QuizzObject(this.ctx, 200, 30));
     this.quizzObjects.push(new QuizzObject(this.ctx, 315, 470));
+    this.quizzObjects.push(new QuizzObject(this.ctx, 415, 170));
   },
 
   generateMathQuizzObjects() {
@@ -375,6 +400,12 @@ const Game = {
 
   generateSplashdown() {
     this.splashdownsArray.push(new Splashdown(this.ctx));
+  },
+
+  switchArray() {
+    mutedMusicArray = musicArray.filter((question) => {
+      return !question.includes("mp3");
+    });
   },
 
   //clean arrays
@@ -482,12 +513,15 @@ const Game = {
 
   quizzCollision() {
     return this.quizzObjects.some((quizz) => {
-      return (
+      if (
         this.player.posX + 58 <= quizz.posX + quizz.width - 26.5 &&
         this.player.posX + this.player.width - 55 >= quizz.posX + 26.5 &&
         this.player.posY + 39 <= quizz.posY + quizz.height - 11.5 &&
         this.player.posY + this.player.height - 38 >= quizz.posY + 12.5
-      );
+      ) {
+        console.log(quizz);
+        return true;
+      }
     });
   },
 
@@ -587,9 +621,6 @@ const Game = {
         "hidden";
       document.querySelector("#maths-quizz-legend-text").style.visibility =
         "hidden";
-      document.querySelector(
-        "#level-one-legend-question-mark"
-      ).style.visibility = "visible";
       document.querySelector("#blue-question-mark").style.visibility = "hidden";
       document.querySelector("#sky-question-mark").style.visibility = "hidden";
       document.querySelector("#white-question-mark").style.visibility =
@@ -647,23 +678,16 @@ const Game = {
           break;
       }
     });
-    this.ctx.fillStyle = "black";
-    this.ctx.fillRect(0, 0, this.width, this.height);
-    this.ctx.fillStyle = "red";
-    this.ctx.font = "40px Arial";
-    this.ctx.fillText(`Game Over`, 220, 350);
-    if (this.lifes === 0) {
-      this.ctx.fillStyle = "white";
-      this.ctx.font = "40px Arial";
-      this.ctx.fillText(`Te has quedado sin vidas`, 130, 450);
-    } else if (this.notEnoughQuizz) {
-      this.ctx.fillStyle = "white";
-      this.ctx.font = "40px Arial";
-      this.ctx.fillText(`Has skipeado demasiado`, 130, 450);
+
+    if (this.currentLevel === 1) {
+      if (this.lifes === 0) {
+        const gameOverScreen1 = document.querySelector("#game-over-1");
+        gameOverScreen1.style.display = "block";
+      } else if (this.quizzScore > this.quizzObjects.length) {
+        const gameOverScreen2 = document.querySelector("#game-over-2");
+        gameOverScreen2.style.display = "block";
+      }
     }
-    this.ctx.fillStyle = "white";
-    this.ctx.font = "40px Arial";
-    this.ctx.fillText(`Press ENTER to retry`, 130, 550);
   },
 
   winScreen() {

@@ -14,13 +14,24 @@
 </head>
 
 <body>
+
+
+  <div id="game-intro">
+
+    <img src="/images/background/start-game-screen.jpg" alt="start-screen">
+    <button id="start-button"><img src="./images/background/start-button.png" alt="start-button"></button>
+  </div>
+
+
   <div id="game">
-    <div class="game-intro">
-      <img src="./images/background/intro-background.jpg" alt="board image" class="board-img" id="board-img" />
-      <div id="level-one-legend-questionmark">
-        <img src="./images/quiz/question-mark.png" alt="question mark" id="level-one-legend-question-mark"
-          class="quizz-legend-questionmark" />
-      </div>
+    <div id="game-legend">
+
+      <img src="./images/legend-screen-level1.jpg" alt="legend background" id="legend-background">
+
+
+      <p class="legendtext" id="firstlevel-quizz-legend-text"></p>
+
+
       <div id="level-two-legend-questionmark"> <img src="./images/quiz/staticbluequestionmark.png" alt="question mark"
           id="blue-question-mark" class="quizz-legend-questionmark" />
         <img src="./images/quiz/staticwhitequestionmark.png" alt="question mark" id="white-question-mark"
@@ -28,16 +39,19 @@
         <img src="./images/quiz/staticskyquestionmark.png" alt="question mark" id="sky-question-mark"
           class="quizz-legend-questionmark" />
       </div>
-      <p class="legendtext" id="firstlevel-quizz-legend-text"></p>
-      <p class="legendtext" id="music-quizz-legend-text"></p>
-      <p class="legendtext" id="geo-quizz-legend-text"></p>
-      <p class="legendtext" id="maths-quizz-legend-text"></p>
-      <br />
-      <div class="buttondiv">
-        <button id="start-button">Press to start</button>
-        <img src="images/3lifes.png" alt="lifes-img" id="lifes" />
-        <img src="images/soundbutton.png" alt="sound-button" id="sound-button" />
+
+      <div id="level-two-legend-text">
+        <p class="legendtext" id="music-quizz-legend-text"></p>
+        <p class="legendtext" id="geo-quizz-legend-text"></p>
+        <p class="legendtext" id="maths-quizz-legend-text"></p>
       </div>
+
+
+
+      <img src="images/3lifes.png" alt="lifes-img" id="lifes" />
+      <img src="images/soundbutton.png" alt="sound-button" id="sound-button" />
+
+
     </div>
 
     <div id="game-board">
@@ -75,6 +89,7 @@
           <p id="wrong-answer-message">
             Respuesta incorrecta...Frogie pierde una vida :(
           </p>
+          <p id="non-answer-message">Primero, debes seleccionar una respuesta</p>
         </div>
 
         <button id="continue-button" class="quizz-button" type="button">
@@ -83,15 +98,33 @@
 
       </form>
     </div>
+
+    <div id="win-screen">
+      <img src="./images/youwin-screen-nextlevel-10.png" alt="you win!" id="you-win-1">
+      <img src="./images/youwin-screen-restart-11.png" alt="you win!" id="you-win-2">
+    </div>
+
+    <div id="game-over-screen">
+      <img src="./images/gameover-screen-1.png" alt="Game Over Screen" id="game-over-1">
+      <img src="./images/gameover-screen-2.png" alt="Game Over Screen" id="game-over-2">
+    </div>
   </div>
 
+
+
+
+
+
+
+
+  <script src="js/collisionMatrix.js"></script>
   <script src="js/map.js"></script>
   <script src="js/splashdown.js"></script>
   <script src="js/explosion.js"></script>
   <script src="js/quizz-data.js"></script>
+  <script src="js/quizz-objects.js"></script>
   <script src="js/obstacles.js"></script>
   <script src="js/table.js"></script>
-  <script src="js/quizz-objects.js"></script>
   <script src="js/player.js"></script>
   <script src="js/background.js"></script>
   <script src="js/river.js"></script>

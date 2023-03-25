@@ -434,6 +434,8 @@ function getResult(event) {
       "visible";
     changeScores();
     printScore();
+  } else if (!answer1.checked && answer2.checked && answer3.checked) {
+    document.querySelector("#non-answer-message").style.visibility = "visible";
   } else {
     document.querySelector("#wrong-answer-message").style.visibility =
       "visible";

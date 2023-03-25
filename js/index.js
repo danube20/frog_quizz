@@ -1,9 +1,9 @@
 window.onload = () => {
-  document.querySelector("#lifes").style.visibility = "hidden";
-  document.querySelector("#level-one-legend-questionmark").style.visibility =
-    "hidden";
-  document.querySelector("#level-two-legend-questionmark").style.visibility =
-    "hidden";
+  // document.querySelector("#lifes").style.visibility = "hidden";
+  // document.querySelector("#level-one-legend-questionmark").style.visibility =
+  //   "hidden";
+  // document.querySelector("#level-two-legend-questionmark").style.visibility =
+  //   "hidden";
 
   document.querySelector("#sound-button").onclick = () => {
     let soundbutton = document.querySelector("#sound-button");
@@ -17,6 +17,7 @@ window.onload = () => {
       Game.sound();
     }
   };
+  Game.gameIntro();
 
   document.getElementById("start-button").onclick = () => {
     Game.init();

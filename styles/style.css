@@ -2,30 +2,45 @@
   padding: 0;
   margin: 0;
   text-align: center;
+  max-height: 100vh;
 }
 
-body {
-  background-color: #019544;
+html {
+  height: 100%;
 }
 
 #game {
   display: flex;
+  background-color: #019544;
 }
 
-.game-intro {
-  width: 646px;
-  height: 100%;
+#game-legend {
+  display: flex;
+  flex-direction: column;
+}
+
+#legend-background {
+  position: absolute;
+}
+#game-intro {
+  width: 100%;
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+#game-intro img {
+  width: 100%;
+  object-fit: cover;
   position: relative;
 }
 
-#sound-button {
-  width: 40px;
-  margin-top: 10px;
-}
-
-#board-img {
-  object-fit: cover;
-  width: 100%;
+#start-button {
+  position: absolute;
+  bottom: 25%;
+  left: 40%;
+  width: 20%;
+  background-color: transparent;
+  border: transparent;
 }
 
 #quizz-box {
@@ -38,10 +53,7 @@ body {
   background-image: url("/images/quizz-background.png");
   background-repeat: no-repeat;
 
-  font-family: "Schoolbell", cursive;
-
-  visibility: hidden;
-  border: solid 2px red;
+  font-family: "Helvetica", cursive;
 
   display: flex;
   justify-content: center;
@@ -54,15 +66,21 @@ body {
   align-items: center;
 }
 
-.buttondiv {
+#lifes {
   position: absolute;
-  bottom: 70px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  top: 62%;
+  left: 12%;
+  width: 8%;
 }
 
-.buttondiv button {
+#sound-button {
+  position: absolute;
+  top: 70%;
+  left: 14.5%;
+  width: 3%;
+}
+
+/* .buttondiv button {
   font-size: 30px;
   background-color: #282828;
   color: #8dc53e;
@@ -74,6 +92,15 @@ body {
   margin-bottom: 20px;
   margin-top: 20px;
   width: 220px;
+} */
+
+/* #game-over-screen {
+  display: none;
+} */
+
+#non-answer-message {
+  visibility: hidden;
+  padding: 20px;
 }
 
 #correct-answer-message {
@@ -95,15 +122,6 @@ body {
   padding-top: 10px;
 }
 
-.board-img {
-  width: 380px;
-  margin-top: 20px;
-}
-
-#lifes {
-  width: 20%;
-}
-
 #question-sheet {
   display: flex;
   flex-direction: column;
@@ -118,7 +136,7 @@ body {
   background-color: #019544;
   color: white;
   padding: 10px;
-  font-family: "Schoolbell";
+  font-family: "Helvetica";
   font-weight: 700;
   font-size: 20px;
 }
@@ -147,20 +165,20 @@ body {
 
 .quizz-legend-questionmark {
   position: absolute;
-  width: 60px;
-  top: 400px;
-  left: 130px;
+  width: 4%;
+  top: 45%;
+  left: 8%;
 }
 
 .legendtext {
   position: absolute;
-  font-family: "Schoolbell";
-  top: 400px;
-  left: 190px;
+  font-family: Helvetica, Arial, sans-serif;
+  top: 46%;
+  left: 11%;
   text-align: left;
-  color: white;
-  -webkit-text-stroke: 1px black;
-  font-size: 40px;
+  color: black;
+  font-size: 30px;
+  font-weight: 600;
 }
 
 #blue-question-mark {
