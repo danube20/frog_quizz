@@ -323,7 +323,27 @@ function changeScores() {
     }
   }
 }
+
+function checkIfWin() {
+  if (Game.currentLevel === 1 && Game.quizzScore === 0) {
+    Game.backSound.pause();
+    Game.winScreen();
+  } else if (
+    Game.currentLevel === 2 &&
+    Game.mathsScore === 0 &&
+    Game.geoScore === 0 &&
+    Game.musicScore === 0
+  ) {
+    Game.backSound.pause();
+    Game.winScreen();
+  }
+}
 function continueGame() {
+  checkIfWin();
+  if (Game.musicScore !== 0 || Game.geoScore !== 0 || Game.mathsScore !== 0) {
+    Game.backSound.play();
+  }
+
   if (Game.currentLevel === 1) {
     Game.atQuizz = false;
     quizzBox.style.visibility = "hidden";
@@ -332,13 +352,8 @@ function continueGame() {
     wrongMessage.style.visibility = "hidden";
     cantSkipMessage.style.visibility = "hidden";
     noAnswerMessage.style.visibility = "hidden";
-
-    if (Game.quizzScore === 0) {
-      Game.winScreen();
-    }
   } else if (Game.currentLevel === 2 && Game.musicQuizz === true) {
     quizzAudio.pause();
-    Game.backSound.play();
     Game.atQuizz = false;
     quizzBox.style.visibility = "hidden";
     continueButton.style.visibility = "hidden";
@@ -346,11 +361,9 @@ function continueGame() {
     wrongMessage.style.visibility = "hidden";
     cantSkipMessage.style.visibility = "hidden";
     noAnswerMessage.style.visibility = "hidden";
-
     Game.musicQuizz = false;
     Game.croacTimer = 0;
   } else if (Game.currentLevel === 2 && Game.musicQuizz === false) {
-    Game.backSound.play();
     Game.atQuizz = false;
     quizzBox.style.visibility = "hidden";
     continueButton.style.visibility = "hidden";
@@ -358,15 +371,7 @@ function continueGame() {
     wrongMessage.style.visibility = "hidden";
     cantSkipMessage.style.visibility = "hidden";
     noAnswerMessage.style.visibility = "hidden";
-
     Game.croacTimer = 0;
-  } else if (
-    Game.currentLevel === 2 &&
-    this.mathsScore === 0 &&
-    this.geoScore === 0 &&
-    this.musicScore === 0
-  ) {
-    Game.winScreen();
   }
 }
 
@@ -413,21 +418,21 @@ function lastQuestion() {
     }
   } else if (Game.currentLevel === 2) {
     if (
-      Game.atQuizz === true &&
+      // Game.atQuizz === true &&
       Game.typeOfQuestion === "maths" &&
       Game.mathsScore === Game.mathQuizzObjects.length
     ) {
       document.querySelector("#cant-skip-message").style.visibility = "visible";
       Game.noSkipSound.play();
     } else if (
-      Game.atQuizz === true &&
+      // Game.atQuizz === true &&
       Game.typeOfQuestion === "geo" &&
       Game.geoScore === Game.geoQuizzObjects.length
     ) {
       document.querySelector("#cant-skip-message").style.visibility = "visible";
       Game.noSkipSound.play();
     } else if (
-      Game.atQuizz === true &&
+      // Game.atQuizz === true &&
       Game.typeOfQuestion === "music" &&
       Game.musicScore === Game.musicQuizzObjects.length
     ) {
@@ -439,6 +444,7 @@ function lastQuestion() {
 
 function getResult(event) {
   event.preventDefault();
+  Game.noSkipSound.pause();
   if (!answer1.checked && !answer2.checked && !answer3.checked) {
     document.querySelector("#no-answer-message").style.visibility = "visible";
   } else {

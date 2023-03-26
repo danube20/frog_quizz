@@ -194,6 +194,7 @@ const Game = {
     gameOver2.style.display = "none";
     win1.style.display = "none";
     win2.style.display = "none";
+    this.goSound.play();
   },
 
   startGameScreen() {
@@ -216,6 +217,7 @@ const Game = {
       const legendImage = document.querySelector("#legend-background");
       legendImage.src = "./images/legend-screen-level2.jpg";
     }
+    Game.goSound.play();
   },
 
   printLifes() {
@@ -331,6 +333,7 @@ const Game = {
     this.onTableUp();
     this.onTableDown();
     this.player.draw(this.framesCounter);
+
     if (this.currentLevel === 1) {
       this.quizzObjects.forEach((quiz) => {
         quiz.draw(this.framesCounter);
@@ -700,7 +703,13 @@ const Game = {
       if (this.lifes === 0) {
         const gameOverScreen1 = document.querySelector("#game-over-1");
         gameOverScreen1.style.display = "block";
-      } else if (this.quizzScore > this.quizzObjects.length) {
+      } else if (this.musicScore > this.musicQuizzObjects.length) {
+        const gameOverScreen2 = document.querySelector("#game-over-2");
+        gameOverScreen2.style.display = "block";
+      } else if (this.mathsScore > this.mathQuizzObjects.length) {
+        const gameOverScreen2 = document.querySelector("#game-over-2");
+        gameOverScreen2.style.display = "block";
+      } else if (this.geoScore > this.geoQuizzObjects.length) {
         const gameOverScreen2 = document.querySelector("#game-over-2");
         gameOverScreen2.style.display = "block";
       }
@@ -733,6 +742,8 @@ const Game = {
       document.addEventListener("keydown", (e) => {
         switch (e.keyCode) {
           case this.keys.ENTER:
+            winScreen2.style.display = "none";
+            this.currentLevel = 1;
             window.location.reload();
             this.winSound.pause();
             break;
