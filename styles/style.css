@@ -154,20 +154,31 @@ html {
   font-weight: 600;
 }
 
-#blue-question-mark {
-  top: 500px;
+#sky-question-mark {
+  top: 40%;
 }
 
-#white-question-mark {
-  top: 600px;
+#red-question-mark {
+  top: 50%;
+}
+
+#blue-question-mark {
+  top: 60%;
+}
+
+#music-quizz-legend-text {
+  top: 42%;
+  left: 13%;
 }
 
 #geo-quizz-legend-text {
-  top: 500px;
+  top: 52%;
+  left: 13%;
 }
 
 #maths-quizz-legend-text {
-  top: 600px;
+  top: 62%;
+  left: 13%;
 }
 
 .front-message {

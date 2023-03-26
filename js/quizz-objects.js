@@ -51,12 +51,12 @@ class BlueQuizzObject extends QuizzObject {
   }
 }
 
-class WhiteQuizzObject extends QuizzObject {
+class RedQuizzObject extends QuizzObject {
   constructor(ctx, posX, posY) {
     super(ctx, posX, posY);
 
     this.image = new Image();
-    this.image.src = "./images/quiz/whitequestionmark.png";
+    this.image.src = "./images/quiz/redquestionmark.png";
     this.image.frames = 14;
     this.image.framesIndex = 0;
   }

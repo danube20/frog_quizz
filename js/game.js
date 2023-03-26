@@ -17,7 +17,7 @@ const Game = {
   height: undefined,
   FPS: 60,
 
-  currentLevel: 1,
+  currentLevel: 2,
 
   framesCounter: 0,
 
@@ -96,10 +96,11 @@ const Game = {
       if (!Game.atQuizz) {
         this.framesCounter++;
       }
-      this.croacTimer++;
+
       if (this.framesCounter > 3000) {
         this.framesCounter = 0;
       }
+      this.croacTimer++;
       this.clear();
 
       this.drawAll();
@@ -173,20 +174,6 @@ const Game = {
       if (this.lifes === 0) {
         this.gameOver();
       }
-
-      // if (this.currentLevel === 1) {
-      //   if (this.quizzScore === 0) {
-      //     this.winScreen();
-      //   }
-      // } else if (this.currentLevel === 2) {
-      //   if (
-      //     this.mathsScore === 0 &&
-      //     this.geoScore === 0 &&
-      //     this.musicScore === 0
-      //   ) {
-      //     this.winScreen();
-      //   }
-      // }
     }, 1000 / this.FPS);
   },
 
@@ -215,6 +202,15 @@ const Game = {
       gameIntro.style.display = "none";
       game.style.display = "block";
     } else if (this.currentLevel === 2) {
+      const gameIntro = document.querySelector("#game-intro");
+      const game = document.querySelector("#game");
+      const lifes = document.querySelector("#lifes");
+      const soundButton = document.querySelector("#sound-button");
+
+      lifes.style.top = "75%";
+      soundButton.style.top = "82%";
+      gameIntro.style.display = "none";
+      game.style.display = "block";
       const legendImage = document.querySelector("#legend-background");
       legendImage.src = "./images/legend-screen-level2.jpg";
     }
@@ -239,6 +235,10 @@ const Game = {
     this.splashSound.volume = 0;
     this.croacSound.volume = 0;
     this.clin.volume = 0;
+    this.noSkipSound.volume = 0;
+    this.wrongSound.volume = 0;
+    this.goSound.volume = 0;
+    this.correctSound.volume = 0;
   },
 
   sound() {
@@ -358,18 +358,19 @@ const Game = {
   },
 
   generateMathQuizzObjects() {
-    this.mathQuizzObjects.push(new BlueQuizzObject(this.ctx, 400, 250));
-    this.mathQuizzObjects.push(new BlueQuizzObject(this.ctx, 200, 650));
+    this.mathQuizzObjects.push(new BlueQuizzObject(this.ctx, 400, 240));
+    this.mathQuizzObjects.push(new BlueQuizzObject(this.ctx, 80, 710));
   },
 
   generateGeoQuizzObjects() {
-    this.geoQuizzObjects.push(new WhiteQuizzObject(this.ctx, 300, 270));
-    this.geoQuizzObjects.push(new WhiteQuizzObject(this.ctx, 100, 750));
+    this.geoQuizzObjects.push(new RedQuizzObject(this.ctx, 200, 100));
+    this.geoQuizzObjects.push(new RedQuizzObject(this.ctx, 100, 870));
   },
 
   generateMusicQuizzObjects() {
-    this.musicQuizzObjects.push(new SkyQuizzObject(this.ctx, 120, 550));
-    this.musicQuizzObjects.push(new SkyQuizzObject(this.ctx, 350, 650));
+    this.musicQuizzObjects.push(new SkyQuizzObject(this.ctx, 180, 230));
+    this.musicQuizzObjects.push(new SkyQuizzObject(this.ctx, 50, 530));
+    this.musicQuizzObjects.push(new SkyQuizzObject(this.ctx, 350, 700));
   },
 
   generateTablesDown() {
@@ -624,8 +625,7 @@ const Game = {
         "hidden";
       document.querySelector("#blue-question-mark").style.visibility = "hidden";
       document.querySelector("#sky-question-mark").style.visibility = "hidden";
-      document.querySelector("#white-question-mark").style.visibility =
-        "hidden";
+      document.querySelector("#red-question-mark").style.visibility = "hidden";
     }
 
     if (this.currentLevel === 2) {
@@ -640,8 +640,7 @@ const Game = {
       document.querySelector("#blue-question-mark").style.visibility =
         "visible";
       document.querySelector("#sky-question-mark").style.visibility = "visible";
-      document.querySelector("#white-question-mark").style.visibility =
-        "visible";
+      document.querySelector("#red-question-mark").style.visibility = "visible";
     }
   },
 
@@ -678,6 +677,16 @@ const Game = {
     });
 
     if (this.currentLevel === 1) {
+      if (this.lifes === 0) {
+        const gameOverScreen1 = document.querySelector("#game-over-1");
+        gameOverScreen1.style.display = "block";
+      } else if (this.quizzScore > this.quizzObjects.length) {
+        const gameOverScreen2 = document.querySelector("#game-over-2");
+        gameOverScreen2.style.display = "block";
+      }
+    }
+
+    if (this.currentLevel === 2) {
       if (this.lifes === 0) {
         const gameOverScreen1 = document.querySelector("#game-over-1");
         gameOverScreen1.style.display = "block";
