@@ -128,48 +128,48 @@ let musicArray = [
     "mp3",
     new Audio("./sounds/quizz/titanic.mp3"),
   ],
-  [
-    "¿De quién es la canción Hey Jude?",
-    "Los Beatles",
-    "Rolling Stones",
-    "Michael Jackson",
-    "Los Beatles",
-  ],
-  [
-    "¿De quién es la canción Hey Jude?",
-    "Los Beatles",
-    "Rolling Stones",
-    "Michael Jackson",
-    "Los Beatles",
-  ],
-  [
-    "¿Qué cantante americana ha ganado un Oscar por la canción 'Shallow'?",
-    "Beyoncé",
-    "Lady Gaga",
-    "Masiel",
-    "Lady Gaga",
-  ],
-  [
-    "¿A qué cantante se le conoce como El Sol de México?",
-    "Luis Miguel",
-    "Chavela Vargas",
-    "Julieta Venegas",
-    "Luis Miguel",
-  ],
-  [
-    "¿Cuál es el nombre de pila del compositor clásico Vivaldi?",
-    "Antonio",
-    "Verdi",
-    "Miguel",
-    "Antonio",
-  ],
-  [
-    "¿Quién compuso la balada 'Tears in heaven'?",
-    "Bon Jovi",
-    "Eric Clapton",
-    "Shakira",
-    "Eric Clapton",
-  ],
+  // [
+  //   "¿De quién es la canción Hey Jude?",
+  //   "Los Beatles",
+  //   "Rolling Stones",
+  //   "Michael Jackson",
+  //   "Los Beatles",
+  // ],
+  // [
+  //   "¿De quién es la canción Hey Jude?",
+  //   "Los Beatles",
+  //   "Rolling Stones",
+  //   "Michael Jackson",
+  //   "Los Beatles",
+  // ],
+  // [
+  //   "¿Qué cantante americana ha ganado un Oscar por la canción 'Shallow'?",
+  //   "Beyoncé",
+  //   "Lady Gaga",
+  //   "Masiel",
+  //   "Lady Gaga",
+  // ],
+  // [
+  //   "¿A qué cantante se le conoce como El Sol de México?",
+  //   "Luis Miguel",
+  //   "Chavela Vargas",
+  //   "Julieta Venegas",
+  //   "Luis Miguel",
+  // ],
+  // [
+  //   "¿Cuál es el nombre de pila del compositor clásico Vivaldi?",
+  //   "Antonio",
+  //   "Verdi",
+  //   "Miguel",
+  //   "Antonio",
+  // ],
+  // [
+  //   "¿Quién compuso la balada 'Tears in heaven'?",
+  //   "Bon Jovi",
+  //   "Eric Clapton",
+  //   "Shakira",
+  //   "Eric Clapton",
+  // ],
 ];
 
 let quizzAudio = undefined;
@@ -299,6 +299,7 @@ function skipQuestion(event) {
   quizzBox.style.visibility = "hidden";
   Game.atQuizz = false;
   printScore();
+  Game.checkEnoughQuestions();
 
   continueButton.style.visibility = "hidden";
   skipButton.style.visibility = "hidden";
@@ -327,6 +328,7 @@ function changeScores() {
 function checkIfWin() {
   if (Game.currentLevel === 1 && Game.quizzScore === 0) {
     Game.backSound.pause();
+    Game.backSound.currentTime = 0;
     Game.winScreen();
   } else if (
     Game.currentLevel === 2 &&
@@ -339,7 +341,6 @@ function checkIfWin() {
   }
 }
 function continueGame() {
-  checkIfWin();
   if (Game.musicScore !== 0 || Game.geoScore !== 0 || Game.mathsScore !== 0) {
     Game.backSound.play();
   }
@@ -373,6 +374,7 @@ function continueGame() {
     noAnswerMessage.style.visibility = "hidden";
     Game.croacTimer = 0;
   }
+  checkIfWin();
 }
 
 window.addEventListener("load", () => {
@@ -445,6 +447,7 @@ function lastQuestion() {
 function getResult(event) {
   event.preventDefault();
   Game.noSkipSound.pause();
+  Game.noSkipSound.currentTime = 0;
   if (!answer1.checked && !answer2.checked && !answer3.checked) {
     document.querySelector("#no-answer-message").style.visibility = "visible";
   } else {

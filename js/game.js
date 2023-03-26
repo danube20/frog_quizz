@@ -248,8 +248,8 @@ const Game = {
 
   sound() {
     this.crashAudio.volume = 1;
-    this.jumpAudio.volume = 0.4;
-    this.backSound.volume = 0.9;
+    this.jumpAudio.volume = 0.6;
+    this.backSound.volume = 0.8;
     this.gameOverSound.volume = 1;
     this.splashSound.volume = 1;
     this.croacSound.volume = 1;
@@ -460,7 +460,6 @@ const Game = {
         ) {
           this.quizzObjects.splice(i, 1);
         }
-        this.checkEnoughQuestions();
       });
     }
     if (this.currentLevel === 2) {
@@ -473,7 +472,6 @@ const Game = {
         ) {
           this.mathQuizzObjects.splice(i, 1);
         }
-        this.checkEnoughQuestions();
       });
     }
     if (this.currentLevel === 2) {
@@ -486,7 +484,6 @@ const Game = {
         ) {
           this.geoQuizzObjects.splice(i, 1);
         }
-        this.checkEnoughQuestions();
       });
     }
     if (this.currentLevel === 2) {
@@ -499,7 +496,6 @@ const Game = {
         ) {
           this.musicQuizzObjects.splice(i, 1);
         }
-        this.checkEnoughQuestions();
       });
     }
   },
@@ -679,6 +675,8 @@ const Game = {
     const lifesImage = document.getElementById("lifes");
     lifesImage.src = "images/0lifes.png";
     this.backSound.pause();
+    this.noSkipSound.pause();
+    this.noSkipSound.currentTime = 0;
     this.gameOverSound.play();
 
     document.addEventListener("keydown", (e) => {
@@ -719,6 +717,7 @@ const Game = {
   winScreen() {
     clearInterval(this.interval);
     this.backSound.pause();
+    this.backSound.currentTime = 0;
     this.winSound.play();
 
     if (this.currentLevel === 1) {
@@ -732,6 +731,7 @@ const Game = {
             this.currentLevel = 2;
             this.init();
             this.winSound.pause();
+            this.winSound.currentTime = 0;
             break;
         }
       });
@@ -746,6 +746,7 @@ const Game = {
             this.currentLevel = 1;
             window.location.reload();
             this.winSound.pause();
+            this.winSound.currentTime = 0;
             break;
         }
       });
