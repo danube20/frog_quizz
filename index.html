@@ -62,20 +62,19 @@
       <form id="question-sheet">
         <p id="question"></p>
         <div id="all-answers">
-          <label>
+          <label class="answer-option">
             <input type="radio" id="answer1" class="answer-radio" name="quizzanswer" value="1" />
             <span id="answer1Text" class="answer"></span>
           </label>
-          <label>
+          <label class="answer-option">
             <input type="radio" id="answer2" class="answer-radio" name="quizzanswer" value="2" />
             <span id="answer2Text" class="answer"></span>
           </label>
-          <label>
+          <label class="answer-option">
             <input type="radio" id="answer3" class="answer-radio" name="quizzanswer" value="3" />
             <span id="answer3Text" class="answer"></span>
           </label>
         </div>
-        <p id="cant-skip-message">Si pasas esta pregunta, no harbrá suficientes como para conseguir el objetivo</p>
 
         <div id="quizz-buttons">
           <button id="skip-button" class="quizz-button" type="button">
@@ -88,15 +87,15 @@
 
         <div class="submit-messages">
           <p id="correct-answer-message">Respuesta correcta. ¡Enhorabuena!</p>
-          <p id="cant-skip-message">Si pasas esta pregunta, no habrá suficientes como para conseguir el objetivo</p>
-          <p id="wrong-answer-message">
-            Respuesta incorrecta...Frogie pierde una vida :(
-          </p>
+          <p id="wrong-answer-message">Respuesta incorrecta...Frogie pierde una vida :(</p>
+          <p id="no-answer-message">Debes seleccionar una respuesta</p>
         </div>
 
         <button id="continue-button" class="quizz-button" type="button">
           Continuar >
         </button>
+        <p id="cant-skip-message">Si pasas esta pregunta, no habrá suficientes como para conseguir el objetivo</p>
+
 
       </form>
     </div>

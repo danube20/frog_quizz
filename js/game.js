@@ -10,6 +10,7 @@ const Game = {
   gameOverSound: new Audio("./sounds/froggievoice/gameover.mp3"),
   splashSound: new Audio("./sounds/splash.mp3"),
   clin: new Audio("./sounds/clin.mp3"),
+  winSound: new Audio("./sounds/win.mp3"),
 
   canvas: undefined,
   ctx: undefined,
@@ -17,7 +18,7 @@ const Game = {
   height: undefined,
   FPS: 60,
 
-  currentLevel: 2,
+  currentLevel: 1,
 
   framesCounter: 0,
 
@@ -87,6 +88,7 @@ const Game = {
 
   start() {
     this.reset();
+    this.sound();
     this.startGameScreen();
     printScore();
 
@@ -137,7 +139,7 @@ const Game = {
         this.clearTablesUp();
         this.clearTablesDown();
       }
-      if (this.croacTimer === 800) {
+      if (this.croacTimer === 800 && this.atQuizz === false) {
         this.croacTimer = 0;
         this.croacSound.play();
       }
@@ -239,14 +241,22 @@ const Game = {
     this.wrongSound.volume = 0;
     this.goSound.volume = 0;
     this.correctSound.volume = 0;
+    this.winSound.volume = 0;
   },
 
   sound() {
     this.crashAudio.volume = 1;
-    this.jumpAudio.volume = 1;
-    this.backSound.volume = 1;
+    this.jumpAudio.volume = 0.4;
+    this.backSound.volume = 0.9;
     this.gameOverSound.volume = 1;
     this.splashSound.volume = 1;
+    this.croacSound.volume = 1;
+    this.clin.volume = 1;
+    this.noSkipSound.volume = 1;
+    this.wrongSound.volume = 1;
+    this.goSound.volume = 1;
+    this.correctSound.volume = 1;
+    this.winSound.volume = 1;
   },
 
   displayCard() {
@@ -700,6 +710,7 @@ const Game = {
   winScreen() {
     clearInterval(this.interval);
     this.backSound.pause();
+    this.winSound.play();
 
     if (this.currentLevel === 1) {
       const winScreen1 = document.querySelector("#you-win-1");
@@ -711,6 +722,7 @@ const Game = {
             winScreen1.style.display = "none";
             this.currentLevel = 2;
             this.init();
+            this.winSound.pause();
             break;
         }
       });
@@ -722,6 +734,7 @@ const Game = {
         switch (e.keyCode) {
           case this.keys.ENTER:
             window.location.reload();
+            this.winSound.pause();
             break;
         }
       });

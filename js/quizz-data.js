@@ -189,6 +189,7 @@ const continueButton = document.querySelector("#continue-button");
 const correctMessage = document.querySelector("#correct-answer-message");
 const wrongMessage = document.querySelector("#wrong-answer-message");
 const cantSkipMessage = document.querySelector("#cant-skip-message");
+const noAnswerMessage = document.querySelector("#no-answer-message");
 
 function printQuizz() {
   lastQuestion();
@@ -303,6 +304,7 @@ function skipQuestion(event) {
   skipButton.style.visibility = "hidden";
   submitButton.style.visibility = "hidden";
   cantSkipMessage.style.visibility = "hidden";
+  noAnswerMessage.style.visibility = "hidden";
   if (Game.notEnoughQuizz === true) {
     Game.gameOver();
   }
@@ -329,6 +331,8 @@ function continueGame() {
     correctMessage.style.visibility = "hidden";
     wrongMessage.style.visibility = "hidden";
     cantSkipMessage.style.visibility = "hidden";
+    noAnswerMessage.style.visibility = "hidden";
+
     if (Game.quizzScore === 0) {
       Game.winScreen();
     }
@@ -341,7 +345,10 @@ function continueGame() {
     correctMessage.style.visibility = "hidden";
     wrongMessage.style.visibility = "hidden";
     cantSkipMessage.style.visibility = "hidden";
+    noAnswerMessage.style.visibility = "hidden";
+
     Game.musicQuizz = false;
+    Game.croacTimer = 0;
   } else if (Game.currentLevel === 2 && Game.musicQuizz === false) {
     Game.backSound.play();
     Game.atQuizz = false;
@@ -350,6 +357,9 @@ function continueGame() {
     correctMessage.style.visibility = "hidden";
     wrongMessage.style.visibility = "hidden";
     cantSkipMessage.style.visibility = "hidden";
+    noAnswerMessage.style.visibility = "hidden";
+
+    Game.croacTimer = 0;
   } else if (
     Game.currentLevel === 2 &&
     this.mathsScore === 0 &&
@@ -399,6 +409,7 @@ function lastQuestion() {
   if (Game.currentLevel === 1) {
     if (Game.quizzScore === Game.quizzObjects.length) {
       document.querySelector("#cant-skip-message").style.visibility = "visible";
+      Game.noSkipSound.play();
     }
   } else if (Game.currentLevel === 2) {
     if (
@@ -407,59 +418,114 @@ function lastQuestion() {
       Game.mathsScore === Game.mathQuizzObjects.length
     ) {
       document.querySelector("#cant-skip-message").style.visibility = "visible";
+      Game.noSkipSound.play();
     } else if (
       Game.atQuizz === true &&
       Game.typeOfQuestion === "geo" &&
       Game.geoScore === Game.geoQuizzObjects.length
     ) {
       document.querySelector("#cant-skip-message").style.visibility = "visible";
+      Game.noSkipSound.play();
     } else if (
       Game.atQuizz === true &&
       Game.typeOfQuestion === "music" &&
       Game.musicScore === Game.musicQuizzObjects.length
     ) {
       document.querySelector("#cant-skip-message").style.visibility = "visible";
+      Game.noSkipSound.play();
     }
   }
 }
 
 function getResult(event) {
   event.preventDefault();
-
-  if (answer1.checked && answer1Info === correctAnswer) {
-    document.querySelector("#correct-answer-message").style.visibility =
-      "visible";
-
-    skipButton.style.visibility = "hidden";
-    submitButton.style.visibility = "hidden";
-    continueButton.style.visibility = "visible";
-    changeScores();
-    printScore();
-  } else if (answer2.checked && answer2Info === correctAnswer) {
-    document.querySelector("#correct-answer-message").style.visibility =
-      "visible";
-
-    skipButton.style.visibility = "hidden";
-    submitButton.style.visibility = "hidden";
-    continueButton.style.visibility = "visible";
-    changeScores();
-
-    printScore();
-  } else if (answer3.checked && answer3Info === correctAnswer) {
-    document.querySelector("#correct-answer-message").style.visibility =
-      "visible";
-    skipButton.style.visibility = "hidden";
-    submitButton.style.visibility = "hidden";
-    continueButton.style.visibility = "visible";
-    changeScores();
-    printScore();
-  } else if (!answer1.checked && !answer2.checked && !answer3.checked) {
+  if (!answer1.checked && !answer2.checked && !answer3.checked) {
+    document.querySelector("#no-answer-message").style.visibility = "visible";
   } else {
-    document.querySelector("#wrong-answer-message").style.visibility =
-      "visible";
-    skipButton.style.visibility = "hidden";
-    submitButton.style.visibility = "hidden";
-    continueButton.style.visibility = "visible";
-    Game.lifes--;
+    if (answer1.checked && answer1Info === correctAnswer) {
+      document.querySelector("#correct-answer-message").style.visibility =
+        "visible";
+      Game.correctSound.play();
+      skipButton.style.visibility = "hidden";
+      submitButton.style.visibility = "hidden";
+      continueButton.style.visibility = "visible";
+      if (
+        (document.querySelector("#no-answer-message").style.visibility =
+          "visible")
+      ) {
+        document.querySelector("#no-answer-message").style.visibility =
+          "hidden";
+      }
+      changeScores();
+      printScore();
+      if (
+        (document.querySelector("#cant-skip-message").style.visibility =
+          "visible")
+      ) {
+        document.querySelector("#cant-skip-message").style.visibility =
+          "hidden";
+      }
+    } else if (answer2.checked && answer2Info === correctAnswer) {
+      document.querySelector("#correct-answer-message").style.visibility =
+        "visible";
+      Game.correctSound.play();
+      skipButton.style.visibility = "hidden";
+      submitButton.style.visibility = "hidden";
+      continueButton.style.visibility = "visible";
+      if (
+        (document.querySelector("#no-answer-message").style.visibility =
+          "visible")
+      ) {
+        document.querySelector("#no-answer-message").style.visibility =
+          "hidden";
+      }
+      changeScores();
+      printScore();
+      if (
+        (document.querySelector("#cant-skip-message").style.visibility =
+          "visible")
+      ) {
+        document.querySelector("#cant-skip-message").style.visibility =
+          "hidden";
+      }
+    } else if (answer3.checked && answer3Info === correctAnswer) {
+      document.querySelector("#correct-answer-message").style.visibility =
+        "visible";
+      Game.correctSound.play();
+      skipButton.style.visibility = "hidden";
+      submitButton.style.visibility = "hidden";
+      continueButton.style.visibility = "visible";
+      if (
+        (document.querySelector("#no-answer-message").style.visibility =
+          "visible")
+      ) {
+        document.querySelector("#no-answer-message").style.visibility =
+          "hidden";
+      }
+      changeScores();
+      printScore();
+      if (
+        (document.querySelector("#cant-skip-message").style.visibility =
+          "visible")
+      ) {
+        document.querySelector("#cant-skip-message").style.visibility =
+          "hidden";
+      }
+    } else {
+      document.querySelector("#wrong-answer-message").style.visibility =
+        "visible";
+      Game.wrongSound.play();
+      skipButton.style.visibility = "hidden";
+      submitButton.style.visibility = "hidden";
+      continueButton.style.visibility = "visible";
+      Game.lifes--;
+      if (
+        (document.querySelector("#no-answer-message").style.visibility =
+          "visible")
+      ) {
+        document.querySelector("#no-answer-message").style.visibility =
+          "hidden";
+      }
+    }
   }
 }

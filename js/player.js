@@ -127,6 +127,7 @@ class Player {
   setEventHandlers() {
     if (!Game.atQuizz) {
       document.addEventListener("keydown", (event) => {
+        Game.croacSound.pause();
         const { key } = event;
         if (key === "ArrowRight" && !this.keyPressed.includes("ArrowRight")) {
           this.keyPressed.push("ArrowRight");

@@ -58,6 +58,10 @@ html {
   align-items: center;
 }
 
+.answer-option {
+  margin-bottom: 10px;
+}
+
 #all-answers {
   display: flex;
   flex-direction: column;
@@ -78,7 +82,7 @@ html {
   width: 3%;
 }
 
-#non-answer-message {
+#no-answer-message {
   visibility: hidden;
 }
 
@@ -101,6 +105,8 @@ html {
 
 #question {
   font-size: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .quizz-button {
