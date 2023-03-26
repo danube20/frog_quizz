@@ -192,6 +192,13 @@ const cantSkipMessage = document.querySelector("#cant-skip-message");
 
 function printQuizz() {
   lastQuestion();
+
+  document.querySelectorAll(".answer-radio").forEach((element) => {
+    if ((element.checked = true)) {
+      element.checked = false;
+    }
+  });
+
   if (Game.currentLevel === 1) {
     randomIndex = Math.floor(Math.random() * infoArray.length);
     questionInfo = infoArray[randomIndex][0];
