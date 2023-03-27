@@ -169,6 +169,7 @@ class Player {
     }
   }
 
+  //Check position and movement posibilities looking at the matrix map
   didCollideWithEnviroment(x, y) {
     this.column = Math.round(x / this.tileSize);
     this.row = Math.round(y / this.tileSize);

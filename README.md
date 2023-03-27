@@ -1,6 +1,12 @@
 # Froggie Quizz
 
+[play the game]: https://github.com/videogame-ironhack/frog_quizz/tree/ramapepe
+
 ## How it looks
+
+![Screen_view_1](./images/readme/Screen1.png){width=100 height=80}
+
+![Screen_view_2](./images/readme/Screen2.png){width=100 height=80}
 
 ## Description
 
@@ -618,10 +624,6 @@ class Splashdown {
 
 ## Links
 
-```
-
-```
-
-```
-
-```
+[play the game]: https://github.com/videogame-ironhack/frog_quizz/tree/ramapepe
+[github code]: https://github.com/videogame-ironhack/frog_quizz
+[trello]: https://trello.com/b/3p8UdlZQ/froggie-quizz

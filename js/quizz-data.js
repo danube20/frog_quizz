@@ -1,3 +1,4 @@
+// Data base for quizz
 let infoArray = [
   ["Cuántos elementos forman la tabla periódica?", "118", "210", "94", "118"],
   [
@@ -172,6 +173,7 @@ let musicArray = [
   ],
 ];
 
+//empty variables for quizz
 let quizzAudio = undefined;
 let randomIndex = undefined;
 let questionInfo = undefined;
@@ -182,6 +184,15 @@ let correctAnswer = undefined;
 let answer1 = undefined;
 let answer2 = undefined;
 let answer3 = undefined;
+
+//Quizz buttons listeners
+window.addEventListener("load", () => {
+  skipButton.addEventListener("click", skipQuestion);
+  submitButton.addEventListener("click", getResult);
+  continueButton.addEventListener("click", continueGame);
+});
+
+//DOM manipulation for quizz
 const quizzBox = document.querySelector("#quizz-box");
 const skipButton = document.querySelector("#skip-button");
 const submitButton = document.querySelector("#submit-button");
@@ -191,6 +202,7 @@ const wrongMessage = document.querySelector("#wrong-answer-message");
 const cantSkipMessage = document.querySelector("#cant-skip-message");
 const noAnswerMessage = document.querySelector("#no-answer-message");
 
+//Select a question from the correct array and print it
 function printQuizz() {
   lastQuestion();
 
@@ -308,6 +320,7 @@ function printQuizz() {
   }
 }
 
+//Skip question button functionality
 function skipQuestion(event) {
   quizzBox.style.visibility = "hidden";
   Game.atQuizz = false;
@@ -328,139 +341,7 @@ function skipQuestion(event) {
   }
 }
 
-function changeScores() {
-  if (Game.currentLevel === 1) {
-    Game.quizzScore--;
-  } else if (Game.currentLevel === 2) {
-    if (Game.typeOfQuestion === "maths" && Game.mathsScore > 0) {
-      Game.mathsScore--;
-    } else if (Game.typeOfQuestion === "geo" && Game.geoScore > 0) {
-      Game.geoScore--;
-    } else if (Game.typeOfQuestion === "music" && Game.musicScore > 0) {
-      Game.musicScore--;
-    }
-  }
-}
-
-function checkIfWin() {
-  if (Game.currentLevel === 1 && Game.quizzScore === 0) {
-    Game.backSound.pause();
-    Game.backSound.currentTime = 0;
-    Game.winScreen();
-  } else if (
-    Game.currentLevel === 2 &&
-    Game.mathsScore === 0 &&
-    Game.geoScore === 0 &&
-    Game.musicScore === 0
-  ) {
-    Game.backSound.pause();
-    Game.winScreen();
-  }
-}
-function continueGame() {
-  if (Game.musicScore !== 0 || Game.geoScore !== 0 || Game.mathsScore !== 0) {
-    Game.backSound.play();
-  }
-
-  if (Game.currentLevel === 1) {
-    Game.atQuizz = false;
-    quizzBox.style.visibility = "hidden";
-    continueButton.style.visibility = "hidden";
-    correctMessage.style.visibility = "hidden";
-    wrongMessage.style.visibility = "hidden";
-    cantSkipMessage.style.visibility = "hidden";
-    noAnswerMessage.style.visibility = "hidden";
-  } else if (Game.currentLevel === 2 && Game.musicQuizz === true) {
-    quizzAudio.pause();
-    Game.atQuizz = false;
-    quizzBox.style.visibility = "hidden";
-    continueButton.style.visibility = "hidden";
-    correctMessage.style.visibility = "hidden";
-    wrongMessage.style.visibility = "hidden";
-    cantSkipMessage.style.visibility = "hidden";
-    noAnswerMessage.style.visibility = "hidden";
-    Game.musicQuizz = false;
-    Game.croacTimer = 0;
-  } else if (Game.currentLevel === 2 && Game.musicQuizz === false) {
-    Game.atQuizz = false;
-    quizzBox.style.visibility = "hidden";
-    continueButton.style.visibility = "hidden";
-    correctMessage.style.visibility = "hidden";
-    wrongMessage.style.visibility = "hidden";
-    cantSkipMessage.style.visibility = "hidden";
-    noAnswerMessage.style.visibility = "hidden";
-    Game.croacTimer = 0;
-  }
-  checkIfWin();
-}
-
-window.addEventListener("load", () => {
-  skipButton.addEventListener("click", skipQuestion);
-  submitButton.addEventListener("click", getResult);
-  continueButton.addEventListener("click", continueGame);
-});
-
-function printScore() {
-  let firstLevelLegendInfo = document.querySelector(
-    "#firstlevel-quizz-legend-text"
-  );
-  let musicLegendInfo = document.querySelector("#music-quizz-legend-text");
-  let geoLegendInfo = document.querySelector("#geo-quizz-legend-text");
-  let mathsLegendInfo = document.querySelector("#maths-quizz-legend-text");
-
-  firstLevelLegendInfo.innerText = `${Game.quizzScore} preguntas`;
-
-  if (Game.musicScore === 1) {
-    musicLegendInfo.innerText = ` ${Game.musicScore} pregunta`;
-  } else {
-    musicLegendInfo.innerText = ` ${Game.musicScore} preguntas`;
-  }
-
-  if (Game.mathsScore === 1) {
-    mathsLegendInfo.innerText = ` ${Game.mathsScore} pregunta`;
-  } else {
-    mathsLegendInfo.innerText = ` ${Game.mathsScore} preguntas`;
-  }
-
-  if (Game.geoScore === 1) {
-    geoLegendInfo.innerText = ` ${Game.geoScore} pregunta`;
-  } else {
-    geoLegendInfo.innerText = ` ${Game.geoScore} preguntas`;
-  }
-}
-
-function lastQuestion() {
-  if (Game.currentLevel === 1) {
-    if (Game.quizzScore === Game.quizzObjects.length) {
-      document.querySelector("#cant-skip-message").style.visibility = "visible";
-      Game.noSkipSound.play();
-    }
-  } else if (Game.currentLevel === 2) {
-    if (
-      // Game.atQuizz === true &&
-      Game.typeOfQuestion === "maths" &&
-      Game.mathsScore === Game.mathQuizzObjects.length
-    ) {
-      document.querySelector("#cant-skip-message").style.visibility = "visible";
-      Game.noSkipSound.play();
-    } else if (
-      // Game.atQuizz === true &&
-      Game.typeOfQuestion === "geo" &&
-      Game.geoScore === Game.geoQuizzObjects.length
-    ) {
-      document.querySelector("#cant-skip-message").style.visibility = "visible";
-      Game.noSkipSound.play();
-    } else if (
-      // Game.atQuizz === true &&
-      Game.typeOfQuestion === "music" &&
-      Game.musicScore === Game.musicQuizzObjects.length
-    ) {
-      document.querySelector("#cant-skip-message").style.visibility = "visible";
-      Game.noSkipSound.play();
-    }
-  }
-}
-
+//Obtain the result when you submit
 function getResult(event) {
   event.preventDefault();
   Game.noSkipSound.pause();
@@ -552,6 +433,139 @@ function getResult(event) {
         document.querySelector("#no-answer-message").style.visibility =
           "hidden";
       }
+    }
+  }
+}
+
+//Continue button functionality
+function continueGame() {
+  if (Game.musicScore !== 0 || Game.geoScore !== 0 || Game.mathsScore !== 0) {
+    Game.backSound.play();
+  }
+
+  if (Game.currentLevel === 1) {
+    Game.atQuizz = false;
+    quizzBox.style.visibility = "hidden";
+    continueButton.style.visibility = "hidden";
+    correctMessage.style.visibility = "hidden";
+    wrongMessage.style.visibility = "hidden";
+    cantSkipMessage.style.visibility = "hidden";
+    noAnswerMessage.style.visibility = "hidden";
+  } else if (Game.currentLevel === 2 && Game.musicQuizz === true) {
+    quizzAudio.pause();
+    Game.atQuizz = false;
+    quizzBox.style.visibility = "hidden";
+    continueButton.style.visibility = "hidden";
+    correctMessage.style.visibility = "hidden";
+    wrongMessage.style.visibility = "hidden";
+    cantSkipMessage.style.visibility = "hidden";
+    noAnswerMessage.style.visibility = "hidden";
+    Game.musicQuizz = false;
+    Game.croacTimer = 0;
+  } else if (Game.currentLevel === 2 && Game.musicQuizz === false) {
+    Game.atQuizz = false;
+    quizzBox.style.visibility = "hidden";
+    continueButton.style.visibility = "hidden";
+    correctMessage.style.visibility = "hidden";
+    wrongMessage.style.visibility = "hidden";
+    cantSkipMessage.style.visibility = "hidden";
+    noAnswerMessage.style.visibility = "hidden";
+    Game.croacTimer = 0;
+  }
+  checkIfWin();
+}
+
+//After quizz, changes score info
+function changeScores() {
+  if (Game.currentLevel === 1) {
+    Game.quizzScore--;
+  } else if (Game.currentLevel === 2) {
+    if (Game.typeOfQuestion === "maths" && Game.mathsScore > 0) {
+      Game.mathsScore--;
+    } else if (Game.typeOfQuestion === "geo" && Game.geoScore > 0) {
+      Game.geoScore--;
+    } else if (Game.typeOfQuestion === "music" && Game.musicScore > 0) {
+      Game.musicScore--;
+    }
+  }
+}
+
+//After changing score with upper function, change the info at legend screen
+function printScore() {
+  let firstLevelLegendInfo = document.querySelector(
+    "#firstlevel-quizz-legend-text"
+  );
+  let musicLegendInfo = document.querySelector("#music-quizz-legend-text");
+  let geoLegendInfo = document.querySelector("#geo-quizz-legend-text");
+  let mathsLegendInfo = document.querySelector("#maths-quizz-legend-text");
+
+  firstLevelLegendInfo.innerText = `${Game.quizzScore} preguntas`;
+
+  if (Game.musicScore === 1) {
+    musicLegendInfo.innerText = ` ${Game.musicScore} pregunta`;
+  } else {
+    musicLegendInfo.innerText = ` ${Game.musicScore} preguntas`;
+  }
+
+  if (Game.mathsScore === 1) {
+    mathsLegendInfo.innerText = ` ${Game.mathsScore} pregunta`;
+  } else {
+    mathsLegendInfo.innerText = ` ${Game.mathsScore} preguntas`;
+  }
+
+  if (Game.geoScore === 1) {
+    geoLegendInfo.innerText = ` ${Game.geoScore} pregunta`;
+  } else {
+    geoLegendInfo.innerText = ` ${Game.geoScore} preguntas`;
+  }
+}
+
+//Check if you have win
+function checkIfWin() {
+  if (Game.currentLevel === 1 && Game.quizzScore === 0) {
+    Game.backSound.pause();
+    Game.backSound.currentTime = 0;
+    Game.winScreen();
+  } else if (
+    Game.currentLevel === 2 &&
+    Game.mathsScore === 0 &&
+    Game.geoScore === 0 &&
+    Game.musicScore === 0
+  ) {
+    Game.backSound.pause();
+    Game.winScreen();
+  }
+}
+
+//Check if you cant skip a question because of the score
+function lastQuestion() {
+  if (Game.currentLevel === 1) {
+    if (Game.quizzScore === Game.quizzObjects.length) {
+      document.querySelector("#cant-skip-message").style.visibility = "visible";
+      Game.noSkipSound.play();
+    }
+  } else if (Game.currentLevel === 2) {
+    if (
+      // Game.atQuizz === true &&
+      Game.typeOfQuestion === "maths" &&
+      Game.mathsScore === Game.mathQuizzObjects.length
+    ) {
+      document.querySelector("#cant-skip-message").style.visibility = "visible";
+      Game.noSkipSound.play();
+    } else if (
+      // Game.atQuizz === true &&
+      Game.typeOfQuestion === "geo" &&
+      Game.geoScore === Game.geoQuizzObjects.length
+    ) {
+      document.querySelector("#cant-skip-message").style.visibility = "visible";
+      Game.noSkipSound.play();
+    } else if (
+      // Game.atQuizz === true &&
+      Game.typeOfQuestion === "music" &&
+      Game.musicScore === Game.musicQuizzObjects.length
+    ) {
+      document.querySelector("#cant-skip-message").style.visibility = "visible";
+      Game.noSkipSound.play();
     }
   }
 }
