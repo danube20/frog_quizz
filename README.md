@@ -625,5 +625,9 @@ class Splashdown {
 ## Links
 
 [Play the game](https://github.com/videogame-ironhack/frog_quizz/tree/ramapepe)
+
 [GitHub code](https://github.com/videogame-ironhack/frog_quizz)
+
+[Canvas presentation](https://www.canva.com/design/DAFeUbuwXJ8/ETL1fPsrEoLNWY2TF8ZSzg/view?utm_content=DAFeUbuwXJ8&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
+
 [Trello](https://trello.com/b/3p8UdlZQ/froggie-quizz)
