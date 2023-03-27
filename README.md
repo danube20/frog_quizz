@@ -624,7 +624,7 @@ class Splashdown {
 
 ## Links
 
-[Play the game](https://github.com/videogame-ironhack/frog_quizz/tree/ramapepe)
+[Play the game](https://videogame-ironhack.github.io/frog_quizz/)
 
 [GitHub code](https://github.com/videogame-ironhack/frog_quizz)
 
