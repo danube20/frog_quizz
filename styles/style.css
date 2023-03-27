@@ -50,7 +50,7 @@ html {
   top: 131px;
   width: 459px;
   height: 700px;
-  background-image: url("/images/quizz-background.png");
+  background-image: url("../images/quizz-background.png");
   background-repeat: no-repeat;
   font-family: "Helvetica", cursive;
   display: flex;
