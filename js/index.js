@@ -1,6 +1,6 @@
 window.onload = () => {
   document.querySelector("#sound-button").onclick = () => {
-    let soundbutton = document.querySelector("#sound-button");
+    const soundbutton = document.querySelector("#sound-button");
     if (Game.playing === true) {
       Game.playing = false;
       soundbutton.src = "images/mutebutton.png";

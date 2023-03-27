@@ -128,48 +128,48 @@ let musicArray = [
     "mp3",
     new Audio("./sounds/quizz/titanic.mp3"),
   ],
-  // [
-  //   "¿De quién es la canción Hey Jude?",
-  //   "Los Beatles",
-  //   "Rolling Stones",
-  //   "Michael Jackson",
-  //   "Los Beatles",
-  // ],
-  // [
-  //   "¿De quién es la canción Hey Jude?",
-  //   "Los Beatles",
-  //   "Rolling Stones",
-  //   "Michael Jackson",
-  //   "Los Beatles",
-  // ],
-  // [
-  //   "¿Qué cantante americana ha ganado un Oscar por la canción 'Shallow'?",
-  //   "Beyoncé",
-  //   "Lady Gaga",
-  //   "Masiel",
-  //   "Lady Gaga",
-  // ],
-  // [
-  //   "¿A qué cantante se le conoce como El Sol de México?",
-  //   "Luis Miguel",
-  //   "Chavela Vargas",
-  //   "Julieta Venegas",
-  //   "Luis Miguel",
-  // ],
-  // [
-  //   "¿Cuál es el nombre de pila del compositor clásico Vivaldi?",
-  //   "Antonio",
-  //   "Verdi",
-  //   "Miguel",
-  //   "Antonio",
-  // ],
-  // [
-  //   "¿Quién compuso la balada 'Tears in heaven'?",
-  //   "Bon Jovi",
-  //   "Eric Clapton",
-  //   "Shakira",
-  //   "Eric Clapton",
-  // ],
+  [
+    "¿De quién es la canción Hey Jude?",
+    "Los Beatles",
+    "Rolling Stones",
+    "Michael Jackson",
+    "Los Beatles",
+  ],
+  [
+    "¿De quién es la canción Hey Jude?",
+    "Los Beatles",
+    "Rolling Stones",
+    "Michael Jackson",
+    "Los Beatles",
+  ],
+  [
+    "¿Qué cantante americana ha ganado un Oscar por la canción 'Shallow'?",
+    "Beyoncé",
+    "Lady Gaga",
+    "Masiel",
+    "Lady Gaga",
+  ],
+  [
+    "¿A qué cantante se le conoce como El Sol de México?",
+    "Luis Miguel",
+    "Chavela Vargas",
+    "Julieta Venegas",
+    "Luis Miguel",
+  ],
+  [
+    "¿Cuál es el nombre de pila del compositor clásico Vivaldi?",
+    "Antonio",
+    "Verdi",
+    "Miguel",
+    "Antonio",
+  ],
+  [
+    "¿Quién compuso la balada 'Tears in heaven'?",
+    "Bon Jovi",
+    "Eric Clapton",
+    "Shakira",
+    "Eric Clapton",
+  ],
 ];
 
 let quizzAudio = undefined;
@@ -308,6 +308,10 @@ function skipQuestion(event) {
   noAnswerMessage.style.visibility = "hidden";
   if (Game.notEnoughQuizz === true) {
     Game.gameOver();
+  }
+  if (Game.currentLevel === 2 && Game.musicQuizz === true) {
+    quizzAudio.pause();
+    Game.backSound.play();
   }
 }
 

@@ -1,4 +1,5 @@
 const Game = {
+  // Sounds
   crashAudio: new Audio("./sounds/crash.mp3"),
   jumpAudio: new Audio("./sounds/jump.mp3"),
   backSound: new Audio("./sounds/backsound.mp3"),
@@ -12,26 +13,33 @@ const Game = {
   clin: new Audio("./sounds/clin.mp3"),
   winSound: new Audio("./sounds/win.mp3"),
 
+  // Properties
   canvas: undefined,
   ctx: undefined,
   width: undefined,
   height: undefined,
   FPS: 60,
+  tileSize: 37,
 
+  // Level
   currentLevel: 1,
 
+  // Counters
   framesCounter: 0,
+  croacTimer: 0,
+
+  // Elements
 
   background1: undefined,
   background2: undefined,
   river: undefined,
   player: undefined,
-
   obstacleUp: undefined,
   obstacleDown: undefined,
   tableUp: undefined,
   tableDown: undefined,
 
+  // Arrays
   obstaclesDownArray: [],
   obstaclesUpArray: [],
   tablesUp: [],
@@ -43,24 +51,26 @@ const Game = {
   explosionsArray: [],
   splashdownsArray: [],
 
+  // Scores
   lifes: 3,
-  croacTimer: 0,
   quizzScore: 4,
   musicScore: 2,
   geoScore: 1,
   mathsScore: 1,
-  tileSize: 37,
+
+  // Checkers
   playing: true,
   atQuizz: false,
   musicQuizz: false,
   notEnoughQuizz: false,
   typeOfQuestion: undefined,
 
+  // Keys
   keys: {
     ENTER: 13,
   },
 
-  //game functionality
+  // Game functionality
   init() {
     this.setContext();
     this.setDimensions();
@@ -152,6 +162,8 @@ const Game = {
           !this.onTableDown()
         ) {
           this.generateSplashdown();
+          this.splashSound.pause();
+          this.splashSound.currentTime = 0;
           this.splashSound.play();
           this.lifes--;
           this.player.posX = 259;
@@ -179,6 +191,7 @@ const Game = {
     }, 1000 / this.FPS);
   },
 
+  // Print intro screen
   gameIntro() {
     const gameIntro = document.querySelector("#game-intro");
     const game = document.querySelector("#game");
@@ -197,6 +210,7 @@ const Game = {
     this.goSound.play();
   },
 
+  // Print Game screen
   startGameScreen() {
     if (this.currentLevel === 1) {
       const gameIntro = document.querySelector("#game-intro");
@@ -220,8 +234,13 @@ const Game = {
     Game.goSound.play();
   },
 
+  // Change life images
   printLifes() {
     const lifesImage = document.getElementById("lifes");
+    if (this.lifes === 3) {
+      lifesImage.src = "images/3lifes.png";
+    }
+
     if (this.lifes === 2) {
       lifesImage.src = "images/2lifes.png";
     }
@@ -231,6 +250,7 @@ const Game = {
     }
   },
 
+  // Sound settings
   mute() {
     this.crashAudio.volume = 0;
     this.jumpAudio.volume = 0;
@@ -261,6 +281,7 @@ const Game = {
     this.winSound.volume = 1;
   },
 
+  // Quizz functions
   displayCard() {
     const quizzBox = document.querySelector("#quizz-box");
     quizzBox.style.visibility = "visible";
@@ -268,7 +289,7 @@ const Game = {
     submitButton.style.visibility = "visible";
   },
 
-  //reset
+  // Reset
   reset() {
     this.background1 = new BackgroundOne(
       this.ctx,
@@ -291,7 +312,6 @@ const Game = {
       this.keys,
       this.tileMap
     );
-    this.tileMap = new TileMap(this.ctx, this.tileSize, this.player);
     this.obstacleUp = new ObstacleUp(this.ctx);
     this.obstacleDown = new ObstacleDown(this.ctx);
     this.tableUp = new TableUp(this.ctx);
@@ -299,10 +319,14 @@ const Game = {
     this.explosion = new Explosion(this.ctx);
     this.splashdown = new Splashdown(this.ctx);
     this.river = new River(this.ctx, this.width);
+
+    // Just for painting grid
+    // this.tileMap = new TileMap(this.ctx, this.tileSize, this.player);
   },
 
-  //draw graphics
+  // Draw graphics
   drawAll() {
+    // Player, obstacles and animation for dying
     if (this.currentLevel === 1) {
       this.background1.draw();
       // this.tileMap.draw(this.ctx);
@@ -330,10 +354,9 @@ const Game = {
         splash.draw(this.framesCounter);
       });
     }
-    this.onTableUp();
-    this.onTableDown();
     this.player.draw(this.framesCounter);
 
+    //Quizz
     if (this.currentLevel === 1) {
       this.quizzObjects.forEach((quiz) => {
         quiz.draw(this.framesCounter);
@@ -350,17 +373,24 @@ const Game = {
         quiz.draw(this.framesCounter);
       });
     }
+
+    //Check status and move player
+    this.onTableUp();
+    this.onTableDown();
     this.player.movement();
     this.checkLegend();
     this.updateTypeOfQuestion();
+
+    // Just for painting grid
+    // this.tileMap.draw(this.ctx);
   },
 
-  //clean everything
+  // Clean everything
   clear() {
     this.ctx.clearRect(0, 0, this.width, this.height);
   },
 
-  //print arrays
+  // Print arrays
   generateQuizzObjects() {
     this.quizzObjects.push(new QuizzObject(this.ctx, 400, 240));
     this.quizzObjects.push(new QuizzObject(this.ctx, 150, 150));
@@ -416,12 +446,6 @@ const Game = {
 
   generateSplashdown() {
     this.splashdownsArray.push(new Splashdown(this.ctx));
-  },
-
-  switchArray() {
-    mutedMusicArray = musicArray.filter((question) => {
-      return !question.includes("mp3");
-    });
   },
 
   //clean arrays
@@ -500,7 +524,7 @@ const Game = {
     }
   },
 
-  //checking functions
+  //Collision functions
   isCollisionUp() {
     return this.obstaclesUpArray.some((obs) => {
       return (
@@ -569,16 +593,6 @@ const Game = {
     });
   },
 
-  updateTypeOfQuestion() {
-    if (this.mathQuizzCollision()) {
-      this.typeOfQuestion = "maths";
-    } else if (this.geoQuizzCollision()) {
-      this.typeOfQuestion = "geo";
-    } else if (this.musicQuizzCollision()) {
-      this.typeOfQuestion = "music";
-    }
-  },
-
   onTableUp() {
     return this.tablesUp.some((tab) => {
       if (
@@ -620,6 +634,17 @@ const Game = {
         return false;
       }
     });
+  },
+
+  // Checking functions
+  updateTypeOfQuestion() {
+    if (this.mathQuizzCollision()) {
+      this.typeOfQuestion = "maths";
+    } else if (this.geoQuizzCollision()) {
+      this.typeOfQuestion = "geo";
+    } else if (this.musicQuizzCollision()) {
+      this.typeOfQuestion = "music";
+    }
   },
 
   checkLegend() {
@@ -669,7 +694,7 @@ const Game = {
     }
   },
 
-  //special screens
+  // Special screens
   gameOver() {
     clearInterval(this.interval);
     const lifesImage = document.getElementById("lifes");
@@ -751,5 +776,12 @@ const Game = {
         }
       });
     }
+  },
+
+  // Non audio playing mode
+  switchArray() {
+    mutedMusicArray = musicArray.filter((question) => {
+      return !question.includes("mp3");
+    });
   },
 };
