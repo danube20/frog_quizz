@@ -630,7 +630,7 @@ class Splashdown {
 
 ## Collaborators
 
-- Maria Jose Arcas Mouliaa (Froggie's voice)
+- María José Arcas Mouliaá (Froggie's voice)
 
 ## Links
 
