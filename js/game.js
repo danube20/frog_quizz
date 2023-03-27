@@ -22,7 +22,7 @@ const Game = {
   tileSize: 37,
 
   // Level
-  currentLevel: 1,
+  currentLevel: 2,
 
   // Counters
   framesCounter: 0,
@@ -81,7 +81,6 @@ const Game = {
     this.generateGeoQuizzObjects();
     this.generateObstaclesUp();
     this.generateObstaclesDown();
-    this.switchArray();
   },
 
   setContext() {
@@ -207,11 +206,18 @@ const Game = {
     gameOver2.style.display = "none";
     win1.style.display = "none";
     win2.style.display = "none";
-    this.goSound.play();
   },
 
   // Print Game screen
   startGameScreen() {
+    const soundbutton = document.querySelector("#sound-button");
+    if (Game.playing === true) {
+      soundbutton.src = "images/soundbutton.png";
+      Game.sound();
+    } else if (Game.playing === false) {
+      soundbutton.src = "images/mutebutton.png";
+      Game.mute();
+    }
     if (this.currentLevel === 1) {
       const gameIntro = document.querySelector("#game-intro");
       const game = document.querySelector("#game");
@@ -776,12 +782,5 @@ const Game = {
         }
       });
     }
-  },
-
-  // Non audio playing mode
-  switchArray() {
-    mutedMusicArray = musicArray.filter((question) => {
-      return !question.includes("mp3");
-    });
   },
 };

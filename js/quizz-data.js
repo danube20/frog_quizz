@@ -267,18 +267,31 @@ function printQuizz() {
       answer3Text.innerText = answer3Info;
       geoArray.splice(randomIndex, 1);
     } else if (Game.musicQuizzCollision()) {
-      randomIndex = Math.floor(Math.random() * musicArray.length);
-      questionInfo = musicArray[randomIndex][0];
-      answer1Info = musicArray[randomIndex][1];
-      answer2Info = musicArray[randomIndex][2];
-      answer3Info = musicArray[randomIndex][3];
-      correctAnswer = musicArray[randomIndex][4];
-      if (musicArray[randomIndex].includes("mp3")) {
-        quizzAudio = musicArray[randomIndex][6];
-        (Game.musicQuizz = true), Game.backSound.pause();
-        quizzAudio.play();
+      if (Game.playing === true) {
+        randomIndex = Math.floor(Math.random() * musicArray.length);
+        questionInfo = musicArray[randomIndex][0];
+        answer1Info = musicArray[randomIndex][1];
+        answer2Info = musicArray[randomIndex][2];
+        answer3Info = musicArray[randomIndex][3];
+        correctAnswer = musicArray[randomIndex][4];
+        if (musicArray[randomIndex].includes("mp3")) {
+          quizzAudio = musicArray[randomIndex][6];
+          (Game.musicQuizz = true), Game.backSound.pause();
+          quizzAudio.play();
+        }
+      } else if (Game.playing === false) {
+        const mutedMusicArray = musicArray.filter((question) => {
+          return !question.includes("mp3");
+        });
+        randomIndex = Math.floor(Math.random() * mutedMusicArray.length);
+        questionInfo = mutedMusicArray[randomIndex][0];
+        answer1Info = mutedMusicArray[randomIndex][1];
+        answer2Info = mutedMusicArray[randomIndex][2];
+        answer3Info = mutedMusicArray[randomIndex][3];
+        correctAnswer = mutedMusicArray[randomIndex][4];
       }
     }
+
     let question = document.querySelector("#question");
     answer1 = document.querySelector("#answer1");
     answer2 = document.querySelector("#answer2");
