@@ -2,6 +2,11 @@
 
 [play the game]: https://github.com/videogame-ironhack/frog_quizz/tree/ramapepe
 
+#### Authors
+
+Pepe Alacid
+Raquel de Frutos Álvarez
+
 ## How it looks
 
 ![Screen_view_1](./images/readme/Screen1.png)
@@ -621,6 +626,10 @@ class Splashdown {
 - Game Screen: Game legend (left) & Game Canvas (right)
 - Game over Screen: Player loses all lives or Player skipped to many questions
 - You Win Screen
+
+## Collaborators
+
+- Maria Jose Arcas Mouliaa (Froggie's voice)
 
 ## Links
 
