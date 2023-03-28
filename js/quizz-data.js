@@ -473,6 +473,10 @@ function continueGame() {
     Game.croacTimer = 0;
   }
   checkIfWin();
+  Game.checkEnoughQuestions();
+  if (Game.notEnoughQuizz === true) {
+    Game.gameOver();
+  }
 }
 
 //After quizz, changes score info

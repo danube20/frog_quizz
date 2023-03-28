@@ -183,6 +183,7 @@ const Game = {
           this.clearQuizzObject();
         }
       }
+
       if (this.lifes === 0) {
         this.gameOver();
       }
