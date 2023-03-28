@@ -22,7 +22,7 @@ const Game = {
   tileSize: 37,
 
   // Level
-  currentLevel: 2,
+  currentLevel: 1,
   // Counters
   framesCounter: 0,
   croacTimer: 0,
