@@ -214,7 +214,7 @@ const Game = {
       soundbutton.src = "images/soundbutton.png";
       Game.sound();
     } else if (Game.playing === false) {
-      soundbutton.src = "images/mutebutton.png";
+      soundbutton.src = "./images/mutebutton.png";
       Game.mute();
     }
     if (this.currentLevel === 1) {
@@ -234,7 +234,7 @@ const Game = {
       gameIntro.style.display = "none";
       game.style.display = "block";
       const legendImage = document.querySelector("#legend-background");
-      legendImage.src = "../images/legend-screen-level2.jpg";
+      legendImage.src = "./images/legend-screen-level2.jpg";
     }
     Game.goSound.play();
   },
@@ -243,15 +243,15 @@ const Game = {
   printLifes() {
     const lifesImage = document.getElementById("lifes");
     if (this.lifes === 3) {
-      lifesImage.src = "../images/3lifes.png";
+      lifesImage.src = "./images/3lifes.png";
     }
 
     if (this.lifes === 2) {
-      lifesImage.src = "../images/2lifes.png";
+      lifesImage.src = "./images/2lifes.png";
     }
 
     if (this.lifes === 1) {
-      lifesImage.src = "../images/1life.png";
+      lifesImage.src = "./images/1life.png";
     }
   },
 

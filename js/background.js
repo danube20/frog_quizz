@@ -25,7 +25,7 @@ class BackgroundOne extends Background {
   constructor(ctx, w, h, posX, posY) {
     super(ctx, w, h, posX, posY);
     this.image = new Image();
-    this.image.src = "../images/background/background-1.png";
+    this.image.src = "./images/background/background-1.png";
   }
 }
 
@@ -33,6 +33,6 @@ class BackgroundTwo extends Background {
   constructor(ctx, w, h, posX, posY) {
     super(ctx, w, h, posX, posY);
     this.image = new Image();
-    this.image.src = "../images/background/background-2.png";
+    this.image.src = "./images/background/background-2.png";
   }
 }

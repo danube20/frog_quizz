@@ -5,7 +5,7 @@ class Explosion {
     this.height = 120;
 
     this.image = new Image();
-    this.image.src = "../images/Sprite/colision.png";
+    this.image.src = "./images/Sprite/colision.png";
 
     this.posX = Game.player.posX + 20;
     this.posY = Game.player.posY + 20;
