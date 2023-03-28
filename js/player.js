@@ -6,7 +6,7 @@ class Player {
     this.gameHeight = gameH;
 
     this.image = new Image();
-    this.image.src = "./images/Sprite/quietaup_20.png";
+    this.image.src = "../images/Sprite/quietaup_20.png";
 
     this.width = 148;
     this.height = 148;
@@ -85,7 +85,7 @@ class Player {
           Game.jumpAudio.play();
           this.image.frames = 20;
           this.posX += this.velMOVE;
-          this.image.src = "./images/Sprite/saltodch_20.png";
+          this.image.src = "../images/Sprite/saltodch_20.png";
         } else if (
           elm.includes("ArrowLeft") &&
           // this.posX + 109 >= 0 &&
@@ -96,7 +96,7 @@ class Player {
           Game.jumpAudio.play();
           this.image.frames = 20;
           this.posX -= this.velMOVE;
-          this.image.src = "./images/Sprite/saltoizq_20.png";
+          this.image.src = "../images/Sprite/saltoizq_20.png";
         } else if (
           elm.includes("ArrowUp") &&
           // this.posY + 74 >= 0 &&
@@ -107,7 +107,7 @@ class Player {
           Game.jumpAudio.play();
           this.image.frames = 20;
           this.posY -= this.velMOVE;
-          this.image.src = "./images/Sprite/movimientoarriba_20.png";
+          this.image.src = "../images/Sprite/movimientoarriba_20.png";
         } else if (
           elm.includes("ArrowDown") &&
           // this.posY + this.height - 71 <= Game.height &&
@@ -118,7 +118,7 @@ class Player {
           Game.jumpAudio.play();
           this.image.frames = 20;
           this.posY += this.velMOVE;
-          this.image.src = "./images/Sprite/movimientoabajo_20.png";
+          this.image.src = "../images/Sprite/movimientoabajo_20.png";
         }
       });
     }
@@ -154,16 +154,16 @@ class Player {
         const { key } = event;
         if (key === "ArrowLeft") {
           this.keyPressed = [];
-          this.image.src = "./images/Sprite/quietaizq_20.png";
+          this.image.src = "../images/Sprite/quietaizq_20.png";
         } else if (key === "ArrowRight") {
           this.keyPressed = [];
-          this.image.src = "./images/Sprite/quietadch_20.png";
+          this.image.src = "../images/Sprite/quietadch_20.png";
         } else if (key === "ArrowUp") {
           this.keyPressed = [];
-          this.image.src = "./images/Sprite/quietaup_20.png";
+          this.image.src = "../images/Sprite/quietaup_20.png";
         } else if (key === "ArrowDown") {
           this.keyPressed = [];
-          this.image.src = "./images/Sprite/quietadown_20.png";
+          this.image.src = "../images/Sprite/quietadown_20.png";
         } else return null;
       });
     }

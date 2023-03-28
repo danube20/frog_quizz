@@ -3,7 +3,7 @@ class Table {
     this.ctx = ctx;
 
     this.image = new Image();
-    this.image.src = "/images/Wood03.png";
+    this.image.src = "../images/Wood03.png";
 
     this.velX = 1;
   }

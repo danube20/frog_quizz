@@ -11,7 +11,7 @@ class QuizzObject {
     this.image = new Image();
     this.image.frames = 14;
     this.image.framesIndex = 0;
-    this.image.src = "./images/quiz/questionmark.png";
+    this.image.src = "../images/quiz/questionmark.png";
   }
 
   draw(framesCounter) {
@@ -45,7 +45,7 @@ class BlueQuizzObject extends QuizzObject {
     super(ctx, posX, posY);
 
     this.image = new Image();
-    this.image.src = "./images/quiz/bluequestionmark.png";
+    this.image.src = "../images/quiz/bluequestionmark.png";
     this.image.frames = 14;
     this.image.framesIndex = 0;
   }
@@ -56,7 +56,7 @@ class RedQuizzObject extends QuizzObject {
     super(ctx, posX, posY);
 
     this.image = new Image();
-    this.image.src = "./images/quiz/redquestionmark.png";
+    this.image.src = "../images/quiz/redquestionmark.png";
     this.image.frames = 14;
     this.image.framesIndex = 0;
   }
@@ -67,7 +67,7 @@ class SkyQuizzObject extends QuizzObject {
     super(ctx, posX, posY);
 
     this.image = new Image();
-    this.image.src = "./images/quiz/skyquestionmark.png";
+    this.image.src = "../images/quiz/skyquestionmark.png";
     this.image.frames = 14;
     this.image.framesIndex = 0;
   }
