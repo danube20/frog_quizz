@@ -5,7 +5,7 @@ class River {
     this.height = 240;
 
     this.image = new Image();
-    this.image.src = "/images/river.png";
+    this.image.src = "./images/river.png";
 
     this.posX = 0;
     this.posY = 390;
