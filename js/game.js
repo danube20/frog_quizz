@@ -749,6 +749,8 @@ const Game = {
     this.backSound.pause();
     this.backSound.currentTime = 0;
     this.winSound.play();
+    this.lifes = 3;
+    this.printLifes();
 
     if (this.currentLevel === 1) {
       const winScreen1 = document.querySelector("#you-win-1");
