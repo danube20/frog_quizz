@@ -1,5 +1,5 @@
 // Data base for quizz
-let infoArray = [
+const infoArray = [
   ["Cuántos elementos forman la tabla periódica?", "118", "210", "94", "118"],
   [
     "¿De qué país es originario el queso brie?",
@@ -39,7 +39,7 @@ let infoArray = [
   ],
 ];
 
-let mathsArray = [
+const mathsArray = [
   ["¿Qué número no tiene un numérico propio", "2", "0", "94", "0"],
   [
     "¿Cómo se llama también el perímetro de un círculo",
@@ -73,7 +73,7 @@ let mathsArray = [
   ],
 ];
 
-let geoArray = [
+const geoArray = [
   [
     "¿Cuál es el país más pequeño del mundo?",
     "España",
@@ -101,7 +101,7 @@ let geoArray = [
   ["¿Qué río pasa por más países?", "Danubio", "Nilo", "Amazonas", "Danubio"],
 ];
 
-let musicArray = [
+const musicArray = [
   [
     "Qué canción suena?",
     "Physical",
@@ -220,13 +220,13 @@ function printQuizz() {
     answer3Info = infoArray[randomIndex][3];
     correctAnswer = infoArray[randomIndex][4];
 
-    let question = document.querySelector("#question");
+    const question = document.querySelector("#question");
     answer1 = document.querySelector("#answer1");
     answer2 = document.querySelector("#answer2");
     answer3 = document.querySelector("#answer3");
-    let answer1Text = document.querySelector("#answer1Text");
-    let answer2Text = document.querySelector("#answer2Text");
-    let answer3Text = document.querySelector("#answer3Text");
+    const answer1Text = document.querySelector("#answer1Text");
+    const answer2Text = document.querySelector("#answer2Text");
+    const answer3Text = document.querySelector("#answer3Text");
 
     question.innerText = questionInfo;
     answer1Text.innerText = answer1Info;
@@ -244,13 +244,13 @@ function printQuizz() {
       answer3Info = mathsArray[randomIndex][3];
       correctAnswer = mathsArray[randomIndex][4];
 
-      let question = document.querySelector("#question");
+      const question = document.querySelector("#question");
       answer1 = document.querySelector("#answer1");
       answer2 = document.querySelector("#answer2");
       answer3 = document.querySelector("#answer3");
-      let answer1Text = document.querySelector("#answer1Text");
-      let answer2Text = document.querySelector("#answer2Text");
-      let answer3Text = document.querySelector("#answer3Text");
+      const answer1Text = document.querySelector("#answer1Text");
+      const answer2Text = document.querySelector("#answer2Text");
+      const answer3Text = document.querySelector("#answer3Text");
 
       question.innerText = questionInfo;
       answer1Text.innerText = answer1Info;
@@ -265,13 +265,13 @@ function printQuizz() {
       answer3Info = geoArray[randomIndex][3];
       correctAnswer = geoArray[randomIndex][4];
 
-      let question = document.querySelector("#question");
+      const question = document.querySelector("#question");
       answer1 = document.querySelector("#answer1");
       answer2 = document.querySelector("#answer2");
       answer3 = document.querySelector("#answer3");
-      let answer1Text = document.querySelector("#answer1Text");
-      let answer2Text = document.querySelector("#answer2Text");
-      let answer3Text = document.querySelector("#answer3Text");
+      const answer1Text = document.querySelector("#answer1Text");
+      const answer2Text = document.querySelector("#answer2Text");
+      const answer3Text = document.querySelector("#answer3Text");
 
       question.innerText = questionInfo;
       answer1Text.innerText = answer1Info;
@@ -304,13 +304,13 @@ function printQuizz() {
       }
     }
 
-    let question = document.querySelector("#question");
+    const question = document.querySelector("#question");
     answer1 = document.querySelector("#answer1");
     answer2 = document.querySelector("#answer2");
     answer3 = document.querySelector("#answer3");
-    let answer1Text = document.querySelector("#answer1Text");
-    let answer2Text = document.querySelector("#answer2Text");
-    let answer3Text = document.querySelector("#answer3Text");
+    const answer1Text = document.querySelector("#answer1Text");
+    const answer2Text = document.querySelector("#answer2Text");
+    const answer3Text = document.querySelector("#answer3Text");
 
     question.innerText = questionInfo;
     answer1Text.innerText = answer1Info;
@@ -496,12 +496,12 @@ function changeScores() {
 
 //After changing score with upper function, change the info at legend screen
 function printScore() {
-  let firstLevelLegendInfo = document.querySelector(
+  const firstLevelLegendInfo = document.querySelector(
     "#firstlevel-quizz-legend-text"
   );
-  let musicLegendInfo = document.querySelector("#music-quizz-legend-text");
-  let geoLegendInfo = document.querySelector("#geo-quizz-legend-text");
-  let mathsLegendInfo = document.querySelector("#maths-quizz-legend-text");
+  const musicLegendInfo = document.querySelector("#music-quizz-legend-text");
+  const geoLegendInfo = document.querySelector("#geo-quizz-legend-text");
+  const mathsLegendInfo = document.querySelector("#maths-quizz-legend-text");
 
   firstLevelLegendInfo.innerText = `${Game.quizzScore} preguntas`;
 
